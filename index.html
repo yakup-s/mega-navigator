@@ -577,6 +577,9 @@ canvas{display:block;width:100%!important;height:auto;max-width:100%;touch-actio
 <div class="prow"><span class="pname">Pozisyon yönü</span><select id="uni-pos"><option value="long">Long</option><option value="short">Short</option></select></div>
 <div class="toggle-row"><input type="checkbox" id="uni-trailing"><label for="uni-trailing">Trailing aktif?</label></div>
 <div class="prow"><span class="pname">Bar sayısı</span><input type="range" min="200" max="1500" step="100" value="200" id="uni-bars"><span class="pval" id="uni-bars-v">200</span></div>
+<div class="prow"><span class="pname">🌊 Volatilite çarpanı (drift + noise)</span><input type="range" min="0.3" max="3.0" step="0.1" value="1.0" id="uni-volmult"><span class="pval" id="uni-volmult-v">1.0x</span></div>
+<div class="prow"><span class="pname">📈 Volatilite rejim modu</span><select id="uni-volmode"><option value="flat">Sabit (tüm bar aynı çarpan)</option><option value="ramp_up">Artan rampa (0.5x → 2.0x)</option><option value="ramp_down">Azalan rampa (2.0x → 0.5x)</option><option value="burst">Ortada patlama (düşük→yüksek→düşük)</option></select></div>
+<div class="card-sub" style="font-size:11px;margin-top:4px;">⚠️ 1000+ bar + len_prior 2000+ → slider tepkisi yavaşlayabilir. Yüksek bar + kısa len_prior önerilir.<br>💡 <b>Volatilite çarpanı</b>: sentetik fiyatın salınım genliğini değiştirir, <code>use_evo_dyn_thresh</code> açıkken dinamik eşiklerin bar-bar nasıl daraldığı/genişlediği direkt görülür.</div>
 </div>
 <div class="nav-card">
 <div class="card-ribbon">Pivot</div>
@@ -632,6 +635,11 @@ canvas{display:block;width:100%!important;height:auto;max-width:100%;touch-actio
 <div class="stat"><div class="stat-n" id="uni-s-firstexit">—</div><div class="stat-l">1.Exit</div></div>
 <div class="stat"><div class="stat-n" id="uni-s-exittype">—</div><div class="stat-l">Tip</div></div>
 <div class="stat"><div class="stat-n" id="uni-s-blockpct">0%</div><div class="stat-l">Blok%</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-totalexits">0</div><div class="stat-l">Toplam exit</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-weakexits">0</div><div class="stat-l">⬇ Weakness</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-deltaexits">0</div><div class="stat-l">⚡ Delta</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-avglife">—</div><div class="stat-l">Ort. ömür</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-volrange">—</div><div class="stat-l">Vol aralık</div></div>
 </div>
 </div>
 <div class="nav-card">
@@ -735,6 +743,65 @@ function effectiveThresholds(p) {
     sell = clamp(0.5 - dynOff, 0.01, 0.49);
   }
   return { buy, sell };
+}
+
+function effectiveThresholdsSeries(prices, p) {
+  const N = prices.length;
+  const buyArr = new Array(N);
+  const sellArr = new Array(N);
+  const volRatioArr = new Array(N);
+  const exitLongArr = new Array(N);
+  const exitShortArr = new Array(N);
+
+  if (!p.evoDynThr) {
+    // Statik: mevcut davranış — her bar aynı değer
+    for (let i = 0; i < N; i++) {
+      buyArr[i] = p.thrBuy;
+      sellArr[i] = p.thrSell;
+      volRatioArr[i] = 1.0;
+      exitLongArr[i] = p.pxExitLong;
+      exitShortArr[i] = p.pxExitShort;
+    }
+    return { buy: buyArr, sell: sellArr, volRatio: volRatioArr, exitLong: exitLongArr, exitShort: exitShortArr };
+  }
+
+  // Bar-bar ATR14 ve ATR_avg100 hesabı (basit rolling SMA of ATR14)
+  const atr14 = new Array(N).fill(0.5);
+  for (let i = 1; i < N; i++) atr14[i] = _atr(prices, 14, i);
+  const atrAvg = new Array(N).fill(0.5);
+  // 100-bar SMA of atr14 (rolling)
+  const avgLen = 100;
+  let runSum = 0;
+  for (let i = 0; i < N; i++) {
+    runSum += atr14[i];
+    if (i >= avgLen) runSum -= atr14[i - avgLen];
+    const eff = Math.min(i + 1, avgLen);
+    atrAvg[i] = eff > 0 ? runSum / eff : 0.5;
+  }
+
+  // Exit eşiği Pine'da dinamik aktifken dynamic_offset × 0.8 ile hesaplanır:
+  //   active_thresh_exit_long = 0.5 - exit_offset
+  //   active_thresh_exit_short = 0.5 + exit_offset
+  // (kapalıyken user'ın ayarladığı pxExitLong / pxExitShort)
+  const volSens = p.volSens || 1.5;
+  const baseZone = p.evoBaseZone || 0.20;
+  const volStr = p.evoVolStr || 0.5;
+
+  for (let i = 0; i < N; i++) {
+    const rawRatio = atrAvg[i] > 0 ? atr14[i] / atrAvg[i] : 1.0;
+    const volPower = Math.pow(Math.max(rawRatio, 0.001), volSens);
+    const volRatio = Math.min(3.0, Math.max(0.3, volPower));
+    volRatioArr[i] = volRatio;
+
+    const dynOff = baseZone * Math.pow(volRatio, volStr);
+    buyArr[i] = Math.min(0.99, 0.5 + dynOff);
+    sellArr[i] = Math.max(0.01, 0.5 - dynOff);
+
+    const exitOff = dynOff * 0.8;
+    exitLongArr[i] = Math.max(0.01, 0.5 - exitOff);
+    exitShortArr[i] = Math.min(0.99, 0.5 + exitOff);
+  }
+  return { buy: buyArr, sell: sellArr, volRatio: volRatioArr, exitLong: exitLongArr, exitShort: exitShortArr };
 }
 
 function updateSignalLabels(p) {
@@ -1141,6 +1208,21 @@ function computeFinalProbSeries(prices, p) {
   const atrSeries = new Array(N).fill(0.5);
   for (let i = 1; i < N; i++) atrSeries[i] = _atr(prices, 14, i);
 
+  // Bar-bar volatility ratio (Pine: atr_current(14) / atr_avg(100) → normalized [0,1])
+  // Rekürsif prior için kullanılır
+  const volRatioBar = new Array(N).fill(1.0);
+  let runSumATR = 0;
+  const avgLenATR = 100;
+  for (let i = 0; i < N; i++) {
+    runSumATR += atrSeries[i];
+    if (i >= avgLenATR) runSumATR -= atrSeries[i - avgLenATR];
+    const eff = Math.min(i + 1, avgLenATR);
+    const atrAvg = eff > 0 ? runSumATR / eff : 0.5;
+    const rawR = atrAvg > 0 ? atrSeries[i] / atrAvg : 1.0;
+    const pw = Math.pow(Math.max(rawR, 0.001), p.volSens || 1.5);
+    volRatioBar[i] = Math.min(3.0, Math.max(0.3, pw));
+  }
+
   if (p.coreModel === '2') {
     // Evo: sigmoid prior/like + Bayes update + EMA smooth
     const adaptLen = computeAdaptiveLen(p);
@@ -1195,8 +1277,8 @@ function computeFinalProbSeries(prices, p) {
       let priorUsed = priorRaw;
       if (rpEnabled) {
         // Pine: f_lerp(prior_decay_base, prior_decay_low, normalized_vol_for_lerp)
-        // Burada vol sabit (envVol parametresi); gerçek Pine bar bazlı vol kullanır
-        const norm = Math.max(0, Math.min(1, ((p.envVol || 1.0) - 0.3) / 2.7));
+        // Bar-bar volRatioBar[i] kullan → gerçek Pine davranışı ile aynı
+        const norm = Math.max(0, Math.min(1, (volRatioBar[i] - 0.3) / 2.7));
         const alpha = (p.rpBase || 0.92) + ((p.rpLow || 0.97) - (p.rpBase || 0.92)) * norm;
         const blended = recursivePrior * alpha + 0.5 * (1 - alpha);
         // Bayes update prior'ı güncellemek için kullanılır (rekürsif zincir)
@@ -1211,21 +1293,34 @@ function computeFinalProbSeries(prices, p) {
   return out;
 }
 
-function detectSignals(probs, p) {
+function detectSignals(probs, p, thSeries = null) {
   // Pine'ın Kesişim ve Seviye modlarını taklit et
-  const th = effectiveThresholds(p);
+  // thSeries verilirse bar-bar dinamik eşik kullanır (Bütünleşik Görünüm için)
+  // thSeries null ise scalar effectiveThresholds (diğer modüller için — geri uyumluluk)
+  const thStatic = effectiveThresholds(p);
   const longs = [], shorts = [];
+  // Pine'daki cross_confirm_mode "Prob + Eşik" ayarı → prob_rising/falling de gerekli
+  const requireDirConfirm = p.crossConfirm === 'prob';
   for (let i = 1; i < probs.length; i++) {
+    const tb = thSeries ? thSeries.buy[i] : thStatic.buy;
+    const ts = thSeries ? thSeries.sell[i] : thStatic.sell;
+    const tbPrev = thSeries ? thSeries.buy[i - 1] : thStatic.buy;
+    const tsPrev = thSeries ? thSeries.sell[i - 1] : thStatic.sell;
+    const probRising = probs[i] > probs[i - 1];
+    const probFalling = probs[i] < probs[i - 1];
     if (p.triggerMode === 'cross') {
-      if (probs[i] > th.buy && probs[i - 1] <= th.buy) longs.push(i);
-      if (probs[i] < th.sell && probs[i - 1] >= th.sell) shorts.push(i);
+      const crossedUp = probs[i] > tb && probs[i - 1] <= tbPrev;
+      const crossedDown = probs[i] < ts && probs[i - 1] >= tsPrev;
+      if (crossedUp && (!requireDirConfirm || probRising)) longs.push(i);
+      if (crossedDown && (!requireDirConfirm || probFalling)) shorts.push(i);
     } else {
       // level: ilk geçiş anı
-      if (probs[i] > th.buy && probs[i - 1] <= th.buy) longs.push(i);
-      if (probs[i] < th.sell && probs[i - 1] >= th.sell) shorts.push(i);
+      if (probs[i] > tb && probs[i - 1] <= tbPrev) longs.push(i);
+      if (probs[i] < ts && probs[i - 1] >= tsPrev) shorts.push(i);
     }
   }
-  return { longs, shorts, th };
+  // `th` alanı geri uyumluluk için eski scalar formu döner
+  return { longs, shorts, th: thStatic, thSeries };
 }
 
 function drawSimulator(p) {
@@ -2185,6 +2280,37 @@ function detectProbExits(probs, x) {
   return fired;
 }
 
+function detectProbExitsInRange(probs, x, from, to, exitThrStatic, exitLongSeries = null) {
+  const deltaEnabled = x.pdxOn && !x.compat;
+  const fromIdx = Math.max(1, from);
+  const toIdx = Math.min(probs.length, to);
+  for (let i = fromIdx; i < toIdx; i++) {
+    const exitThr = exitLongSeries ? exitLongSeries[i] : exitThrStatic;
+    const weak = x.pxOn && probs[i] < exitThr;
+    let delta = false;
+    let deltaChange = 0;
+    if (deltaEnabled && i >= x.pdxLen) {
+      deltaChange = probs[i] - probs[i - x.pdxLen];
+      if (deltaChange < x.pdxThr) delta = true;
+    }
+    if (weak || delta) {
+      // Korumalı modda trailing aktifse bu tetiği 'blocked' olarak kaydet ama pozisyon açık kalsın
+      if (x.pxMode === 'prot' && x.pxTrailingOn) {
+        // blocked bir tetik, pozisyonu kapatmıyor — aynı entry için aramaya devam
+        continue;
+      }
+      return {
+        i,
+        type: weak ? 'weak' : 'delta',
+        reason: weak
+          ? `prob ${probs[i].toFixed(2)} < ${exitThr.toFixed(2)}`
+          : `Δ${deltaChange.toFixed(2)} < ${x.pdxThr.toFixed(2)}`
+      };
+    }
+  }
+  return null; // bu aralıkta exit tetiklenmedi (sonraki entry'ye kadar pozisyon açık kalır varsay)
+}
+
 function drawProbExitSim() {
   const c = $('px-canvas'); if (!c) return;
   const ctx = c.getContext('2d');
@@ -2420,8 +2546,10 @@ function updateRegimeLabels(r) {
 }
 
 let regimeCache = null;
-function getSyntheticPrices(market, N = 200) {
+function getSyntheticPrices(market, N = 200, volMult = 1.0, volMode = 'flat') {
   // deterministic per market
+  // volMult: drift ve noise'un tüm seriye uygulanan skalar çarpanı
+  // volMode: 'flat' (sabit) | 'ramp_up' (0.5x→2x linearly) | 'ramp_down' | 'burst' (orta patlama)
   const seed = market === 'mixed' ? 1 : market === 'trend' ? 2 : market === 'chop' ? 3 : 4;
   const prices = []; let v = 100;
   for (let i = 0; i < N; i++) {
@@ -2435,7 +2563,18 @@ function getSyntheticPrices(market, N = 200) {
       drift = i < 60 ? 0.25 : i < 120 ? -0.05 + Math.sin(i * 0.3) * 0.05 : 0.3;
       noise = Math.sin(i * 0.5 + seed) * (i > 60 && i < 120 ? 0.5 : 0.2);
     }
-    v += drift + noise;
+    // Bar-bar volatilite çarpanı
+    const tNorm = N > 1 ? i / (N - 1) : 0;
+    let barVolMult = volMult;
+    if (volMode === 'ramp_up') {
+      barVolMult = volMult * (0.5 + 1.5 * tNorm);         // 0.5x → 2.0x
+    } else if (volMode === 'ramp_down') {
+      barVolMult = volMult * (2.0 - 1.5 * tNorm);         // 2.0x → 0.5x
+    } else if (volMode === 'burst') {
+      // sinusoidal burst: kenarlarda 0.5x, ortada 2x
+      barVolMult = volMult * (0.5 + 1.5 * Math.sin(Math.PI * tNorm));
+    }
+    v += (drift + noise) * barVolMult;
     prices.push(v);
   }
   return prices;
@@ -3200,6 +3339,9 @@ function getUnifiedParams() {
     pivotFlex: val('uni-pivot-flex'),
     pivotFlexValid: val('uni-pf-valid'),
     barCount: val('uni-bars') || 200,
+    // Volatilite simülasyonu (Bütünleşik Görünüm)
+    volMult: val('uni-volmult') || 1.0,
+    volMode: val('uni-volmode') || 'flat',
   };
 }
 
@@ -3407,9 +3549,12 @@ function drawUnifiedChain(p) {
   const tc = tcol();
 
   const N = Math.round(p.barCount || 200);
-  const prices = getSyntheticPrices(p.market, N);
+  // Sentetik fiyat — volatilite çarpanı ve rejim modu ile
+  const prices = getSyntheticPrices(p.market, N, p.volMult || 1.0, p.volMode || 'flat');
   const probs = computeFinalProbSeries(prices, p);
-  const sig = detectSignals(probs, p);
+  // Bar-bar dinamik eşik serisi (evo_dyn_thr açıkken) veya statik
+  const thSeries = effectiveThresholdsSeries(prices, p);
+  const sig = detectSignals(probs, p, thSeries);
   const blocks = detectFilterBlocks(prices, p);
 
   // Pivot seviyelerini hesapla (her bar için aktif pivot, NaN = pivot yok / kapalı)
@@ -3443,8 +3588,10 @@ function drawUnifiedChain(p) {
         const maxBar = Math.min(i + (p.pivotFlexValid || 5), prices.length - 1);
         for (let j = i + 1; j <= maxBar; j++) {
           if (!isNaN(pivotSeries[j]) && prices[j] > pivotSeries[j]) {
-            // Flex onayı: prob hala üstte mi? (basit kontrol)
-            if (probs[j] > sig.th.buy) {
+            // Flex onayı: prob hala üstte mi? (bar-bar dinamik eşik + opsiyonel prob_rising)
+            const tbJ = thSeries.buy[j];
+            const probOk = probs[j] > tbJ && (p.crossConfirm !== 'prob' || probs[j] > probs[j - 1]);
+            if (probOk) {
               flexLongs.push(j);
               break;
             }
@@ -3473,7 +3620,9 @@ function drawUnifiedChain(p) {
         const maxBar = Math.min(i + (p.pivotFlexValid || 5), prices.length - 1);
         for (let j = i + 1; j <= maxBar; j++) {
           if (!isNaN(pivotSeries[j]) && prices[j] < pivotSeries[j]) {
-            if (probs[j] < sig.th.sell) {
+            const tsJ = thSeries.sell[j];
+            const probOk = probs[j] < tsJ && (p.crossConfirm !== 'prob' || probs[j] < probs[j - 1]);
+            if (probOk) {
               flexShorts.push(j);
               break;
             }
@@ -3485,30 +3634,87 @@ function drawUnifiedChain(p) {
     }
   });
 
-  // Exit detection — pozisyon yönüne göre
-  // Pseudo: ilk geçen sinyalden sonra prob serisini alıp prob exit kontrol et
+  // === MULTI-POZİSYON EXIT DÖNGÜSÜ ===
+  // Pine'ın gerçek davranışı: her entry → kendi exit'i → sonraki entry
+  // Pozisyon kapandıktan sonra aynı yönde yeni sinyal gelirse yeni pozisyon açılır.
+  // Ters yönde sinyal gelirse (raw_short_signal long pozisyonda) reverse_mode mantığı devreye girer —
+  // ama Bütünleşik Görünüm burada basitleştirilmiş bir "ters sinyal pozisyonu kapatır" modeli kullanır
+  // (Pine'daki "Sadece Kapat" moduna yakın), böylece her entry'nin exit'i net görünür.
   const exitInputs = {
     pxOn: p.pxOn, pxMode: p.pxMode, pxTrailingOn: p.trailingOn,
     pxExitLong: p.pxExitLong, pxExitShort: p.pxExitShort,
     pdxOn: p.pdxOn, pdxLen: p.pdxLen, pdxThr: p.pdxThr, compat: p.compat,
   };
-  // Gerçekçi: ilk geçen sinyalden başla; yoksa bar 30'dan başla
+
   const passedOwn = p.posDir === 'long' ? passedLongs : passedShorts;
-  const startBar = passedOwn.length > 0 ? passedOwn[0] : 30;
-  // Probs'u kırp
-  const probsFromEntry = probs.slice(startBar);
-  // detectProbExits long varsayar; short için probs'u 1-x ile aynalayıp tekrar çalıştır
-  let exitsRel = [];
-  if (p.posDir === 'long') {
-    exitsRel = detectProbExits(probsFromEntry, exitInputs);
-  } else {
-    // short: prob azalmak yerine artmak exit'tir → mirror
-    const mirroredProbs = probsFromEntry.map(v => 1 - v);
-    const mirroredInputs = { ...exitInputs, pxExitLong: 1 - p.pxExitShort, pdxThr: p.pdxThr };
-    exitsRel = detectProbExits(mirroredProbs, mirroredInputs);
+  const passedOpp = p.posDir === 'long' ? passedShorts : passedLongs;
+
+  // Her entry için pozisyon simüle et
+  // positions: [{entryIdx, exitIdx, exitType, exitReason}]
+  const positions = [];
+  // Short için mirror probs ve mirror exit thresholds
+  const mirrored = p.posDir === 'short';
+  const runProbs = mirrored ? probs.map(v => 1 - v) : probs;
+  const runExitStatic = mirrored ? (1 - p.pxExitShort) : p.pxExitLong;
+  // Dinamik eşik aktifse bar-bar exit eşiği; short için aynalanmış serisi
+  const runExitSeries = p.evoDynThr
+    ? (mirrored
+        ? thSeries.exitShort.map(v => 1 - v)  // short: 1 - exitShort → mirror edilmiş "long exit"
+        : thSeries.exitLong)
+    : null;
+
+  let cursor = 0; // passedOwn dizisinde nerede olduğumuz
+  let lastExit = -1; // son pozisyonun kapandığı bar
+  while (cursor < passedOwn.length) {
+    const entryIdx = passedOwn[cursor];
+    // Eğer bu entry hâlâ önceki pozisyonun açık olduğu aralıkta kaldıysa atla
+    if (entryIdx <= lastExit) { cursor++; continue; }
+
+    // Bu entry'nin kapanabileceği bar: bir sonraki own-entry ya da ters sinyal ya da N
+    const nextOwnEntry = passedOwn[cursor + 1] !== undefined ? passedOwn[cursor + 1] : N;
+    const nextOppEntry = passedOpp.find(idx => idx > entryIdx);
+    const hardCap = Math.min(nextOwnEntry, nextOppEntry !== undefined ? nextOppEntry : N, N);
+
+    // Prob exit aramasını bu entry'den hardCap'e kadar yap
+    const exitHit = detectProbExitsInRange(runProbs, exitInputs, entryIdx + 1, hardCap, runExitStatic, runExitSeries);
+
+    let exitIdx, exitType, exitReason;
+    if (exitHit) {
+      exitIdx = exitHit.i;
+      exitType = exitHit.type;
+      exitReason = exitHit.reason;
+    } else if (nextOppEntry !== undefined && nextOppEntry < nextOwnEntry) {
+      // Ters yön sinyali geldi → pozisyon kapanır (reverse modlarına göre gerçek Pine'da farklı ama burada basit)
+      exitIdx = nextOppEntry;
+      exitType = 'opposite';
+      exitReason = 'ters yön sinyali';
+    } else {
+      // Hiçbir exit yok; bir sonraki kendi entry'sine kadar açık kalır (yeni entry re-entry sayılmaz)
+      exitIdx = Math.min(nextOwnEntry, N) - 1;
+      exitType = 'none';
+      exitReason = 'timeout / veri sonu';
+    }
+
+    positions.push({ entryIdx, exitIdx, exitType, exitReason });
+    lastExit = exitIdx;
+    cursor++;
   }
-  const exits = exitsRel.map(e => ({ ...e, i: e.i + startBar }));
-  const firstRealExit = exits.find(e => e.type !== 'blocked');
+
+  // İlk gerçek (weak/delta) exit — geriye uyumluluk için istatistiklerde kullanılıyor
+  const firstRealExit = positions
+    .map(pos => ({ i: pos.exitIdx, type: pos.exitType }))
+    .find(e => e.type === 'weak' || e.type === 'delta') || null;
+
+  // Toplam exit sayaçları
+  const weakExits = positions.filter(pos => pos.exitType === 'weak').length;
+  const deltaExits = positions.filter(pos => pos.exitType === 'delta').length;
+  const totalExits = weakExits + deltaExits;
+  const livesBars = positions
+    .filter(pos => pos.exitType === 'weak' || pos.exitType === 'delta')
+    .map(pos => pos.exitIdx - pos.entryIdx);
+  const avgLife = livesBars.length > 0
+    ? (livesBars.reduce((a, b) => a + b, 0) / livesBars.length).toFixed(1)
+    : null;
 
   // Layout: 3 şerit
   const padL = 38, padR = 12, padT = 12, padB = 24;
@@ -3625,15 +3831,42 @@ function drawUnifiedChain(p) {
   ctx.fillStyle = tc; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
   ctx.fillText('① Fiyat + Rejim filtresi + Sinyaller', padL + 4, topY0 + 12);
 
-  // ORTA ŞERİT: prob + eşikler + exit eşiği
-  const th = sig.th;
-  const buyY = midY1 - th.buy * midH;
-  const sellY = midY1 - th.sell * midH;
+  // ORTA ŞERİT: prob + eşikler + exit eşiği (bar-bar DİNAMİK bantlar)
+  const th = sig.th; // statik scalar — fallback + label için
+  const anyDyn = p.evoDynThr;
 
-  ctx.fillStyle = 'rgba(34,197,94,0.10)';
-  ctx.fillRect(padL, midY0, plotW, buyY - midY0);
-  ctx.fillStyle = 'rgba(239,68,68,0.10)';
-  ctx.fillRect(padL, sellY, plotW, midY1 - sellY);
+  // Bar-bar eşik eğrileri — dinamik modda her bar farklı, statikte tüm bar aynı
+  // Önce bantları (gradient dolgu) çiz
+  if (anyDyn) {
+    // BUY bandı: üst sınır = 1.0, alt sınır = thSeries.buy[i] (yeşil dolgu)
+    ctx.fillStyle = 'rgba(34,197,94,0.10)';
+    ctx.beginPath();
+    ctx.moveTo(padL, midY0);
+    for (let i = 0; i < N; i++) {
+      ctx.lineTo(padL + i * xStep, midY1 - thSeries.buy[i] * midH);
+    }
+    ctx.lineTo(padL + (N - 1) * xStep, midY0);
+    ctx.closePath();
+    ctx.fill();
+
+    // SELL bandı: üst sınır = thSeries.sell[i], alt sınır = 0.0 (kırmızı dolgu)
+    ctx.fillStyle = 'rgba(239,68,68,0.10)';
+    ctx.beginPath();
+    ctx.moveTo(padL, midY1);
+    for (let i = 0; i < N; i++) {
+      ctx.lineTo(padL + i * xStep, midY1 - thSeries.sell[i] * midH);
+    }
+    ctx.lineTo(padL + (N - 1) * xStep, midY1);
+    ctx.closePath();
+    ctx.fill();
+  } else {
+    const buyYStatic = midY1 - th.buy * midH;
+    const sellYStatic = midY1 - th.sell * midH;
+    ctx.fillStyle = 'rgba(34,197,94,0.10)';
+    ctx.fillRect(padL, midY0, plotW, buyYStatic - midY0);
+    ctx.fillStyle = 'rgba(239,68,68,0.10)';
+    ctx.fillRect(padL, sellYStatic, plotW, midY1 - sellYStatic);
+  }
 
   // mid line
   ctx.strokeStyle = 'rgba(128,128,128,0.4)'; ctx.lineWidth = 0.5;
@@ -3643,79 +3876,77 @@ function drawUnifiedChain(p) {
   ctx.moveTo(padL, midLine); ctx.lineTo(W - padR, midLine); ctx.stroke();
   ctx.setLineDash([]);
 
-  // buy/sell eşik çizgileri
-  ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(padL, buyY); ctx.lineTo(W - padR, buyY); ctx.stroke();
-  ctx.strokeStyle = '#ef4444';
-  ctx.beginPath(); ctx.moveTo(padL, sellY); ctx.lineTo(W - padR, sellY); ctx.stroke();
+  // buy/sell eşik eğrileri (dinamikse bar-bar, statikse düz)
+  ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const py = midY1 - (anyDyn ? thSeries.buy[i] : th.buy) * midH;
+    if (i === 0) ctx.moveTo(padL + i * xStep, py);
+    else ctx.lineTo(padL + i * xStep, py);
+  }
+  ctx.stroke();
 
-  // Exit eşik çizgisi (yöne göre)
-  const exitThr = p.posDir === 'long' ? p.pxExitLong : p.pxExitShort;
-  const exitY = midY1 - exitThr * midH;
+  ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const py = midY1 - (anyDyn ? thSeries.sell[i] : th.sell) * midH;
+    if (i === 0) ctx.moveTo(padL + i * xStep, py);
+    else ctx.lineTo(padL + i * xStep, py);
+  }
+  ctx.stroke();
+
+  // Exit eşik eğrisi (yöne göre + dinamik varsa bar-bar)
+  const exitThrStaticDisp = p.posDir === 'long' ? p.pxExitLong : p.pxExitShort;
   ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1.2;
   ctx.setLineDash([4, 3]);
-  ctx.beginPath(); ctx.moveTo(padL, exitY); ctx.lineTo(W - padR, exitY); ctx.stroke();
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    let exitV = exitThrStaticDisp;
+    if (anyDyn) {
+      exitV = p.posDir === 'long' ? thSeries.exitLong[i] : thSeries.exitShort[i];
+    }
+    const py = midY1 - exitV * midH;
+    if (i === 0) ctx.moveTo(padL + i * xStep, py);
+    else ctx.lineTo(padL + i * xStep, py);
+  }
+  ctx.stroke();
   ctx.setLineDash([]);
 
-  // prob curve — entry sonrası soluklaşır
+  // prob curve — tüm bar boyunca (soluklaşma kaldırıldı; multi-pozisyon simülasyonu yapıyoruz)
+  ctx.strokeStyle = '#a855f7';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
   for (let i = 0; i < N; i++) {
     const px = padL + i * xStep;
     const py = midY1 - probs[i] * midH;
-    // İlk gerçek exit'ten sonra alpha düşür
-    const fadeStart = firstRealExit ? firstRealExit.i : N;
-    if (i === 0) {
-      ctx.strokeStyle = '#a855f7';
-      ctx.moveTo(px, py);
-    } else {
-      if (i === fadeStart) {
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.strokeStyle = 'rgba(168,85,247,0.30)';
-        ctx.moveTo(px, py);
-      } else {
-        ctx.lineTo(px, py);
-      }
-    }
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
   }
   ctx.stroke();
 
-  // y-axis labels
+  // y-axis labels (ilk barın değeriyle etiketle)
   ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
   ctx.fillText('1.0', padL - 3, midY0 + 4);
   ctx.fillText('0.5', padL - 3, midLine + 3);
   ctx.fillText('0.0', padL - 3, midY1 + 3);
-  ctx.fillStyle = '#22c55e'; ctx.fillText('buy ' + th.buy.toFixed(2), padL - 3, buyY + 3);
-  ctx.fillStyle = '#ef4444'; ctx.fillText('sell ' + th.sell.toFixed(2), padL - 3, sellY + 3);
-  ctx.fillStyle = '#f59e0b'; ctx.textAlign = 'left'; ctx.fillText('exit ' + exitThr.toFixed(2), padL + 4, exitY - 3);
+  const lastBuy = anyDyn ? thSeries.buy[N - 1] : th.buy;
+  const lastSell = anyDyn ? thSeries.sell[N - 1] : th.sell;
+  const lastExitVal = anyDyn
+    ? (p.posDir === 'long' ? thSeries.exitLong[N - 1] : thSeries.exitShort[N - 1])
+    : exitThrStaticDisp;
+  ctx.fillStyle = '#22c55e';
+  ctx.fillText('buy ' + lastBuy.toFixed(2) + (anyDyn ? ' (dyn)' : ''), padL - 3, midY1 - lastBuy * midH + 3);
+  ctx.fillStyle = '#ef4444';
+  ctx.fillText('sell ' + lastSell.toFixed(2) + (anyDyn ? ' (dyn)' : ''), padL - 3, midY1 - lastSell * midH + 3);
+  ctx.fillStyle = '#f59e0b'; ctx.textAlign = 'left';
+  ctx.fillText('exit ' + lastExitVal.toFixed(2) + (anyDyn ? ' (dyn)' : ''), padL + 4, midY1 - lastExitVal * midH - 3);
 
   ctx.fillStyle = tc; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
-  ctx.fillText('② final_prob + Eşikler', padL + 4, midY0 + 12);
+  const midTitle = '② final_prob + Eşikler' + (anyDyn ? ' (bar-bar dinamik)' : '');
+  ctx.fillText(midTitle, padL + 4, midY0 + 12);
 
-  // ALT ŞERİT: exit timeline
-  // Entry barını işaretle
+  // ALT ŞERİT: MULTİ-POZİSYON exit timeline
   ctx.fillStyle = '#94a3b8'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
-  if (passedOwn.length > 0) {
-    const ex = padL + startBar * xStep;
-    ctx.strokeStyle = '#94a3b8'; ctx.setLineDash([2, 2]); ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(ex, botY0); ctx.lineTo(ex, botY1); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillText('Entry', ex, botY0 + 12);
-  }
-
-  // Exit'leri çiz
-  exits.forEach(e => {
-    const px = padL + e.i * xStep;
-    const cy = botY0 + botH / 2;
-    let icon = '⬇', col = '#ef4444';
-    if (e.type === 'delta') { icon = '⚡'; col = '#f59e0b'; }
-    else if (e.type === 'blocked') { icon = '🛡'; col = '#3b82f6'; }
-    ctx.fillStyle = col;
-    ctx.beginPath(); ctx.arc(px, cy, 6, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = col; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText(icon, px, cy + 22);
-  });
 
   // baseline
   ctx.strokeStyle = 'rgba(148,163,184,0.4)'; ctx.lineWidth = 0.5;
@@ -3723,8 +3954,43 @@ function drawUnifiedChain(p) {
   ctx.moveTo(padL, botY0 + botH / 2); ctx.lineTo(W - padR, botY0 + botH / 2);
   ctx.stroke();
 
+  // Her pozisyonu çiz: entry çizgisi + bağlantı çizgisi + exit ikonu
+  positions.forEach((pos, idx) => {
+    const ex = padL + pos.entryIdx * xStep;
+    const xx = padL + pos.exitIdx * xStep;
+    const cy = botY0 + botH / 2;
+
+    // Entry dikey çizgisi
+    ctx.strokeStyle = p.posDir === 'long' ? 'rgba(34,197,94,0.85)' : 'rgba(239,68,68,0.85)';
+    ctx.setLineDash([2, 2]); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(ex, botY0 + 4); ctx.lineTo(ex, botY1 - 4); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Entry → Exit bağlantı çizgisi (pozisyon yaşam süresi)
+    ctx.strokeStyle = 'rgba(148,163,184,0.55)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(ex, cy); ctx.lineTo(xx, cy); ctx.stroke();
+
+    // Exit ikonu — tipine göre
+    let icon = '⬇', col = '#ef4444';
+    if (pos.exitType === 'delta') { icon = '⚡'; col = '#f59e0b'; }
+    else if (pos.exitType === 'opposite') { icon = '⇄'; col = '#8b5cf6'; }
+    else if (pos.exitType === 'none') { icon = '∅'; col = '#64748b'; }
+
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(xx, cy, 5.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = col; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(icon, xx, cy + 22);
+
+    // İlk pozisyonun başına 'Entry' etiketi
+    if (idx === 0) {
+      ctx.fillStyle = '#94a3b8'; ctx.font = '10px sans-serif';
+      ctx.fillText('Entry', ex, botY0 + 12);
+    }
+  });
+
   ctx.fillStyle = tc; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
-  ctx.fillText('③ Exit tetikleri (pozisyon: ' + p.posDir + ')', padL + 4, botY0 + 12);
+  ctx.fillText('③ Multi-pozisyon exit (yön: ' + p.posDir + ', ' + positions.length + ' pozisyon)', padL + 4, botY0 + 12);
 
   // x ekseni — bar numarası
   ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
@@ -3748,6 +4014,20 @@ function drawUnifiedChain(p) {
   setText('uni-s-firstexit', firstRealExit ? '#' + firstRealExit.i : '—');
   setText('uni-s-exittype', firstRealExit ? (firstRealExit.type === 'weak' ? '⬇ Weakness' : '⚡ Delta') : '—');
   setText('uni-s-blockpct', blockPct + '%');
+
+  // Yeni multi-pozisyon + vol istatistikleri
+  setText('uni-s-totalexits', totalExits);
+  setText('uni-s-weakexits', weakExits);
+  setText('uni-s-deltaexits', deltaExits);
+  setText('uni-s-avglife', avgLife !== null ? avgLife + ' bar' : '—');
+
+  if (p.evoDynThr) {
+    const vrMin = Math.min(...thSeries.volRatio).toFixed(2);
+    const vrMax = Math.max(...thSeries.volRatio).toFixed(2);
+    setText('uni-s-volrange', vrMin + 'x - ' + vrMax + 'x');
+  } else {
+    setText('uni-s-volrange', 'statik (1.0x)');
+  }
 
   // === BİRLEŞİK İÇGÖRÜ ===
   const ins = [];
@@ -3813,20 +4093,44 @@ function drawUnifiedChain(p) {
     ins.push('⚠️ <code>use_pivot_flex</code> açık ama <code>use_pivot_filter</code> kapalı → flex etkisiz.');
   }
 
-  // 4) Exit sağlığı
+  // 4) Exit sağlığı — multi-pozisyon
   if (passedCount > 0) {
-    if (firstRealExit) {
-      const lifetime = firstRealExit.i - startBar;
-      ins.push('🚪 İlk pozisyon ortalama <b>' + lifetime + ' bar</b> sonra <b>' + (firstRealExit.type === 'weak' ? 'Weakness' : 'Delta') + '</b> ile kapandı.');
-      if (lifetime < 5) ins.push('🔴 Pozisyon ömrü çok kısa — exit eşiği çok agresif (long: <code>thresh_exit_long</code>\'u düşür / delta\'yı kapat).');
-      else if (lifetime > 100) ins.push('🟡 Pozisyon çok uzun açık kaldı — Stage 1/2 trailing kullan, sadece prob exit\'e güvenme.');
+    if (totalExits > 0) {
+      const lifeMsg = avgLife !== null ? 'ortalama <b>' + avgLife + ' bar</b> ömürle' : '';
+      ins.push('🚪 <b>' + positions.length + ' pozisyon</b> simüle edildi → ' + totalExits + ' tanesi prob exit ile kapandı (' + weakExits + ' Weakness, ' + deltaExits + ' Delta) ' + lifeMsg + '.');
+
+      if (avgLife !== null) {
+        const al = parseFloat(avgLife);
+        if (al < 5) ins.push('🔴 Pozisyon ömrü çok kısa (ort. ' + avgLife + ' bar) — exit eşiği çok agresif (long: <code>thresh_exit_long</code>\'u düşür / delta eşiğini gevşet).');
+        else if (al > 100) ins.push('🟡 Pozisyonlar çok uzun açık kalıyor (ort. ' + avgLife + ' bar) — Stage 1/2 trailing şart, sadece prob exit yetmez.');
+      }
+
+      if (p.pdxOn && !p.compat && deltaExits === 0) {
+        ins.push('⚠️ <b>Delta Exit aktif ama bu senaryoda hiç tetiklenmedi</b> — <code>prob_delta_thresh</code> (' + p.pdxThr.toFixed(2) + ') çok sıkı ya da <code>prob_delta_len</code> (' + p.pdxLen + ') çok uzun. Eşiği -0.10 civarına çek veya len\'i kısalt.');
+      } else if (p.pdxOn && !p.compat && deltaExits > weakExits * 2 && weakExits > 0) {
+        ins.push('💡 Delta Exit baskın (' + deltaExits + ' vs Weakness ' + weakExits + ') — prob serisinde sert kırılmalar çok. Trailing ile korumalı moda almayı düşün.');
+      }
     } else if (p.pxOn || (p.pdxOn && !p.compat)) {
-      ins.push('🟢 Prob exit aktif ama bu senaryoda hiç tetiklenmedi — pozisyon trend boyunca açık kalıyor.');
+      ins.push('🟢 Prob exit aktif ama bu senaryoda hiç tetiklenmedi — pozisyon trend boyunca açık kalıyor, ters sinyal veya veri sonu kapatıyor.');
     } else {
       ins.push('⚪ Hiç prob exit aktif değil — pozisyon yalnızca Stage 1/2 / ters sinyal / acil SL ile kapanır.');
     }
   } else {
     ins.push('⚪ Filtreyi geçen sinyal yok → exit testi yapılamadı.');
+  }
+
+  // 4b) Dinamik eşik + volatilite rejim uyarısı
+  if (p.evoDynThr) {
+    const vrMin = Math.min(...thSeries.volRatio);
+    const vrMax = Math.max(...thSeries.volRatio);
+    const spread = vrMax - vrMin;
+    if (spread < 0.2) {
+      ins.push('⚪ Dinamik eşik açık ama vol dalgalanması çok düşük (aralık ' + vrMin.toFixed(2) + 'x - ' + vrMax.toFixed(2) + 'x). Volatilite slider\'ını artır veya rejim modunu "burst"/"ramp" yap.');
+    } else if (spread > 1.5) {
+      ins.push('💡 Vol aralığı geniş (' + vrMin.toFixed(2) + 'x - ' + vrMax.toFixed(2) + 'x) → buy/sell eşikleri ciddi dalgalanıyor. Yüksek volde eşik genişliyor (daha seçici), düşük volde daralıyor.');
+    }
+  } else if (p.volMult !== 1.0 || p.volMode !== 'flat') {
+    ins.push('💡 Volatilite slider\'ını değiştiriyorsun ama <code>use_evo_dyn_thresh</code> kapalı → eşikler sabit kalıyor. Dinamik modu açarsan volun eşiklere etkisi görünür.');
   }
 
   // 5) Compat çakışması
@@ -3888,6 +4192,7 @@ function updateUnifiedPanel() {
   setText('rp-low-v', val('rp-low').toFixed(2));
   setText('uni-pf-valid-v', val('uni-pf-valid'));
   setText('uni-bars-v', val('uni-bars'));
+  setText('uni-volmult-v', val('uni-volmult').toFixed(1) + 'x');
   const p = getUnifiedParams();
   drawUnifiedPosterior(p);
   drawUnifiedChain(p);
