@@ -1,0 +1,3906 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+<meta name="theme-color" content="#0b0e11">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>V855 Mega Navigator — Mobile</title>
+<style>
+html,body{background:#0b0e11!important;color:#eaecef!important;color-scheme:dark!important}
+:root{color-scheme:dark;--color-background-primary:#0b0e11;--color-background-secondary:#181a20;--color-background-tertiary:#12141a;--color-text-primary:#eaecef;--color-text-secondary:#848e9c;--color-border-tertiary:#2b3139;--color-text-danger:#f6465d;--color-text-success:#0ecb81;--color-text-warning:#f0b90b;--color-background-success:rgba(14,203,129,0.10);--color-border-success:rgba(14,203,129,0.28);--color-background-warning:rgba(240,185,11,0.10);--color-border-warning:rgba(240,185,11,0.28);--color-background-danger:rgba(246,70,93,0.10);--color-border-danger:rgba(246,70,93,0.28);--border-radius-sm:6px;--border-radius-md:8px;--accent:#f0b90b;--accent-2:#8b5cf6}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;margin:0;padding:12px;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));padding-bottom:max(12px,env(safe-area-inset-bottom));background:#0b0e11;color:#eaecef;overflow-x:hidden;-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility}
+.mn-wrap{width:100%;max-width:1480px;margin:0 auto;position:relative}
+.mn-hero{position:relative;padding:16px 14px 14px;margin-bottom:12px;border-radius:14px;background:radial-gradient(600px 300px at 12% -10%,rgba(139,92,246,0.22),transparent 60%),radial-gradient(500px 280px at 100% 0%,rgba(14,203,129,0.10),transparent 55%),linear-gradient(180deg,#0f1319 0%,#0b0e11 100%);border:1px solid rgba(148,163,184,0.18);overflow:hidden}
+.mn-kicker{display:inline-block;padding:4px 8px;margin-bottom:8px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(226,232,240,0.78);border:1px solid rgba(148,163,184,0.22);border-radius:999px;background:rgba(15,23,42,0.55)}
+.mn-hero h1{margin:0;font-size:22px;line-height:1.15;letter-spacing:-0.02em;color:#f8fafc;font-weight:700}
+.mn-hero p{margin:8px 0 0;font-size:12px;line-height:1.55;color:rgba(226,232,240,0.72)}
+.mn-chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.mn-chip{display:inline-flex;flex-direction:column;padding:6px 10px;border-radius:10px;border:1px solid rgba(148,163,184,0.18);background:rgba(15,23,42,0.55);min-width:0}
+.mn-chip .k{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(148,163,184,0.82)}
+.mn-chip .v{font-size:12px;font-weight:700;color:#f8fafc;margin-top:2px}
+.tabs{display:flex;gap:4px;margin-bottom:12px;padding:6px;border-radius:12px;border:1px solid rgba(148,163,184,0.14);background:rgba(8,13,26,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:6px;z-index:100}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:10px 14px;font-size:12px;font-weight:600;cursor:pointer;border-radius:10px;background:transparent;color:#848e9c;border:1px solid transparent;white-space:nowrap;user-select:none;scroll-snap-align:start;min-height:40px;display:inline-flex;align-items:center;transition:background 0.15s,color 0.15s}
+.tab:active{background:rgba(255,255,255,0.04)}
+.tab.active{background:#181a20;color:#fff;border-color:#2b3139;border-bottom:2px solid var(--accent)}
+.tab-emoji{margin-right:4px;font-size:14px}
+.panel{display:none}
+.panel.active{display:block}
+.panel-head{padding:4px 2px 14px}
+.panel-kicker{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(148,163,184,0.9);margin-bottom:6px}
+.panel-title{margin:0;font-size:18px;line-height:1.2;letter-spacing:-0.02em;color:#eaecef;font-weight:700}
+.panel-desc{margin:6px 0 0;font-size:12px;line-height:1.55;color:#848e9c}
+.panel-side-note{margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid rgba(148,163,184,0.14);background:rgba(15,23,42,0.72)}
+.panel-side-note .label{font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:rgba(148,163,184,0.9)}
+.panel-side-note .text{margin-top:4px;font-size:11px;color:#eaecef;line-height:1.55}
+.nav-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px}
+.nav-grid.three{grid-template-columns:1fr}
+@media (min-width:768px){.nav-grid{grid-template-columns:1fr 1fr;gap:14px}.nav-grid.three{grid-template-columns:1fr 1fr 1fr}body{padding:20px}.mn-hero h1{font-size:28px}.mn-hero p{font-size:13px}.panel-title{font-size:22px}}
+@media (min-width:1100px){.mn-hero{padding:22px 22px 18px;border-radius:20px}.mn-hero h1{font-size:32px}.tabs{top:10px;padding:10px;border-radius:18px}.tab{padding:10px 14px}}
+.nav-card{position:relative;padding:14px 14px 12px;border:1px solid rgba(148,163,184,0.16);border-radius:12px;background:linear-gradient(180deg,rgba(24,26,32,0.92) 0%,rgba(18,20,26,0.88) 100%);box-shadow:0 4px 12px rgba(0,0,0,0.35);overflow:hidden}
+.nav-card::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.55),rgba(14,203,129,0.45),transparent);opacity:0.6}
+.nav-card.full{grid-column:1/-1}
+.nav-card.is-active-spotlight{border-color:rgba(139,92,246,0.35)}
+.card-ribbon{position:absolute;top:10px;right:10px;display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(15,23,42,0.78);color:#cbd5e1;border:1px solid rgba(148,163,184,0.18);line-height:1}
+.card-ribbon[data-tone="ok"]{color:#86efac;border-color:rgba(14,203,129,0.26)}
+.card-ribbon[data-tone="warn"]{color:#fcd34d;border-color:rgba(240,185,11,0.28)}
+.card-ribbon[data-tone="info"]{color:#c4b5fd;border-color:rgba(139,92,246,0.30)}
+.card-title{margin-bottom:8px;padding-right:90px;font-size:13px;font-weight:700;color:#eaecef;line-height:1.3}
+.card-sub{margin-bottom:10px;font-size:11px;line-height:1.5;color:#848e9c}
+@media (max-width:520px){.card-ribbon{position:static;margin:0 0 8px;display:inline-flex}.card-title{padding-right:0}}
+.prow{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:nowrap}
+.pname{font-size:11px;color:#848e9c;flex:0 0 auto;min-width:0;max-width:45%;word-break:break-word;line-height:1.3}
+.pval{font-size:11px;font-weight:600;color:#eaecef;flex:0 0 auto;padding:4px 8px;border-radius:6px;background:rgba(2,6,23,0.55);border:1px solid rgba(148,163,184,0.12);min-width:48px;text-align:right}
+@media (min-width:768px){.pname{font-size:12px;max-width:52%;min-width:168px}.pval{font-size:12px;min-width:56px}}
+.prow input[type=range]{flex:1 1 auto;min-width:0;height:28px;-webkit-appearance:none;appearance:none;background:transparent;accent-color:var(--accent);touch-action:pan-y}
+.prow input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,rgba(240,185,11,0.7) 0%,rgba(139,92,246,0.5) 100%)}
+.prow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#f0b90b;border:2px solid #0b0e11;margin-top:-9px;box-shadow:0 2px 6px rgba(0,0,0,0.5);cursor:pointer}
+.prow input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(90deg,rgba(240,185,11,0.7) 0%,rgba(139,92,246,0.5) 100%)}
+.prow input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#f0b90b;border:2px solid #0b0e11;cursor:pointer}
+.prow select,.prow input[type=text]{font-size:13px;padding:8px 10px;background:#0b0e11;color:#eaecef;border:1px solid #2b3139;border-radius:8px;flex:1 1 auto;min-width:0;min-height:40px;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23848e9c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:8px 10px;border-radius:10px;background:rgba(2,6,23,0.25);border:1px solid rgba(148,163,184,0.10);min-height:40px}
+.toggle-row input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;accent-color:var(--accent);cursor:pointer}
+.toggle-row label{font-size:12px;color:#eaecef;cursor:pointer;flex:1;line-height:1.35;user-select:none}
+.pill{font-size:10px;padding:2px 8px;border-radius:999px;margin-left:4px;display:inline-block;font-weight:600}
+.pill-ok{background:var(--color-background-success);color:var(--color-text-success)}
+.pill-warn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.pill-bad{background:var(--color-background-danger);color:var(--color-text-danger)}
+.pill-info{background:#181a20;color:#848e9c;border:1px solid #2b3139}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+@media (min-width:480px){.stat-row{grid-template-columns:repeat(auto-fit,minmax(100px,1fr))}}
+.stat{text-align:center;background:rgba(2,6,23,0.34);border-radius:10px;padding:8px 4px;border:1px solid rgba(148,163,184,0.10)}
+.stat-n{font-size:15px;font-weight:700;color:#eaecef}
+@media (min-width:768px){.stat-n{font-size:18px}}
+.stat-l{font-size:9px;color:#848e9c;margin-top:2px;line-height:1.2}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+@media (min-width:480px){.stat-grid{grid-template-columns:repeat(auto-fit,minmax(100px,1fr))}}
+.insight{font-size:11px;color:#cbd5e1;line-height:1.55;padding:10px 12px;background:rgba(2,6,23,0.30);border-radius:10px;border:1px solid rgba(148,163,184,0.12)}
+.insight code{background:rgba(240,185,11,0.12);color:#fcd34d;padding:1px 4px;border-radius:3px;font-size:10px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.insight.warn{border-color:var(--color-border-warning);color:var(--color-text-warning)}
+.insight.bad{border-color:var(--color-border-danger);color:var(--color-text-danger)}
+.insight.ok{border-color:var(--color-border-success);color:var(--color-text-success)}
+canvas{display:block;width:100%!important;height:auto;max-width:100%;touch-action:pan-y}
+.section-sep{border:none;border-top:1px solid #2b3139;margin:12px 0}
+.timeline{display:flex;align-items:center;gap:4px;padding:8px 6px;background:rgba(2,6,23,0.30);border-radius:10px;border:1px solid rgba(148,163,184,0.12);margin-top:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.timeline::-webkit-scrollbar{display:none}
+.tl-step{flex:0 0 auto;min-width:110px;text-align:center;font-size:10px;padding:6px 6px;border-radius:6px;position:relative;line-height:1.3}
+.tl-step small{font-size:9px;opacity:0.85;display:block;margin-top:2px}
+.tl-step.active{background:var(--color-background-success);color:var(--color-text-success);font-weight:600}
+.tl-step.blocked{background:var(--color-background-danger);color:var(--color-text-danger);opacity:0.7}
+.tl-step.idle{background:transparent;color:#848e9c;border:1px dashed #2b3139}
+.tl-arrow{color:#848e9c;font-size:14px;flex:0 0 auto}
+.tree-node{padding:8px 10px;background:rgba(2,6,23,0.30);border:1px solid #2b3139;border-radius:8px;margin-bottom:6px;font-size:11px;color:#eaecef;line-height:1.5}
+.tree-node.entry{border-left:3px solid var(--color-text-success)}
+.tree-node.condition{border-left:3px solid var(--color-text-warning)}
+.tree-node.action{border-left:3px solid #8b5cf6}
+.tree-node.skip{opacity:0.45}
+.tree-indent{padding-left:10px}
+@media (min-width:768px){.tree-node{font-size:12px;padding:8px 10px}.tree-indent{padding-left:16px}}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:10px;color:#848e9c;margin-top:6px}
+.legend-item{display:flex;align-items:center;gap:4px;min-width:0}
+.legend-dot{width:10px;height:3px;border-radius:2px;display:inline-block;flex-shrink:0}
+.matrix-wrap{border:1px solid rgba(148,163,184,0.14);border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:rgba(2,6,23,0.22)}
+.matrix-table{width:100%;min-width:540px;border-collapse:collapse;font-size:11px}
+.matrix-table th{padding:8px 10px;text-align:left;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(148,163,184,0.92);background:rgba(15,23,42,0.92);border-bottom:1px solid rgba(148,163,184,0.14);white-space:nowrap}
+.matrix-table td{padding:9px 10px;vertical-align:top;border-bottom:1px solid rgba(148,163,184,0.08);line-height:1.4}
+.matrix-table tr{cursor:pointer}
+.matrix-table tr:hover,.matrix-table tr:active{background:rgba(255,255,255,0.03)}
+.matrix-table tr.is-selected{background:rgba(139,92,246,0.12)}
+.mx-sev{display:inline-flex;align-items:center;gap:6px;padding:4px 7px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;line-height:1;white-space:nowrap}
+.mx-sev.ok{color:#86efac;background:rgba(14,203,129,0.10);border:1px solid rgba(14,203,129,0.22)}
+.mx-sev.warn{color:#fcd34d;background:rgba(240,185,11,0.10);border:1px solid rgba(240,185,11,0.24)}
+.mx-sev.bad{color:#fda4af;background:rgba(246,70,93,0.10);border:1px solid rgba(246,70,93,0.24)}
+.mx-mod{display:inline-flex;align-items:center;padding:4px 8px;border-radius:8px;background:rgba(15,23,42,0.60);border:1px solid rgba(148,163,184,0.12);color:#eaecef;font-size:10px;white-space:nowrap}
+.mx-arrow{color:#848e9c;font-size:14px}
+.matrix-foot{display:grid;grid-template-columns:1fr;gap:10px;padding:12px;background:rgba(2,6,23,0.22)}
+@media (min-width:768px){.matrix-foot{grid-template-columns:1.2fr 0.8fr}}
+.matrix-detail,.matrix-fix{padding:10px 12px;border-radius:10px;border:1px solid rgba(148,163,184,0.12);background:rgba(15,23,42,0.60)}
+.matrix-detail .k,.matrix-fix .k{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(148,163,184,0.86)}
+.matrix-detail .v,.matrix-fix .v{margin-top:6px;font-size:11px;line-height:1.55;color:#eaecef}
+.full-diag-grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:768px){.full-diag-grid{grid-template-columns:1fr 1fr}}
+.diag-column{padding:12px;border-radius:12px;border:1px solid rgba(148,163,184,0.12);background:linear-gradient(180deg,rgba(24,26,32,0.82),rgba(18,20,26,0.70))}
+.diag-column h4{margin:0 0 10px;font-size:12px;letter-spacing:0.04em}
+.diag-item{margin-bottom:6px;padding:9px 10px;border-radius:8px;font-size:11px;line-height:1.5;background:rgba(15,23,42,0.54)}
+.diag-item.bad{border-left:3px solid var(--color-text-danger)}
+.diag-item.ok{border-left:3px solid var(--color-text-success)}
+.scroll-hint{font-size:10px;color:#848e9c;text-align:center;margin:4px 0;opacity:0.7}
+@media (min-width:768px){.scroll-hint{display:none}}
+.nav-card,.nav-card *{min-width:0}
+.nav-card{word-wrap:break-word}
+</style>
+</head>
+<body>
+<div class="mn-wrap">
+<section class="mn-hero">
+<div class="mn-kicker">Strategy cockpit · mobile edition</div>
+<h1>V855 Mega Navigator</h1>
+<p>Smart Bayesian x Evo stratejisinin tüm katmanlarını mobilde kontrol et. Dokunmatik için optimize edildi.</p>
+<div class="mn-chip-row">
+<div class="mn-chip"><div class="k">Aktif Panel</div><div class="v" id="mn-chip-panel">Sinyal Motoru</div></div>
+<div class="mn-chip"><div class="k">Canlı Mod</div><div class="v" id="mn-chip-mode">—</div></div>
+<div class="mn-chip"><div class="k">Risk Özeti</div><div class="v" id="mn-chip-risk">—</div></div>
+</div>
+</section>
+
+<div class="tabs" id="tabs-bar">
+<div class="tab active" data-tab="signal"><span class="tab-emoji">🧠</span>Sinyal</div>
+<div class="tab" data-tab="entry"><span class="tab-emoji">🎯</span>Entry</div>
+<div class="tab" data-tab="exit"><span class="tab-emoji">🚪</span>Exit</div>
+<div class="tab" data-tab="regime"><span class="tab-emoji">🛡️</span>Rejim</div>
+<div class="tab" data-tab="reverse"><span class="tab-emoji">🔄</span>Reverse</div>
+<div class="tab" data-tab="diag"><span class="tab-emoji">📊</span>Tanı</div>
+<div class="tab" data-tab="unified"><span class="tab-emoji">🔗</span>Bütünleşik</div>
+</div>
+
+<!-- PANEL 1: SİNYAL -->
+<div class="panel active" id="panel-signal">
+<div class="panel-head">
+<div class="panel-kicker">Karar Çekirdeği</div>
+<h2 class="panel-title">Sinyal motoru kontrol merkezi</h2>
+<p class="panel-desc">Posterior şekli, dinamik eşikler ve adaptif MA davranışını tek ekranda kalibre et.</p>
+<div class="panel-side-note">
+<div class="label">Bu bölüm neyi optimize eder?</div>
+<div class="text">Eşik bandı, motor tipi ve volatiliteye uyarlanan uzunlukların karar kalitesi.</div>
+</div>
+</div>
+<div class="nav-grid">
+<div class="nav-card">
+<div class="card-ribbon" data-tone="info">Core</div>
+<div class="card-title">Motor seçimi & ortak</div>
+<div class="prow"><span class="pname">core_model</span><select id="core-model"><option value="1">1. Smart Bayesian Klasik</option><option value="2">2. Evo V8.1 Motoru</option><option value="3">3. Adaptif Smart Bayesian</option></select></div>
+<div class="prow"><span class="pname">trigger_mode</span><select id="trigger-mode"><option value="cross">Kesişim (Klasik)</option><option value="level">Seviye Üstü</option></select></div>
+<div class="prow"><span class="pname">cross_confirm</span><select id="cross-confirm"><option value="thresh">Sadece Eşik</option><option value="prob">Prob + Eşik</option></select></div>
+<div class="prow"><span class="pname">thresh_buy</span><input type="range" min="0.50" max="0.80" step="0.01" value="0.55" id="thr-buy"><span class="pval" id="thr-buy-v">0.55</span></div>
+<div class="prow"><span class="pname">thresh_sell</span><input type="range" min="0.20" max="0.50" step="0.01" value="0.45" id="thr-sell"><span class="pval" id="thr-sell-v">0.45</span></div>
+<div class="toggle-row"><input type="checkbox" id="evo-dyn-thr"><label for="evo-dyn-thr">use_evo_dyn_thresh</label></div>
+<div class="toggle-row"><input type="checkbox" id="compat-mode" checked><label for="compat-mode">compat_v843_mode</label></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon">Legacy/Adaptive</div>
+<div class="card-title">Klasik statik & Adaptif uzunluklar</div>
+<div class="prow"><span class="pname">len_prior (statik)</span><input type="range" min="100" max="5000" step="50" value="850" id="len-prior"><span class="pval" id="len-prior-v">850</span></div>
+<div class="prow"><span class="pname">len_likelihood</span><input type="range" min="50" max="5000" step="50" value="500" id="len-like"><span class="pval" id="len-like-v">500</span></div>
+<hr class="section-sep">
+<div class="prow"><span class="pname">evo_len_max</span><input type="range" min="30" max="500" step="5" value="100" id="evo-max"><span class="pval" id="evo-max-v">100</span></div>
+<div class="prow"><span class="pname">evo_len_min</span><input type="range" min="5" max="200" step="5" value="30" id="evo-min"><span class="pval" id="evo-min-v">30</span></div>
+<div class="prow"><span class="pname">evo_vol_sens</span><input type="range" min="0.5" max="3.0" step="0.1" value="1.5" id="vol-sens"><span class="pval" id="vol-sens-v">1.5</span></div>
+<div class="prow"><span class="pname">evo_gap_abs</span><input type="range" min="5" max="250" step="1" value="20" id="evo-gap"><span class="pval" id="evo-gap-v">20</span></div>
+<div class="prow"><span class="pname">adaptive_gap_pct</span><input type="range" min="5" max="60" step="1" value="20" id="ad-gap"><span class="pval" id="ad-gap-v">20%</span></div>
+<div class="prow"><span class="pname">evo_k (sigmoid)</span><input type="range" min="0.1" max="3.0" step="0.1" value="1.0" id="evo-k"><span class="pval" id="evo-k-v">1.0</span></div>
+</div>
+<div class="nav-card full is-active-spotlight">
+<div class="card-ribbon" data-tone="ok">Live</div>
+<div class="card-title">Anlık sistem durumu</div>
+<div class="stat-row">
+<div class="stat"><div class="stat-n" id="s-mode">Klasik</div><div class="stat-l">Motor</div></div>
+<div class="stat"><div class="stat-n" id="s-prior-len">850</div><div class="stat-l">Prior</div></div>
+<div class="stat"><div class="stat-n" id="s-like-len">500</div><div class="stat-l">Like</div></div>
+<div class="stat"><div class="stat-n" id="s-thr-buy">0.55</div><div class="stat-l">Buy</div></div>
+<div class="stat"><div class="stat-n" id="s-thr-sell">0.45</div><div class="stat-l">Sell</div></div>
+<div class="stat"><div class="stat-n" id="s-band">0.10</div><div class="stat-l">Bant</div></div>
+</div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Grafik</div>
+<div class="card-title">Sinyal şekli — Bayesian posterior</div>
+<canvas id="bayes-canvas" height="170"></canvas>
+<div class="insight" id="bayes-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="warn">Vol</div>
+<div class="card-title">Dinamik eşik — vol rejimi etkisi</div>
+<canvas id="thr-canvas" height="170"></canvas>
+<div class="insight" id="thr-insight" style="margin-top:8px;"></div>
+<div class="prow" style="margin-top:8px;"><span class="pname">evo_base_zone</span><input type="range" min="0.05" max="0.50" step="0.01" value="0.20" id="evo-base-zone"><span class="pval" id="evo-base-zone-v">0.20</span></div>
+<div class="prow"><span class="pname">evo_vol_str</span><input type="range" min="0.1" max="2.0" step="0.1" value="0.5" id="evo-vol-str"><span class="pval" id="evo-vol-str-v">0.5</span></div>
+<div class="prow"><span class="pname">volatility_ratio</span><input type="range" min="0.3" max="3.0" step="0.1" value="1.0" id="env-vol"><span class="pval" id="env-vol-v">1.0x</span></div>
+<div class="card-sub" style="margin-top:6px;"><code>thresh_buy = 0.5 + base_zone × pow(vol_ratio, vol_str)</code></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Adaptive</div>
+<div class="card-title">MA uzunluğu — vol adaptasyonu</div>
+<canvas id="ma-canvas" height="160"></canvas>
+<div class="insight" id="ma-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon">Logic</div>
+<div class="card-title">Tetikleme modu — kesişim vs seviye</div>
+<canvas id="trig-canvas" height="180"></canvas>
+<div class="insight" id="trig-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Simulation</div>
+<div class="card-title">🎯 Piyasa rejimi simülatörü</div>
+<div class="card-sub">Seçili motor sentetik fiyat üzerinde çalışır. Tüm slider değerleri hesaba katılır.</div>
+<canvas id="sim-canvas" height="320"></canvas>
+<div class="legend" style="margin-top:6px;">
+<div class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span>Fiyat</div>
+<div class="legend-item"><span class="legend-dot" style="background:#a855f7;"></span>final_prob</div>
+<div class="legend-item"><span class="legend-dot" style="background:#22c55e;"></span>▲ Long</div>
+<div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span>▼ Short</div>
+</div>
+<div class="prow" style="margin-top:8px;"><span class="pname">Sentetik piyasa</span><select id="sim-mkt"><option value="mixed">Karışık</option><option value="trend">Net trend</option><option value="chop">Yatay</option><option value="bist">BIST tipi</option></select></div>
+<div class="insight" id="sim-insight" style="margin-top:8px;"></div>
+</div>
+</div>
+</div>
+
+<!-- PANEL 2: ENTRY -->
+<div class="panel" id="panel-entry">
+<div class="panel-head">
+<div class="panel-kicker">Pozisyon Açılışı</div>
+<h2 class="panel-title">Entry akışı ve ikinci şans mantıkları</h2>
+<p class="panel-desc">SC Breakout, PARE, Opp Entry ve koruma modüllerinin etkileşimi.</p>
+</div>
+<div class="nav-grid">
+<div class="nav-card">
+<div class="card-ribbon" data-tone="info">Re-entry</div>
+<div class="card-title">SC Breakout</div>
+<div class="card-sub">SC ile kapatılan pozisyon, yeni yön kırılım ile re-entry yapar.</div>
+<div class="toggle-row"><input type="checkbox" id="sc-pa-reentry" checked><label for="sc-pa-reentry">use_pa_reentry</label></div>
+<div class="prow"><span class="pname">pa_reentry_pct</span><input type="range" min="0" max="1" step="0.01" value="0.05" id="sc-pa-pct"><span class="pval" id="sc-pa-pct-v">0.05%</span></div>
+<div class="prow"><span class="pname">force_close_wait</span><input type="range" min="0" max="10" step="1" value="2" id="sc-wait"><span class="pval" id="sc-wait-v">2</span></div>
+<div class="prow"><span class="pname">breakout_timeout</span><input type="range" min="0" max="60" step="1" value="20" id="sc-timeout"><span class="pval" id="sc-timeout-v">20</span></div>
+<div class="prow"><span class="pname">breakout_reset_prob</span><input type="range" min="0.1" max="0.5" step="0.05" value="0.4" id="sc-reset"><span class="pval" id="sc-reset-v">0.40</span></div>
+<div class="prow"><span class="pname">sc_block_bars</span><input type="range" min="0" max="200" step="1" value="10" id="sc-block"><span class="pval" id="sc-block-v">10</span></div>
+<div class="toggle-row"><input type="checkbox" id="sc-block-on" checked><label for="sc-block-on">use_sc_dir_block</label></div>
+<div class="toggle-row"><input type="checkbox" id="sc-ignore-flt" checked><label for="sc-ignore-flt">use_sc_breakout_ignore_filters</label></div>
+<canvas id="sc-canvas" height="160" style="margin-top:8px;"></canvas>
+<div class="insight" id="sc-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon">Price Action</div>
+<div class="card-title">PARE — PA Re-Entry</div>
+<div class="card-sub">Kapat + PARE modlarında devreye girer.</div>
+<div class="prow"><span class="pname">pare_method</span><select id="pare-method"><option value="pa">Price Action</option><option value="pct">Yüzde (%)</option><option value="atr">ATR</option></select></div>
+<div class="prow"><span class="pname">pare_lookback</span><input type="range" min="2" max="20" step="1" value="5" id="pare-lb"><span class="pval" id="pare-lb-v">5</span></div>
+<div class="prow"><span class="pname">pare_pct</span><input type="range" min="0.1" max="5" step="0.1" value="0.5" id="pare-pct"><span class="pval" id="pare-pct-v">0.5%</span></div>
+<div class="prow"><span class="pname">pare_atr_mult</span><input type="range" min="0.1" max="3" step="0.1" value="0.5" id="pare-atr"><span class="pval" id="pare-atr-v">0.5</span></div>
+<div class="prow"><span class="pname">pare_min_bars</span><input type="range" min="1" max="10" step="1" value="2" id="pare-min"><span class="pval" id="pare-min-v">2</span></div>
+<div class="prow"><span class="pname">pare_timeout</span><input type="range" min="5" max="50" step="1" value="15" id="pare-to"><span class="pval" id="pare-to-v">15</span></div>
+<canvas id="pare-canvas" height="160" style="margin-top:8px;"></canvas>
+<div class="insight" id="pare-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="warn">2nd Chance</div>
+<div class="card-title">Opp Entry — Fırsat Girişi</div>
+<div class="card-sub">Normal sinyal kaçırılırsa agresif eşikle 2. şans.</div>
+<div class="toggle-row"><input type="checkbox" id="opp-on"><label for="opp-on">use_opp_entry</label></div>
+<div class="prow"><span class="pname">opp_logic_type</span><select id="opp-logic"><option value="cross">Kesişim</option><option value="level">Seviye</option></select></div>
+<div class="prow"><span class="pname">thresh_opp_long</span><input type="range" min="0.50" max="0.75" step="0.01" value="0.55" id="opp-long"><span class="pval" id="opp-long-v">0.55</span></div>
+<div class="prow"><span class="pname">thresh_opp_short</span><input type="range" min="0.25" max="0.50" step="0.01" value="0.45" id="opp-short"><span class="pval" id="opp-short-v">0.45</span></div>
+<div class="prow"><span class="pname">opp_cooldown</span><input type="range" min="0" max="30" step="1" value="5" id="opp-cd"><span class="pval" id="opp-cd-v">5</span></div>
+<div class="toggle-row"><input type="checkbox" id="opp-sc-stop" checked><label for="opp-sc-stop">use_opp_sc_stop</label></div>
+<div class="prow"><span class="pname">opp_sc_stop_pct</span><input type="range" min="0.1" max="3" step="0.1" value="0.7" id="opp-sc-pct"><span class="pval" id="opp-sc-pct-v">0.7%</span></div>
+<div class="insight" id="opp-insight"></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="warn">Failsafe</div>
+<div class="card-title">Stubborn Mode</div>
+<div class="card-sub">Ters sinyal alıp reverse yapamayan pozisyonu N bar sonra zorla kapat.</div>
+<div class="prow"><span class="pname">stubborn_timeout</span><input type="range" min="3" max="50" step="1" value="10" id="stub-to"><span class="pval" id="stub-to-v">10</span></div>
+<div class="prow"><span class="pname">stubborn_hard_stop</span><input type="range" min="0.5" max="10" step="0.1" value="3.0" id="stub-hs"><span class="pval" id="stub-hs-v">3.0%</span></div>
+<div class="toggle-row"><input type="checkbox" id="dyn-chop"><label for="dyn-chop">use_dynamic_chop_timeout</label></div>
+<canvas id="stub-canvas" height="140" style="margin-top:8px;"></canvas>
+<div class="insight" id="stub-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon">Latency</div>
+<div class="card-title">Pivot Flex</div>
+<div class="card-sub">Sinyal pivot filtresine takıldığında bekler.</div>
+<div class="toggle-row"><input type="checkbox" id="pivot-flt"><label for="pivot-flt">use_pivot_filter</label></div>
+<div class="toggle-row"><input type="checkbox" id="pivot-flex" checked><label for="pivot-flex">use_pivot_flex</label></div>
+<div class="prow"><span class="pname">pivot_flex_bars</span><input type="range" min="1" max="20" step="1" value="3" id="pf-bars"><span class="pval" id="pf-bars-v">3</span></div>
+<div class="prow"><span class="pname">pivot_flex_valid</span><input type="range" min="2" max="100" step="1" value="5" id="pf-valid"><span class="pval" id="pf-valid-v">5</span></div>
+<canvas id="pf-canvas" height="140" style="margin-top:8px;"></canvas>
+<div class="insight" id="pf-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="ok">Guard</div>
+<div class="card-title">Entry Protection</div>
+<div class="card-sub">N ve REV girişlerinden sonra X bar reverse'leri bloklar.</div>
+<div class="toggle-row"><input type="checkbox" id="ep-on"><label for="ep-on">use_entry_protection</label></div>
+<div class="prow"><span class="pname">entry_protection</span><input type="range" min="60" max="480" step="60" value="240" id="ep-bars"><span class="pval" id="ep-bars-v">240</span></div>
+<div class="insight bad" id="ep-warn" style="display:none;">⚠️ Acil SL kapalı + EP açık → pozisyon korumasız!</div>
+<canvas id="ep-canvas" height="140" style="margin-top:8px;"></canvas>
+<div class="insight" id="ep-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Workflow</div>
+<div class="card-title">Entry karar zinciri</div>
+<div id="entry-tree"></div>
+</div>
+</div>
+</div>
+
+<!-- PANEL 3: EXIT -->
+<div class="panel" id="panel-exit">
+<div class="panel-head">
+<div class="panel-kicker">Pozisyon Yönetimi</div>
+<h2 class="panel-title">Exit mimarisi ve kâr koruma</h2>
+<p class="panel-desc">Acil stop, Stage 1 ve Stage 2 ilişkisini izle.</p>
+</div>
+<div class="nav-grid">
+<div class="nav-card">
+<div class="card-ribbon">Global</div>
+<div class="card-title">Genel ayarlar</div>
+<div class="toggle-row"><input type="checkbox" id="adv-exits"><label for="adv-exits">use_advanced_exits</label></div>
+<div class="prow"><span class="pname">exit_calc (S2)</span><select id="exit-calc"><option value="atr">ATR</option><option value="pct">Yüzde (%)</option></select></div>
+<div class="prow"><span class="pname">early_calc (S1)</span><select id="early-calc"><option value="pct">Yüzde (%)</option><option value="atr">ATR</option></select></div>
+<div class="prow"><span class="pname">atr_len_exits</span><input type="range" min="5" max="50" step="1" value="14" id="atr-len"><span class="pval" id="atr-len-v">14</span></div>
+<hr class="section-sep">
+<div class="toggle-row"><input type="checkbox" id="emg-on" checked><label for="emg-on">use_emergency_sl</label></div>
+<div class="prow"><span class="pname">emergency_sl_pct</span><input type="range" min="0.5" max="15" step="0.1" value="5.0" id="emg-pct"><span class="pval" id="emg-pct-v">5.0%</span></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="ok">Protect</div>
+<div class="card-title">Stage 1 — Erken Kâr Koruma</div>
+<div class="toggle-row"><input type="checkbox" id="s1-on"><label for="s1-on">use_early_trail</label></div>
+<div class="prow"><span class="pname">early_trigger_pct</span><input type="range" min="0.5" max="15" step="0.1" value="5.0" id="s1-trig-pct"><span class="pval" id="s1-trig-pct-v">5.0%</span></div>
+<div class="prow"><span class="pname">early_offset_pct</span><input type="range" min="0.1" max="5" step="0.1" value="1.2" id="s1-off-pct"><span class="pval" id="s1-off-pct-v">1.2%</span></div>
+<div class="prow"><span class="pname">early_trigger_atr</span><input type="range" min="0.5" max="6" step="0.1" value="2.0" id="s1-trig-atr"><span class="pval" id="s1-trig-atr-v">2.0</span></div>
+<div class="prow"><span class="pname">early_offset_atr</span><input type="range" min="0.1" max="3" step="0.1" value="0.6" id="s1-off-atr"><span class="pval" id="s1-off-atr-v">0.6</span></div>
+<div class="prow"><span class="pname">early_exit_qty</span><input type="range" min="0" max="100" step="5" value="40" id="s1-qty"><span class="pval" id="s1-qty-v">40%</span></div>
+<hr class="section-sep">
+<div class="prow"><span class="pname">s1_lock_mode</span><select id="s1-lock"><option value="main">Ana Stop</option><option value="be">Girişe Çek</option><option value="lock">S1'den Kilitle</option></select></div>
+<div class="prow"><span class="pname">s1_lock_pct</span><input type="range" min="0" max="5" step="0.05" value="0.3" id="s1-lock-pct"><span class="pval" id="s1-lock-pct-v">0.30%</span></div>
+<div class="prow"><span class="pname">s1_lock_atr</span><input type="range" min="0" max="5" step="0.05" value="0.5" id="s1-lock-atr"><span class="pval" id="s1-lock-atr-v">0.50</span></div>
+<div class="prow"><span class="pname">s1_floor_mode</span><select id="s1-floor"><option value="entry">Giriş</option><option value="pct">Giriş + %</option><option value="atr">Giriş + ATR</option><option value="free">Sınır Yok</option></select></div>
+<div class="prow"><span class="pname">s1_floor_pct</span><input type="range" min="0" max="5" step="0.1" value="0.0" id="s1-floor-pct"><span class="pval" id="s1-floor-pct-v">0.0%</span></div>
+<div class="prow"><span class="pname">s1_floor_atr</span><input type="range" min="0" max="5" step="0.1" value="0.0" id="s1-floor-atr"><span class="pval" id="s1-floor-atr-v">0.0</span></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="ok">Scale-out</div>
+<div class="card-title">Stage 2 — Ana Kâr Al + Trailing</div>
+<div class="prow"><span class="pname">partial_tp_atr</span><input type="range" min="0.5" max="10" step="0.1" value="3.5" id="s2-tp-atr"><span class="pval" id="s2-tp-atr-v">3.5</span></div>
+<div class="prow"><span class="pname">initial_sl_atr</span><input type="range" min="0.5" max="10" step="0.1" value="3.0" id="s2-sl-atr"><span class="pval" id="s2-sl-atr-v">3.0</span></div>
+<div class="prow"><span class="pname">trail_atr_offset</span><input type="range" min="0.3" max="5" step="0.1" value="1.5" id="s2-tr-atr"><span class="pval" id="s2-tr-atr-v">1.5</span></div>
+<div class="prow"><span class="pname">partial_tp_pct</span><input type="range" min="0.5" max="30" step="0.1" value="10" id="s2-tp-pct"><span class="pval" id="s2-tp-pct-v">10%</span></div>
+<div class="prow"><span class="pname">initial_sl_pct</span><input type="range" min="0.5" max="15" step="0.1" value="3.0" id="s2-sl-pct"><span class="pval" id="s2-sl-pct-v">3.0%</span></div>
+<div class="prow"><span class="pname">trail_pct_offset</span><input type="range" min="0.3" max="5" step="0.1" value="1.5" id="s2-tr-pct"><span class="pval" id="s2-tr-pct-v">1.5%</span></div>
+<div class="prow"><span class="pname">partial_tp_qty</span><input type="range" min="0" max="100" step="5" value="50" id="s2-qty"><span class="pval" id="s2-qty-v">50%</span></div>
+<div class="insight warn" id="qty-warn" style="display:none;margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Simulation</div>
+<div class="card-title">Canlı pozisyon simülasyonu — Long @ 100</div>
+<canvas id="exit-sim" height="240"></canvas>
+<div class="prow" style="margin-top:8px;"><span class="pname">Senaryo</span><select id="exit-scenario"><option value="strong">Güçlü trend</option><option value="reverse">Kâr sonra dönüş</option><option value="fail">Hızlı zarar</option><option value="sideways">Yatay</option></select></div>
+<div class="insight" id="exit-insight" style="margin-top:8px;"></div>
+<div class="legend">
+<div class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span>Fiyat</div>
+<div class="legend-item"><span class="legend-dot" style="background:#a855f7;"></span>S2</div>
+<div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span>S1</div>
+<div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span>TP</div>
+<div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span>Acil SL</div>
+</div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Prob Exit</div>
+<div class="card-title">📉 Prob Exit + Delta + Weakness</div>
+<div class="card-sub">Pozisyon açıkken prob aleyhine dönerse çıkış.</div>
+<div class="toggle-row"><input type="checkbox" id="px-on"><label for="px-on">use_prob_exit (Weakness)</label></div>
+<div class="prow"><span class="pname">prob_exit_mode</span><select id="px-mode"><option value="agg">Agresif</option><option value="prot">Korumalı</option></select></div>
+<div class="prow"><span class="pname">thresh_exit_long</span><input type="range" min="0.20" max="0.50" step="0.01" value="0.45" id="px-exit-long"><span class="pval" id="px-exit-long-v">0.45</span></div>
+<div class="prow"><span class="pname">thresh_exit_short</span><input type="range" min="0.50" max="0.80" step="0.01" value="0.55" id="px-exit-short"><span class="pval" id="px-exit-short-v">0.55</span></div>
+<hr class="section-sep">
+<div class="toggle-row"><input type="checkbox" id="pdx-on"><label for="pdx-on">use_prob_delta_exit (V8.5+)</label></div>
+<div class="prow"><span class="pname">prob_delta_len</span><input type="range" min="2" max="10" step="1" value="3" id="pdx-len"><span class="pval" id="pdx-len-v">3</span></div>
+<div class="prow"><span class="pname">prob_delta_thresh</span><input type="range" min="-0.40" max="-0.01" step="0.01" value="-0.15" id="pdx-thr"><span class="pval" id="pdx-thr-v">-0.15</span></div>
+<div class="card-sub" style="margin-top:6px;">⚠️ <code>compat_v843_mode</code> açıkken delta exit otomatik devre dışı.</div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Exit Sim</div>
+<div class="card-title">Prob Exit simülasyonu — long</div>
+<canvas id="px-canvas" height="280"></canvas>
+<div class="prow" style="margin-top:8px;"><span class="pname">Senaryo</span><select id="px-scenario"><option value="slow">Yavaş çürüme</option><option value="cliff">Ani çöküş</option><option value="wobble">Dalgalı</option><option value="trend">Net trend</option></select></div>
+<div class="toggle-row"><input type="checkbox" id="px-trailing-on"><label for="px-trailing-on">Trailing aktif mi?</label></div>
+<div class="insight" id="px-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-title">Karar matrisi</div>
+<div class="scroll-hint">← yatay kaydır →</div>
+<div id="px-matrix"></div>
+</div>
+<div class="nav-card full">
+<div class="card-title">Stage akış şeması</div>
+<div class="scroll-hint">← yatay kaydır →</div>
+<div id="stage-timeline"></div>
+</div>
+</div>
+</div>
+
+<!-- PANEL 4: REJIM -->
+<div class="panel" id="panel-regime">
+<div class="panel-head">
+<div class="panel-kicker">Piyasa Bağlamı</div>
+<h2 class="panel-title">Rejim filtresi</h2>
+<p class="panel-desc">CHOP, ER ve ADX etkilerini sentetik fiyat üzerinde gör.</p>
+</div>
+<div class="nav-grid">
+<div class="nav-card">
+<div class="card-ribbon" data-tone="warn">Filter</div>
+<div class="card-title">Piyasa rejim filtresi</div>
+<div class="prow"><span class="pname">filter_type</span><select id="flt-type"><option value="chop">CHOP Index</option><option value="er">Efficiency Ratio</option><option value="both">CHOP + ER</option><option value="none">Yok</option></select></div>
+<div class="prow"><span class="pname">chop_len</span><input type="range" min="1" max="200" step="1" value="14" id="chop-len"><span class="pval" id="chop-len-v">14</span></div>
+<div class="prow"><span class="pname">chop_thresh</span><input type="range" min="30" max="80" step="1" value="55" id="chop-thr"><span class="pval" id="chop-thr-v">55</span></div>
+<div class="prow"><span class="pname">er_len</span><input type="range" min="5" max="100" step="1" value="10" id="er-len"><span class="pval" id="er-len-v">10</span></div>
+<div class="prow"><span class="pname">er_thresh</span><input type="range" min="0.01" max="0.7" step="0.01" value="0.35" id="er-thr"><span class="pval" id="er-thr-v">0.35</span></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon">Strength</div>
+<div class="card-title">ADX filtresi</div>
+<div class="toggle-row"><input type="checkbox" id="adx-on"><label for="adx-on">use_adx_filter</label></div>
+<div class="prow"><span class="pname">adx_len</span><input type="range" min="5" max="40" step="1" value="14" id="adx-len"><span class="pval" id="adx-len-v">14</span></div>
+<div class="prow"><span class="pname">adx_thresh</span><input type="range" min="10" max="40" step="1" value="20" id="adx-thr"><span class="pval" id="adx-thr-v">20</span></div>
+<div class="prow"><span class="pname">adx_force_dir</span><input type="range" min="20" max="60" step="1" value="40" id="adx-force"><span class="pval" id="adx-force-v">40</span></div>
+<div class="insight" id="adx-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Context</div>
+<div class="card-title">Sentetik fiyat üzerinde rejim renklendirme</div>
+<canvas id="regime-canvas" height="220"></canvas>
+<div class="legend" style="margin-top:6px;">
+<div class="legend-item"><span class="legend-dot" style="background:rgba(245,158,11,0.55);"></span>CHOP/ER</div>
+<div class="legend-item"><span class="legend-dot" style="background:rgba(59,130,246,0.55);"></span>ADX zayıf</div>
+<div class="legend-item"><span class="legend-dot" style="background:rgba(168,85,247,0.55);"></span>İkisi</div>
+<div class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span>Fiyat</div>
+</div>
+<div class="prow" style="margin-top:8px;"><span class="pname">Sentetik piyasa</span><select id="regime-mkt"><option value="mixed">Karışık</option><option value="trend">Net trend</option><option value="chop">Yatay</option><option value="bist">BIST tipi</option></select></div>
+<div class="insight" id="regime-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="warn">Adaptive</div>
+<div class="card-title">Dinamik CHOP timeout</div>
+<canvas id="dchop-canvas" height="160"></canvas>
+<div class="insight" id="dchop-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon">Pipeline</div>
+<div class="card-title">Filtre ↔ İşlem akışı</div>
+<div id="regime-tree"></div>
+</div>
+</div>
+</div>
+
+<!-- PANEL 5: REVERSE -->
+<div class="panel" id="panel-reverse">
+<div class="panel-head">
+<div class="panel-kicker">Yön Değişimi</div>
+<h2 class="panel-title">Reverse kararları davranış haritası</h2>
+<p class="panel-desc">PnL ekseninde modlar nasıl farklılaşır?</p>
+</div>
+<div class="nav-grid">
+<div class="nav-card">
+<div class="card-ribbon" data-tone="info">Mode</div>
+<div class="card-title">Reverse modu</div>
+<div class="prow"><span class="pname">reverse_mode</span><select id="rev-mode"><option value="normal">Normal</option><option value="closeonly">Sadece Kapat</option><option value="pare">Kapat + PARE</option><option value="protect">Kârdayken Koru</option><option value="profitpare">Kârda Kapat+PARE</option><option value="sc">Smart Close</option></select></div>
+<div class="prow"><span class="pname">block_behavior</span><select id="rev-block"><option value="hold">Hold</option><option value="close">CloseOnlyIfBlocked</option></select></div>
+<div class="prow"><span class="pname">rev_profit_thresh</span><input type="range" min="0" max="5" step="0.1" value="0.0" id="rev-pct"><span class="pval" id="rev-pct-v">0.0%</span></div>
+<div class="prow"><span class="pname">rev_profit_mode</span><select id="rev-pm"><option value="pct">Yüzde (%)</option><option value="atr">ATR</option></select></div>
+<div class="prow"><span class="pname">rev_profit_atr</span><input type="range" min="0" max="3" step="0.1" value="1.0" id="rev-atr"><span class="pval" id="rev-atr-v">1.0</span></div>
+<div class="toggle-row"><input type="checkbox" id="rev-hyst"><label for="rev-hyst">use_rev_hysteresis</label></div>
+<div class="prow"><span class="pname">rev_hysteresis_pct</span><input type="range" min="0" max="5" step="0.1" value="0.3" id="rev-hp"><span class="pval" id="rev-hp-v">0.3%</span></div>
+</div>
+<div class="nav-card is-active-spotlight">
+<div class="card-ribbon" data-tone="ok">Live</div>
+<div class="card-title">Seçili modun şu anki kararı</div>
+<div class="prow"><span class="pname">Açık pozisyon PnL</span><input type="range" min="-5" max="5" step="0.1" value="1.5" id="rev-pnl"><span class="pval" id="rev-pnl-v">+1.5%</span></div>
+<canvas id="rev-canvas" height="180" style="margin-top:8px;"></canvas>
+<div class="insight" id="rev-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Map</div>
+<div class="card-title">Tüm modların davranış haritası</div>
+<canvas id="rev-map-canvas" height="320" style="margin-top:8px;"></canvas>
+<div class="legend" style="margin-top:8px;">
+<div class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span>REVERSE</div>
+<div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span>HOLD</div>
+<div class="legend-item"><span class="legend-dot" style="background:#0d9488;"></span>KAPAT+PARE</div>
+<div class="legend-item"><span class="legend-dot" style="background:#a855f7;"></span>SC</div>
+<div class="legend-item"><span class="legend-dot" style="background:#94a3b8;"></span>KAPAT</div>
+</div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon">Decision</div>
+<div class="card-title">Reverse karar ağacı</div>
+<div id="rev-tree"></div>
+</div>
+</div>
+</div>
+
+<!-- PANEL 6: TANI -->
+<div class="panel" id="panel-diag">
+<div class="panel-head">
+<div class="panel-kicker">Sistem Tanısı</div>
+<h2 class="panel-title">Risk, çakışma ve sağlık görünümü</h2>
+<p class="panel-desc">Modüller arası çakışma ve overfit riski.</p>
+</div>
+<div class="nav-grid">
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="warn">Risk</div>
+<div class="card-title">Overfit risk haritası</div>
+<canvas id="diag-radar" height="280"></canvas>
+<div class="insight" id="diag-radar-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="warn">Conflict</div>
+<div class="card-title">Modül etkileşim matrisi</div>
+<div class="scroll-hint">← yatay kaydır →</div>
+<div id="interaction-matrix"></div>
+</div>
+<div class="nav-card full is-active-spotlight">
+<div class="card-ribbon" data-tone="ok">Audit</div>
+<div class="card-title">Birleşik tanı</div>
+<div id="full-diag"></div>
+</div>
+</div>
+</div>
+
+<!-- PANEL 7: BUTUNLESIK -->
+<div class="panel" id="panel-unified">
+<div class="panel-head">
+<div class="panel-kicker">Full Chain</div>
+<h2 class="panel-title">Posterior → Prob → Rejim → Exit</h2>
+<p class="panel-desc">Tüm zincir tek fiyat üzerinde eş zamanlı.</p>
+</div>
+<div class="nav-grid">
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Chain</div>
+<div class="card-title">🔗 Tam zincir ayarları</div>
+<div class="prow" style="margin-top:8px;"><span class="pname">Sentetik piyasa</span><select id="uni-mkt"><option value="mixed">Karışık</option><option value="trend">Net trend</option><option value="chop">Yatay</option><option value="bist">BIST tipi</option></select></div>
+<div class="prow"><span class="pname">Pozisyon yönü</span><select id="uni-pos"><option value="long">Long</option><option value="short">Short</option></select></div>
+<div class="toggle-row"><input type="checkbox" id="uni-trailing"><label for="uni-trailing">Trailing aktif?</label></div>
+<div class="prow"><span class="pname">Bar sayısı</span><input type="range" min="200" max="1500" step="100" value="200" id="uni-bars"><span class="pval" id="uni-bars-v">200</span></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon">Pivot</div>
+<div class="card-title">📏 Pivot Filtresi</div>
+<div class="toggle-row"><input type="checkbox" id="uni-pivot-on"><label for="uni-pivot-on">use_pivot_filter</label></div>
+<div class="toggle-row"><input type="checkbox" id="uni-pivot-t1"><label for="uni-pivot-t1">T-1 (dün)</label></div>
+<div class="toggle-row"><input type="checkbox" id="uni-pivot-t2" checked><label for="uni-pivot-t2">T-2</label></div>
+<div class="toggle-row"><input type="checkbox" id="uni-pivot-t3"><label for="uni-pivot-t3">T-3</label></div>
+<hr class="section-sep">
+<div class="toggle-row"><input type="checkbox" id="uni-pivot-flex" checked><label for="uni-pivot-flex">use_pivot_flex</label></div>
+<div class="prow"><span class="pname">pivot_flex_valid</span><input type="range" min="2" max="100" step="1" value="5" id="uni-pf-valid"><span class="pval" id="uni-pf-valid-v">5</span></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="info">Fat-Tail</div>
+<div class="card-title">🧬 Fat-Tail Likelihood</div>
+<div class="toggle-row"><input type="checkbox" id="ft-on"><label for="ft-on">use_fat_tail</label></div>
+<div class="prow"><span class="pname">nu_param</span><input type="range" min="2.1" max="20" step="0.1" value="5.0" id="ft-nu"><span class="pval" id="ft-nu-v">5.0</span></div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="info">Recursive</div>
+<div class="card-title">🔁 Rekürsif Prior</div>
+<div class="toggle-row"><input type="checkbox" id="rp-on"><label for="rp-on">use_recursive_prior</label></div>
+<div class="prow"><span class="pname">decay_base</span><input type="range" min="0.80" max="0.99" step="0.01" value="0.92" id="rp-base"><span class="pval" id="rp-base-v">0.92</span></div>
+<div class="prow"><span class="pname">decay_low</span><input type="range" min="0.80" max="0.99" step="0.01" value="0.97" id="rp-low"><span class="pval" id="rp-low-v">0.97</span></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Posterior</div>
+<div class="card-title">Üst panel — Posterior şekli</div>
+<canvas id="uni-posterior" height="170"></canvas>
+<div class="insight" id="uni-posterior-insight" style="margin-top:8px;"></div>
+</div>
+<div class="nav-card full">
+<div class="card-ribbon" data-tone="info">Main Chain</div>
+<div class="card-title">Ana zincir — Fiyat / Prob / Rejim / Exit</div>
+<canvas id="uni-chain" height="460"></canvas>
+<div class="legend" style="margin-top:6px;">
+<div class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span>Fiyat</div>
+<div class="legend-item"><span class="legend-dot" style="background:#a855f7;"></span>final_prob</div>
+<div class="legend-item"><span class="legend-dot" style="background:#22c55e;"></span>▲ Long</div>
+<div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span>▼ Short</div>
+<div class="legend-item"><span class="legend-dot" style="background:rgba(249,115,22,0.85);"></span>Pivot</div>
+<div class="legend-item"><span class="legend-dot" style="background:#d946ef;"></span>◆ Flex</div>
+</div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="ok">Stats</div>
+<div class="card-title">Akış istatistikleri</div>
+<div class="stat-grid">
+<div class="stat"><div class="stat-n" id="uni-s-raw">0</div><div class="stat-l">Ham</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-passed">0</div><div class="stat-l">Geçen</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-blocked">0</div><div class="stat-l">Bloklu</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-flex">0</div><div class="stat-l">Flex</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-firstexit">—</div><div class="stat-l">1.Exit</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-exittype">—</div><div class="stat-l">Tip</div></div>
+<div class="stat"><div class="stat-n" id="uni-s-blockpct">0%</div><div class="stat-l">Blok%</div></div>
+</div>
+</div>
+<div class="nav-card">
+<div class="card-ribbon" data-tone="ok">Insight</div>
+<div class="card-title">Birleşik tanı</div>
+<div class="insight" id="uni-final-insight"></div>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+// ============================================
+// TAB SWITCHING
+// ============================================
+document.querySelectorAll('.tab').forEach(t => {
+  t.onclick = () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('panel-' + t.dataset.tab).classList.add('active');
+    setTimeout(updateAll, 30);
+  };
+});
+
+// ============================================
+// UTILS
+// ============================================
+function $(id) { return document.getElementById(id); }
+function val(id) { const el = $(id); return el.type === 'checkbox' ? el.checked : (el.tagName === 'SELECT' ? el.value : (el.type === 'range' ? parseFloat(el.value) : el.value)); }
+function setText(id, t) { const el = $(id); if (el) el.textContent = t; }
+function sig(x) { return 1 / (1 + Math.exp(-x)); }
+function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function getCSSVar(name, fallback) {
+  try {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+  } catch (e) { return fallback; }
+}
+function tcol() { return getCSSVar('--color-text-secondary', '#64748b'); }
+function tcolPri() { return getCSSVar('--color-text-primary', '#0f172a'); }
+
+// ============================================
+// SIGNAL ENGINE PANEL
+// ============================================
+function getSignalParams() {
+  return {
+    coreModel: val('core-model'),
+    triggerMode: val('trigger-mode'),
+    crossConfirm: val('cross-confirm'),
+    thrBuy: val('thr-buy'),
+    thrSell: val('thr-sell'),
+    evoDynThr: val('evo-dyn-thr'),
+    compat: val('compat-mode'),
+    lenPrior: val('len-prior'),
+    lenLike: val('len-like'),
+    evoMax: val('evo-max'),
+    evoMin: val('evo-min'),
+    volSens: val('vol-sens'),
+    evoGap: val('evo-gap'),
+    adGap: val('ad-gap'),
+    evoK: val('evo-k'),
+    envVol: val('env-vol'),
+    evoBaseZone: val('evo-base-zone'),
+    evoVolStr: val('evo-vol-str'),
+  };
+}
+
+function computeAdaptiveLen(p) {
+  const norm = clamp((p.envVol - 0.3) / 2.7, 0, 1);
+  const vp = Math.pow(norm, 1 / p.volSens);
+  return Math.max(2, Math.round(p.evoMax - vp * (p.evoMax - p.evoMin)));
+}
+
+function effectivePriorLen(p) {
+  if (p.coreModel === '1') return p.lenPrior;
+  return computeAdaptiveLen(p);
+}
+
+function effectiveLikeLen(p) {
+  if (p.coreModel === '1') return p.lenLike;
+  if (p.coreModel === '2') {
+    const adapt = computeAdaptiveLen(p);
+    return Math.max(1, adapt - p.evoGap);
+  }
+  // mode 3
+  const adapt = computeAdaptiveLen(p);
+  return Math.max(1, Math.round(adapt * (1 - p.adGap / 100)));
+}
+
+function effectiveThresholds(p) {
+  let buy = p.thrBuy, sell = p.thrSell;
+  if (p.evoDynThr) {
+    const norm = clamp((p.envVol - 0.3) / 2.7, 0, 1);
+    const ratio = lerp(0.3, 3.0, norm);
+    const dynOff = p.evoBaseZone * Math.pow(ratio, p.evoVolStr);
+    buy = clamp(0.5 + dynOff, 0.51, 0.99);
+    sell = clamp(0.5 - dynOff, 0.01, 0.49);
+  }
+  return { buy, sell };
+}
+
+function updateSignalLabels(p) {
+  setText('thr-buy-v', p.thrBuy.toFixed(2));
+  setText('thr-sell-v', p.thrSell.toFixed(2));
+  setText('len-prior-v', p.lenPrior);
+  setText('len-like-v', p.lenLike);
+  setText('evo-max-v', p.evoMax);
+  setText('evo-min-v', p.evoMin);
+  setText('vol-sens-v', p.volSens.toFixed(1));
+  setText('evo-gap-v', p.evoGap);
+  setText('ad-gap-v', p.adGap + '%');
+  setText('evo-k-v', p.evoK.toFixed(1));
+  setText('env-vol-v', p.envVol.toFixed(1) + 'x');
+  setText('evo-base-zone-v', p.evoBaseZone.toFixed(2));
+  setText('evo-vol-str-v', p.evoVolStr.toFixed(1));
+
+  const modeName = p.coreModel === '1' ? 'Klasik' : p.coreModel === '2' ? 'Evo V8.1' : 'Adaptif';
+  setText('s-mode', modeName);
+  setText('s-prior-len', effectivePriorLen(p));
+  setText('s-like-len', effectiveLikeLen(p));
+  const thr = effectiveThresholds(p);
+  setText('s-thr-buy', thr.buy.toFixed(2));
+  setText('s-thr-sell', thr.sell.toFixed(2));
+  setText('s-band', (thr.buy - thr.sell).toFixed(2));
+}
+
+function drawBayes(p) {
+  const c = $('bayes-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 170;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 30;
+
+  const tc = tcol();
+  ctx.strokeStyle = 'rgba(128,128,128,0.18)'; ctx.lineWidth = 0.5;
+  [0, 0.25, 0.5, 0.75, 1].forEach(y => {
+    const py = H - 18 - y * (H - 36);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(y.toFixed(2), pad - 3, py + 3);
+  });
+
+  const thr = effectiveThresholds(p);
+  // buy/sell threshold lines
+  const pyBuy = H - 18 - thr.buy * (H - 36);
+  const pySell = H - 18 - thr.sell * (H - 36);
+  ctx.strokeStyle = 'rgba(16,185,129,0.4)'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+  ctx.beginPath(); ctx.moveTo(pad, pyBuy); ctx.lineTo(W - 8, pyBuy); ctx.stroke();
+  ctx.strokeStyle = 'rgba(239,68,68,0.4)';
+  ctx.beginPath(); ctx.moveTo(pad, pySell); ctx.lineTo(W - 8, pySell); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // posterior curve as function of normalized z (-3..3)
+  // P(up|z) = sigmoid(z * k_effective)
+  // Mod 2 is purely sigmoid based on f_continuous_signal; klasik uses linreg slope -> atan
+  const N = W - pad - 8;
+  ctx.strokeStyle = '#534AB7'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i <= N; i++) {
+    const z = -3 + (i / N) * 6;
+    let prob;
+    if (p.coreModel === '1') {
+      // sb: atan-based prior + sigmoid likelihood -> Bayesian update
+      const prior = (Math.atan(z * 5) + Math.PI / 2) / Math.PI;
+      const like = sig(z);
+      const num = prior * like;
+      const den = num + (1 - prior) * (1 - like);
+      prob = den === 0 ? 0.5 : num / den;
+    } else if (p.coreModel === '2') {
+      // evo: continuous sigmoid both -> Bayesian update with smoothing implicit
+      const prior = sig(z * p.evoK);
+      const like = sig(z * p.evoK * 1.2); // fast MA more reactive
+      const num = prior * like;
+      const den = num + (1 - prior) * (1 - like);
+      prob = den === 0 ? 0.5 : num / den;
+    } else {
+      // adaptive: same as klasik but with adaptive lengths (shape similar)
+      const prior = (Math.atan(z * 5) + Math.PI / 2) / Math.PI;
+      const like = sig(z);
+      const num = prior * like;
+      const den = num + (1 - prior) * (1 - like);
+      prob = den === 0 ? 0.5 : num / den;
+    }
+    const px = pad + i;
+    const py = H - 18 - prob * (H - 36);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('z = -3 (düşüş)', pad + 30, H - 4);
+  ctx.fillText('z = 0', W / 2, H - 4);
+  ctx.fillText('z = +3 (yükseliş)', W - 50, H - 4);
+  ctx.fillStyle = '#10b981'; ctx.textAlign = 'left';
+  ctx.fillText('buy=' + thr.buy.toFixed(2), pad + 4, pyBuy - 3);
+  ctx.fillStyle = '#ef4444';
+  ctx.fillText('sell=' + thr.sell.toFixed(2), pad + 4, pySell + 12);
+
+  let ins = '';
+  if (p.coreModel === '1') ins = 'Klasik motor: atan-tabanlı prior + sigmoid likelihood. Eğri keskin S-şekli.';
+  else if (p.coreModel === '2') ins = 'Evo motoru: çift sigmoid, k=' + p.evoK.toFixed(1) + '. k arttıkça eğri sertleşir, false sinyaller artar.';
+  else ins = 'Adaptif motor: klasik şekil ama MA uzunlukları vol ile değişir → eğri sabittir, dinamizm uzunluk seviyesinde.';
+  $('bayes-insight').textContent = ins;
+}
+
+function drawThr(p) {
+  const c = $('thr-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 170;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 30;
+
+  const tc = tcol();
+  ctx.strokeStyle = 'rgba(128,128,128,0.18)'; ctx.lineWidth = 0.5;
+  [0, 0.25, 0.5, 0.75, 1].forEach(y => {
+    const py = H - 18 - y * (H - 36);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(y.toFixed(2), pad - 3, py + 3);
+  });
+
+  const N = W - pad - 8;
+  // buy threshold curve
+  ctx.strokeStyle = '#10b981'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i <= N; i++) {
+    const ratio = 0.3 + (i / N) * 2.7;
+    let buy;
+    if (p.evoDynThr) buy = clamp(0.5 + p.evoBaseZone * Math.pow(ratio, p.evoVolStr), 0.51, 0.99);
+    else buy = p.thrBuy;
+    const px = pad + i;
+    const py = H - 18 - buy * (H - 36);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i <= N; i++) {
+    const ratio = 0.3 + (i / N) * 2.7;
+    let sell;
+    if (p.evoDynThr) sell = clamp(0.5 - p.evoBaseZone * Math.pow(ratio, p.evoVolStr), 0.01, 0.49);
+    else sell = p.thrSell;
+    const px = pad + i;
+    const py = H - 18 - sell * (H - 36);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // current vol marker
+  const curPx = pad + ((p.envVol - 0.3) / 2.7) * N;
+  ctx.strokeStyle = '#64748b'; ctx.setLineDash([2, 2]);
+  ctx.beginPath(); ctx.moveTo(curPx, 8); ctx.lineTo(curPx, H - 18); ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('vol 0.3x', pad + 18, H - 4);
+  ctx.fillText('vol 1.0x', pad + N / 2.7 * 0.7, H - 4);
+  ctx.fillText('vol 3.0x', W - 18, H - 4);
+
+  $('thr-insight').textContent = p.evoDynThr
+    ? 'Dinamik mod aktif: base_zone=' + p.evoBaseZone.toFixed(2) + ', vol_str=' + p.evoVolStr.toFixed(1) + '. Yüksek volde eşikler genişler, false sinyali azaltır ama trade sayısını düşürür. base_zone büyürse bant kalıcı genişler, vol_str büyürse vol artışına tepki keskinleşir.'
+    : 'Sabit eşik: buy=' + p.thrBuy.toFixed(2) + ', sell=' + p.thrSell.toFixed(2) + ', bant=' + (p.thrBuy - p.thrSell).toFixed(2) + '. Vol değişiminden etkilenmez.';
+}
+
+function drawMA(p) {
+  const c = $('ma-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 160;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 35;
+
+  const tc = tcol();
+  let yMin = Math.min(p.evoMin, p.lenLike) - 10, yMax = Math.max(p.evoMax, p.lenPrior) + 10;
+  if (p.coreModel === '1') { yMin = Math.min(p.lenLike, 50) - 20; yMax = p.lenPrior + 50; }
+  yMin = Math.max(0, yMin);
+
+  ctx.strokeStyle = 'rgba(128,128,128,0.18)'; ctx.lineWidth = 0.5;
+  for (let y = 0; y <= 4; y++) {
+    const v = yMin + (yMax - yMin) * (y / 4);
+    const py = H - 18 - (v - yMin) / (yMax - yMin) * (H - 36);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(v), pad - 3, py + 3);
+  }
+
+  const N = W - pad - 8;
+
+  if (p.coreModel === '1') {
+    // statik çizgiler
+    const pyP = H - 18 - (p.lenPrior - yMin) / (yMax - yMin) * (H - 36);
+    const pyL = H - 18 - (p.lenLike - yMin) / (yMax - yMin) * (H - 36);
+    ctx.strokeStyle = '#534AB7'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(pad, pyP); ctx.lineTo(W - 8, pyP); ctx.stroke();
+    ctx.strokeStyle = 'rgba(83,74,183,0.45)'; ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(pad, pyL); ctx.lineTo(W - 8, pyL); ctx.stroke();
+    ctx.setLineDash([]);
+    $('ma-insight').textContent = 'Klasik mod: prior=' + p.lenPrior + ', likelihood=' + p.lenLike + ' SABİT — vol değişse bile MA uzunluğu hiç değişmez.';
+  } else {
+    ctx.strokeStyle = '#534AB7'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = 0; i <= N; i++) {
+      const ratio = 0.3 + (i / N) * 2.7;
+      const norm = clamp((ratio - 0.3) / 2.7, 0, 1);
+      const vp = Math.pow(norm, 1 / p.volSens);
+      const len = p.evoMax - vp * (p.evoMax - p.evoMin);
+      const px = pad + i;
+      const py = H - 18 - (len - yMin) / (yMax - yMin) * (H - 36);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(83,74,183,0.45)'; ctx.lineWidth = 1.5; ctx.setLineDash([3, 3]);
+    ctx.beginPath();
+    for (let i = 0; i <= N; i++) {
+      const ratio = 0.3 + (i / N) * 2.7;
+      const norm = clamp((ratio - 0.3) / 2.7, 0, 1);
+      const vp = Math.pow(norm, 1 / p.volSens);
+      const slow = p.evoMax - vp * (p.evoMax - p.evoMin);
+      const fast = p.coreModel === '2' ? Math.max(1, slow - p.evoGap) : Math.max(1, Math.round(slow * (1 - p.adGap / 100)));
+      const px = pad + i;
+      const py = H - 18 - (fast - yMin) / (yMax - yMin) * (H - 36);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke(); ctx.setLineDash([]);
+
+    const curRatio = p.envVol;
+    const curNorm = clamp((curRatio - 0.3) / 2.7, 0, 1);
+    const curVp = Math.pow(curNorm, 1 / p.volSens);
+    const curLen = p.evoMax - curVp * (p.evoMax - p.evoMin);
+    const curPx = pad + ((curRatio - 0.3) / 2.7) * N;
+    const curPy = H - 18 - (curLen - yMin) / (yMax - yMin) * (H - 36);
+    ctx.fillStyle = '#534AB7';
+    ctx.beginPath(); ctx.arc(curPx, curPy, 4, 0, Math.PI * 2); ctx.fill();
+
+    const fastNow = p.coreModel === '2' ? Math.max(1, Math.round(curLen) - p.evoGap) : Math.max(1, Math.round(curLen * (1 - p.adGap / 100)));
+    const gapTxt = p.coreModel === '2' ? ('Gap=' + p.evoGap) : ('Oran=%' + p.adGap);
+    let warn = '';
+    if (p.coreModel === '2' && p.evoGap > curLen * 0.6) warn = ' ⚠️ Gap çok büyük, fast MA negatife düşebilir.';
+    if (p.coreModel === '3' && p.adGap > 50) warn = ' ⚠️ Gap çok agresif, prior ve likelihood neredeyse eşit.';
+    $('ma-insight').textContent = 'Şu an (vol=' + curRatio.toFixed(1) + 'x): slow=' + Math.round(curLen) + ', fast=' + fastNow + ' | ' + gapTxt + warn;
+  }
+
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('vol 0.3x (sakin)', pad + 25, H - 4);
+  ctx.fillText('vol 3.0x (panik)', W - 30, H - 4);
+}
+
+function drawTrigger(p) {
+  const c = $('trig-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 180;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 30;
+
+  const tc = tcol();
+  ctx.strokeStyle = 'rgba(128,128,128,0.18)'; ctx.lineWidth = 0.5;
+  [0, 0.25, 0.5, 0.75, 1].forEach(y => {
+    const py = H - 18 - y * (H - 36);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(y.toFixed(2), pad - 3, py + 3);
+  });
+
+  // synthetic prob curve oscillating
+  const N = W - pad - 8;
+  const probs = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const base = 0.5 + 0.30 * Math.sin(t * Math.PI * 4) + 0.08 * Math.sin(t * Math.PI * 13);
+    probs.push(clamp(base, 0.02, 0.98));
+  }
+
+  const thr = effectiveThresholds(p);
+  // threshold lines
+  const pyBuy = H - 18 - thr.buy * (H - 36);
+  const pySell = H - 18 - thr.sell * (H - 36);
+  ctx.strokeStyle = 'rgba(16,185,129,0.45)'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+  ctx.beginPath(); ctx.moveTo(pad, pyBuy); ctx.lineTo(W - 8, pyBuy); ctx.stroke();
+  ctx.strokeStyle = 'rgba(239,68,68,0.45)';
+  ctx.beginPath(); ctx.moveTo(pad, pySell); ctx.lineTo(W - 8, pySell); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // detect signals
+  let sigCount = 0;
+  for (let i = 1; i <= N; i++) {
+    const cur = probs[i], prev = probs[i - 1];
+    let isLong = false, isShort = false;
+    if (p.triggerMode === 'cross') {
+      if (cur > thr.buy && prev <= thr.buy) isLong = true;
+      if (cur < thr.sell && prev >= thr.sell) isShort = true;
+    } else {
+      if (cur > thr.buy && prev <= thr.buy) isLong = true; // first time crossing
+      if (cur < thr.sell && prev >= thr.sell) isShort = true;
+    }
+    if (isLong || isShort) {
+      sigCount++;
+      const px = pad + i;
+      const py = H - 18 - cur * (H - 36);
+      ctx.fillStyle = isLong ? '#10b981' : '#ef4444';
+      ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  // draw prob curve
+  ctx.strokeStyle = '#534AB7'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i <= N; i++) {
+    const px = pad + i;
+    const py = H - 18 - probs[i] * (H - 36);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText(p.triggerMode === 'cross' ? 'Mod: Kesişim' : 'Mod: Seviye', pad + 4, 14);
+  ctx.fillText('Sinyal sayısı: ' + sigCount, pad + 100, 14);
+
+  let ins = '';
+  if (p.triggerMode === 'cross') {
+    ins = 'Kesişim modu: yalnızca eşik geçiş anında sinyal. Trade sayısı düşük, false-positive az.';
+    if (p.crossConfirm === 'prob') ins += ' Prob+Eşik aktif → ek olarak prob yön doğrulaması arar (daha güvenli).';
+  } else {
+    ins = 'Seviye modu: eşik üstünde her bar uzun sinyali aktif kalır. Sürekli pozisyon eğiliminde — pyramiding kapalıysa sadece flatten sonrası tekrar girer.';
+  }
+  $('trig-insight').textContent = ins;
+}
+
+function updateSignalPanel() {
+  const p = getSignalParams();
+  updateSignalLabels(p);
+  drawBayes(p);
+  drawThr(p);
+  drawMA(p);
+  drawTrigger(p);
+  drawSimulator(p);
+}
+
+// ============================================
+// PIYASA REJİMİ SİMÜLATÖRÜ — gerçek motor matematiği
+// ============================================
+function _linreg(arr, len, offset, endIdx) {
+  // arr.length-1-offset kullanmak yerine endIdx verildiyse onu kullan (perf)
+  const end = (endIdx !== undefined) ? endIdx - offset : arr.length - 1 - offset;
+  const start = end - len + 1;
+  if (start < 0) return arr[end];
+  let sx = 0, sy = 0, sxx = 0, sxy = 0;
+  for (let i = 0; i < len; i++) {
+    const x = i, y = arr[start + i];
+    sx += x; sy += y; sxx += x * x; sxy += x * y;
+  }
+  const denom = len * sxx - sx * sx;
+  if (denom === 0) return arr[end];
+  const slope = (len * sxy - sx * sy) / denom;
+  const intercept = (sy - slope * sx) / len;
+  return intercept + slope * (len - 1);
+}
+function _sma(arr, len, end) {
+  if (end - len + 1 < 0) return arr[end];
+  let s = 0;
+  for (let i = end - len + 1; i <= end; i++) s += arr[i];
+  return s / len;
+}
+function _stdev(arr, len, end) {
+  if (end - len + 1 < 0) return 1;
+  const m = _sma(arr, len, end);
+  let s = 0;
+  for (let i = end - len + 1; i <= end; i++) s += (arr[i] - m) ** 2;
+  return Math.sqrt(s / len);
+}
+function _atr(prices, period, end) {
+  // basitleştirilmiş ATR — sadece kapanış farkları
+  if (end < period) return 0.5;
+  let s = 0;
+  for (let i = end - period + 1; i <= end; i++) s += Math.abs(prices[i] - prices[i - 1]);
+  return s / period;
+}
+function _ema(arr, len) {
+  const out = []; const a = 2 / (len + 1);
+  for (let i = 0; i < arr.length; i++) {
+    if (i === 0) out.push(arr[0]);
+    else out.push(a * arr[i] + (1 - a) * out[i - 1]);
+  }
+  return out;
+}
+function _dema(arr, len) {
+  const e1 = _ema(arr, len);
+  const e2 = _ema(e1, len);
+  return e1.map((v, i) => 2 * v - e2[i]);
+}
+function _sigmoid(x) { return 1 / (1 + Math.exp(-x)); }
+function _clip01(x) { return Math.max(0.001, Math.min(0.999, x)); }
+function _bayes(prior, like) {
+  const num = prior * like;
+  const den = num + (1 - prior) * (1 - like);
+  return den === 0 ? 0.5 : num / den;
+}
+
+function computeFinalProbSeries(prices, p) {
+  const N = prices.length;
+  const out = new Array(N).fill(0.5);
+  // ATR serisini önceden hesapla
+  const atrSeries = new Array(N).fill(0.5);
+  for (let i = 1; i < N; i++) atrSeries[i] = _atr(prices, 14, i);
+
+  if (p.coreModel === '2') {
+    // Evo: sigmoid prior/like + Bayes update + EMA smooth
+    const adaptLen = computeAdaptiveLen(p);
+    const fastLen = Math.max(1, adaptLen - p.evoGap);
+    const emaSlow = _ema(prices, adaptLen);
+    const demaSlow = _dema(prices, adaptLen);
+    const emaFast = _ema(prices, fastLen);
+    const demaFast = _dema(prices, fastLen);
+    const raw = new Array(N).fill(0.5);
+    for (let i = 0; i < N; i++) {
+      const atrN = atrSeries[i] || 0.5;
+      const dEmaSlow = (prices[i] - emaSlow[i]) / atrN;
+      const dDemaSlow = (prices[i] - demaSlow[i]) / atrN;
+      const dEmaFast = (prices[i] - emaFast[i]) / atrN;
+      const dDemaFast = (prices[i] - demaFast[i]) / atrN;
+      const prior = _clip01((_sigmoid(p.evoK * dEmaSlow) + _sigmoid(p.evoK * dDemaSlow)) / 2);
+      const like  = _clip01((_sigmoid(p.evoK * dEmaFast) + _sigmoid(p.evoK * dDemaFast)) / 2);
+      raw[i] = _clip01(_bayes(prior, like));
+    }
+    // smooth
+    const sm = _ema(raw, Math.max(1, p.evoSmooth || 4));
+    for (let i = 0; i < N; i++) out[i] = _clip01(sm[i]);
+  } else {
+    // Mod 1 ve Mod 3 — Smart Bayesian
+    const priorLen = effectivePriorLen(p);
+    const likeLen = effectiveLikeLen(p);
+    // Fat-tail ve recursive prior compat kapalıyken aktif
+    const ftEnabled = p.ftOn && !p.compat;
+    const rpEnabled = p.rpOn && !p.compat;
+    const nuSafe = Math.max(p.ftNu || 5.0, 2.1);
+    const tScale = Math.sqrt(nuSafe / (nuSafe - 2));
+    let recursivePrior = 0.5; // sistem priorı (sadece rpEnabled iken kullanılır)
+    for (let i = 0; i < N; i++) {
+      if (i < Math.max(priorLen, likeLen)) { out[i] = 0.5; continue; }
+      // Prior: linreg vs sma slope, atan ile [0,1]'e (slice yerine endIdx kullan — O(N²) → O(N×len))
+      const lrV = _linreg(prices, priorLen, 0, i);
+      const smV = _sma(prices, priorLen, i);
+      const slopeRaw = (lrV - smV) / Math.max((priorLen - 1) / 2, 1);
+      const atrV = atrSeries[i] || 0.5;
+      const normSlope = slopeRaw / Math.max(atrV, 0.0001);
+      let priorRaw = (Math.atan(normSlope * 5) + Math.PI / 2) / Math.PI;
+      priorRaw = _clip01(priorRaw);
+
+      // Likelihood: z-score → (fat-tail varsa scale et) → sigmoid
+      const basis = _linreg(prices, likeLen, 0, i);
+      const dev = Math.max(_stdev(prices, likeLen, i), Math.max(atrV * 0.1, prices[i] * 0.001));
+      const z = (prices[i] - basis) / dev;
+      const zScaled = ftEnabled ? z / tScale : z;
+      const like = _clip01(_sigmoid(zScaled));
+
+      // Prior: rekürsif modda blended prior, değilse direkt
+      let priorUsed = priorRaw;
+      if (rpEnabled) {
+        // Pine: f_lerp(prior_decay_base, prior_decay_low, normalized_vol_for_lerp)
+        // Burada vol sabit (envVol parametresi); gerçek Pine bar bazlı vol kullanır
+        const norm = Math.max(0, Math.min(1, ((p.envVol || 1.0) - 0.3) / 2.7));
+        const alpha = (p.rpBase || 0.92) + ((p.rpLow || 0.97) - (p.rpBase || 0.92)) * norm;
+        const blended = recursivePrior * alpha + 0.5 * (1 - alpha);
+        // Bayes update prior'ı güncellemek için kullanılır (rekürsif zincir)
+        const recNum = blended * like;
+        const recDen = recNum + (1 - blended) * (1 - like);
+        recursivePrior = recDen !== 0 ? recNum / recDen : 0.5;
+        priorUsed = recursivePrior;
+      }
+      out[i] = _clip01(_bayes(priorUsed, like));
+    }
+  }
+  return out;
+}
+
+function detectSignals(probs, p) {
+  // Pine'ın Kesişim ve Seviye modlarını taklit et
+  const th = effectiveThresholds(p);
+  const longs = [], shorts = [];
+  for (let i = 1; i < probs.length; i++) {
+    if (p.triggerMode === 'cross') {
+      if (probs[i] > th.buy && probs[i - 1] <= th.buy) longs.push(i);
+      if (probs[i] < th.sell && probs[i - 1] >= th.sell) shorts.push(i);
+    } else {
+      // level: ilk geçiş anı
+      if (probs[i] > th.buy && probs[i - 1] <= th.buy) longs.push(i);
+      if (probs[i] < th.sell && probs[i - 1] >= th.sell) shorts.push(i);
+    }
+  }
+  return { longs, shorts, th };
+}
+
+function drawSimulator(p) {
+  const c = $('sim-canvas'); if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 320;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const tc = tcol();
+  const market = val('sim-mkt') || 'mixed';
+  const N = 200;
+  const prices = getSyntheticPrices(market, N);
+  const probs = computeFinalProbSeries(prices, p);
+  const { longs, shorts, th } = detectSignals(probs, p);
+
+  // Layout: üst yarı fiyat, alt yarı prob
+  const padL = 38, padR = 12, padT = 14, gap = 8;
+  const topH = (H - padT - gap - 22) * 0.55;
+  const botH = (H - padT - gap - 22) * 0.45;
+  const topY0 = padT, topY1 = padT + topH;
+  const botY0 = topY1 + gap, botY1 = botY0 + botH;
+  const xStep = (W - padL - padR) / N;
+
+  // ÜST: Fiyat
+  const yMin = Math.min(...prices) - 0.5, yMax = Math.max(...prices) + 0.5;
+  // grid
+  ctx.strokeStyle = 'rgba(128,128,128,0.12)'; ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 3; g++) {
+    const v = yMin + (yMax - yMin) * (g / 3);
+    const py = topY1 - (v - yMin) / (yMax - yMin) * topH;
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(W - padR, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(0), padL - 3, py + 3);
+  }
+  // price line
+  ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+  // signal markers on price
+  longs.forEach(i => {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    ctx.fillStyle = '#22c55e';
+    ctx.beginPath();
+    ctx.moveTo(px, py + 8); ctx.lineTo(px - 4, py + 14); ctx.lineTo(px + 4, py + 14); ctx.closePath(); ctx.fill();
+  });
+  shorts.forEach(i => {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath();
+    ctx.moveTo(px, py - 8); ctx.lineTo(px - 4, py - 14); ctx.lineTo(px + 4, py - 14); ctx.closePath(); ctx.fill();
+  });
+
+  // ALT: prob serisi
+  // bands: long bandı (buy üstü) ve short bandı (sell altı)
+  const buyY = botY1 - th.buy * botH;
+  const sellY = botY1 - th.sell * botH;
+  ctx.fillStyle = 'rgba(34,197,94,0.10)';
+  ctx.fillRect(padL, botY0, W - padL - padR, buyY - botY0);
+  ctx.fillStyle = 'rgba(239,68,68,0.10)';
+  ctx.fillRect(padL, sellY, W - padL - padR, botY1 - sellY);
+  // mid line at 0.5
+  const midY = botY1 - 0.5 * botH;
+  ctx.strokeStyle = 'rgba(128,128,128,0.4)'; ctx.lineWidth = 0.5;
+  ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(padL, midY); ctx.lineTo(W - padR, midY); ctx.stroke(); ctx.setLineDash([]);
+  // threshold lines
+  ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padL, buyY); ctx.lineTo(W - padR, buyY); ctx.stroke();
+  ctx.strokeStyle = '#ef4444';
+  ctx.beginPath(); ctx.moveTo(padL, sellY); ctx.lineTo(W - padR, sellY); ctx.stroke();
+  // labels
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+  ctx.fillText('1.0', padL - 3, botY0 + 4);
+  ctx.fillText('0.5', padL - 3, midY + 3);
+  ctx.fillText('0.0', padL - 3, botY1 + 3);
+  ctx.fillStyle = '#22c55e';
+  ctx.fillText('buy ' + th.buy.toFixed(2), padL - 3, buyY + 3);
+  ctx.fillStyle = '#ef4444';
+  ctx.fillText('sell ' + th.sell.toFixed(2), padL - 3, sellY + 3);
+  // prob curve
+  ctx.strokeStyle = '#a855f7'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = padL + i * xStep;
+    const py = botY1 - probs[i] * botH;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+  // signals on prob
+  longs.forEach(i => {
+    const px = padL + i * xStep;
+    ctx.strokeStyle = 'rgba(34,197,94,0.5)'; ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(px, botY0); ctx.lineTo(px, botY1); ctx.stroke();
+  });
+  shorts.forEach(i => {
+    const px = padL + i * xStep;
+    ctx.strokeStyle = 'rgba(239,68,68,0.5)'; ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(px, botY0); ctx.lineTo(px, botY1); ctx.stroke();
+  });
+
+  // bottom labels
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('Fiyat', padL + 4, topY0 + 12);
+  ctx.fillText('final_prob', padL + 4, botY0 + 12);
+
+  // insight
+  const modelName = p.coreModel === '1' ? 'Smart Bayesian Klasik' : p.coreModel === '2' ? 'Evo V8.1' : 'Adaptif Smart Bayesian';
+  const trigName = p.triggerMode === 'cross' ? 'Kesişim' : 'Seviye';
+  const totalSig = longs.length + shorts.length;
+  const probsValid = probs.filter((v, i) => i > 30);
+  const avgProb = probsValid.reduce((a, b) => a + b, 0) / probsValid.length;
+  const probStd = Math.sqrt(probsValid.reduce((a, b) => a + (b - avgProb) ** 2, 0) / probsValid.length);
+  let ins = `Motor: <b>${modelName}</b>, tetikleme: <b>${trigName}</b>. `;
+  ins += `200 bar üzerinde <b>${longs.length}</b> long + <b>${shorts.length}</b> short = <b>${totalSig}</b> sinyal. `;
+  ins += `Prob ortalaması: <b>${avgProb.toFixed(2)}</b>, sapma: <b>${probStd.toFixed(2)}</b>. `;
+  if (totalSig === 0) ins += '⚠️ Hiç sinyal yok — eşikler çok dar veya prob eşikleri aşmıyor. <code>thresh_buy/sell</code>\'i 0.5\'e yaklaştır.';
+  else if (totalSig > 30) ins += '⚠️ Aşırı sinyal — overtrading riski. Eşikleri genişlet veya filtreleri açık tut.';
+  else if (probStd < 0.05) ins += '⚠️ Prob neredeyse sabit — motor karar üretmiyor. Uzunlukları kısalt veya k\'yı artır.';
+  else if (market === 'chop' && totalSig > 15) ins += '💡 Yatay piyasada bile çok sinyal üretiyor → CHOP filtresi şart.';
+  else if (market === 'trend' && totalSig < 3) ins += '💡 Trend piyasasında bile az sinyal → motor çok pasif, eşikleri 0.5\'e yaklaştır.';
+  else ins += '✅ Dengeli sinyal üretimi.';
+  $('sim-insight').innerHTML = ins;
+}
+
+// ============================================
+// ENTRY PANEL
+// ============================================
+function getEntryParams() {
+  return {
+    // SC
+    scPaReentry: val('sc-pa-reentry'),
+    scPaPct: val('sc-pa-pct'),
+    scWait: val('sc-wait'),
+    scTimeout: val('sc-timeout'),
+    scReset: val('sc-reset'),
+    scBlock: val('sc-block'),
+    scBlockOn: val('sc-block-on'),
+    scIgnoreFlt: val('sc-ignore-flt'),
+    // PARE
+    pareMethod: val('pare-method'),
+    pareLb: val('pare-lb'),
+    parePct: val('pare-pct'),
+    pareAtr: val('pare-atr'),
+    pareMin: val('pare-min'),
+    pareTo: val('pare-to'),
+    // OPP
+    oppOn: val('opp-on'),
+    oppLogic: val('opp-logic'),
+    oppLong: val('opp-long'),
+    oppShort: val('opp-short'),
+    oppCd: val('opp-cd'),
+    oppScStop: val('opp-sc-stop'),
+    oppScPct: val('opp-sc-pct'),
+    // Stubborn
+    stubTo: val('stub-to'),
+    stubHs: val('stub-hs'),
+    dynChop: val('dyn-chop'),
+    // Pivot Flex
+    pivotFlt: val('pivot-flt'),
+    pivotFlex: val('pivot-flex'),
+    pfBars: val('pf-bars'),
+    pfValid: val('pf-valid'),
+    // Entry Protection
+    epOn: val('ep-on'),
+    epBars: val('ep-bars'),
+  };
+}
+
+function updateEntryLabels(e) {
+  setText('sc-pa-pct-v', e.scPaPct.toFixed(2) + '%');
+  setText('sc-wait-v', e.scWait);
+  setText('sc-timeout-v', e.scTimeout);
+  setText('sc-reset-v', e.scReset.toFixed(2));
+  setText('sc-block-v', e.scBlock);
+  setText('pare-lb-v', e.pareLb);
+  setText('pare-pct-v', e.parePct.toFixed(1) + '%');
+  setText('pare-atr-v', e.pareAtr.toFixed(1));
+  setText('pare-min-v', e.pareMin);
+  setText('pare-to-v', e.pareTo);
+  setText('opp-long-v', e.oppLong.toFixed(2));
+  setText('opp-short-v', e.oppShort.toFixed(2));
+  setText('opp-cd-v', e.oppCd);
+  setText('opp-sc-pct-v', e.oppScPct.toFixed(1) + '%');
+  setText('stub-to-v', e.stubTo);
+  setText('stub-hs-v', e.stubHs.toFixed(1) + '%');
+  setText('pf-bars-v', e.pfBars);
+  setText('pf-valid-v', e.pfValid);
+  setText('ep-bars-v', e.epBars);
+}
+
+function drawSCBreakout(e) {
+  const c = $('sc-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 160;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 25;
+
+  const tc = tcol();
+  // synth price: long pos -> SC at peak -> reentry above level
+  const N = 60;
+  const prices = [];
+  for (let i = 0; i < N; i++) {
+    let v = 100;
+    if (i < 15) v = 100 + i * 0.3;       // ramp up
+    else if (i < 25) v = 104.5 - (i - 15) * 0.4; // peak then dip (SC trigger)
+    else if (i < 25 + e.scWait) v = 100.5; // wait bars
+    else if (i < 40) v = 100.5 + (i - 25 - e.scWait) * 0.25; // recovery
+    else v = 103.7 + Math.sin((i - 40) * 0.5) * 0.3;
+    prices.push(v + (Math.random() - 0.5) * 0.15);
+  }
+  const yMin = 99, yMax = 106;
+  const xStep = (W - pad - 10) / N;
+
+  // grid
+  ctx.strokeStyle = 'rgba(128,128,128,0.15)'; ctx.lineWidth = 0.5;
+  for (let y = yMin; y <= yMax; y++) {
+    const py = H - 18 - (y - yMin) / (yMax - yMin) * (H - 36);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+  }
+
+  // SC fired at bar 25
+  const scBar = 25;
+  const scPrice = prices[scBar];
+  const breakoutLevel = scPrice * (1 + e.scPaPct / 100);
+  const pyBO = H - 18 - (breakoutLevel - yMin) / (yMax - yMin) * (H - 36);
+  ctx.strokeStyle = '#8B4513'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(pad + scBar * xStep, pyBO); ctx.lineTo(W - 8, pyBO); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // wait zone
+  ctx.fillStyle = 'rgba(239,68,68,0.10)';
+  ctx.fillRect(pad + scBar * xStep, 4, e.scWait * xStep, H - 22);
+
+  // block zone (eski yön)
+  if (e.scBlockOn) {
+    ctx.fillStyle = 'rgba(239,68,68,0.06)';
+    const blockW = Math.min(e.scBlock * xStep, W - pad - 10 - scBar * xStep);
+    ctx.fillRect(pad + scBar * xStep, 4, blockW, H - 22);
+  }
+
+  // price line
+  ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = pad + i * xStep;
+    const py = H - 18 - (prices[i] - yMin) / (yMax - yMin) * (H - 36);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // SC marker
+  ctx.fillStyle = '#ef4444';
+  ctx.beginPath(); ctx.arc(pad + scBar * xStep, H - 18 - (scPrice - yMin) / (yMax - yMin) * (H - 36), 5, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('SC', pad + scBar * xStep, H - 18 - (scPrice - yMin) / (yMax - yMin) * (H - 36) - 8);
+
+  // reentry marker (where price first crosses breakoutLevel after wait)
+  let reBar = -1;
+  for (let i = scBar + e.scWait + 1; i < N; i++) {
+    if (prices[i] > breakoutLevel) { reBar = i; break; }
+  }
+  if (reBar > 0) {
+    const px = pad + reBar * xStep;
+    const py = H - 18 - (prices[reBar] - yMin) / (yMax - yMin) * (H - 36);
+    ctx.fillStyle = '#10b981';
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillText('Re-Entry', px, py - 8);
+  }
+
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('Breakout level = SC × (1 + ' + e.scPaPct + '%)', pad + 4, 12);
+
+  let ins = 'SC tetiklendi → ' + e.scWait + ' bar bekle → fiyat breakout level üzerine geçince re-entry. ';
+  if (e.scIgnoreFlt) ins += 'Filtreler atlanır (CHOP/ADX kontrol edilmez). ';
+  if (e.scBlockOn) ins += 'Eski yön ' + e.scBlock + ' bar bloklu.';
+  if (e.scTimeout < e.scWait + 5) ins += ' ⚠️ Timeout çok kısa, re-entry fırsatı kaçabilir.';
+  $('sc-insight').textContent = ins;
+}
+
+function drawPARE(e) {
+  const c = $('pare-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 160;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 25;
+
+  const tc = tcol();
+  // synthetic: position closed at bar 10, price drifts, pare condition met
+  const N = 50;
+  const prices = [];
+  const closeBar = 10;
+  const closePrice = 100;
+  for (let i = 0; i < N; i++) {
+    let v;
+    if (i < closeBar) v = 102 - i * 0.2;
+    else if (i < 25) v = closePrice + Math.sin((i - closeBar) * 0.4) * 0.3;
+    else v = closePrice + (i - 25) * (e.pareMethod === 'pa' ? 0.18 : 0.13);
+    prices.push(v + (Math.random() - 0.5) * 0.1);
+  }
+
+  const yMin = 98, yMax = 105;
+  const xStep = (W - pad - 10) / N;
+
+  // grid
+  ctx.strokeStyle = 'rgba(128,128,128,0.15)'; ctx.lineWidth = 0.5;
+  for (let y = yMin; y <= yMax; y++) {
+    const py = H - 18 - (y - yMin) / (yMax - yMin) * (H - 36);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+  }
+
+  // PARE level (long re-entry: example assumes short was closed → long pare)
+  let level;
+  if (e.pareMethod === 'pa') level = Math.max(...prices.slice(closeBar - e.pareLb, closeBar));
+  else if (e.pareMethod === 'pct') level = closePrice * (1 + e.parePct / 100);
+  else level = closePrice + 1.5 * e.pareAtr;
+
+  const pyL = H - 18 - (level - yMin) / (yMax - yMin) * (H - 36);
+  ctx.strokeStyle = '#0d9488'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(pad + closeBar * xStep, pyL); ctx.lineTo(W - 8, pyL); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // min wait + timeout zones
+  ctx.fillStyle = 'rgba(255,165,0,0.12)';
+  ctx.fillRect(pad + closeBar * xStep, 4, e.pareMin * xStep, H - 22);
+  ctx.fillStyle = 'rgba(239,68,68,0.06)';
+  const toEnd = Math.min(closeBar + e.pareTo, N) * xStep + pad;
+  ctx.fillRect(pad + (closeBar + e.pareMin) * xStep, 4, toEnd - (pad + (closeBar + e.pareMin) * xStep), H - 22);
+
+  // price line
+  ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = pad + i * xStep;
+    const py = H - 18 - (prices[i] - yMin) / (yMax - yMin) * (H - 36);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // close marker
+  ctx.fillStyle = '#94a3b8';
+  ctx.beginPath(); ctx.arc(pad + closeBar * xStep, H - 18 - (closePrice - yMin) / (yMax - yMin) * (H - 36), 5, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('Close', pad + closeBar * xStep, H - 18 - (closePrice - yMin) / (yMax - yMin) * (H - 36) - 8);
+
+  // re-entry detection
+  let reBar = -1;
+  for (let i = closeBar + e.pareMin; i < Math.min(closeBar + e.pareTo, N); i++) {
+    if (prices[i] > level) { reBar = i; break; }
+  }
+  if (reBar > 0) {
+    const px = pad + reBar * xStep;
+    const py = H - 18 - (prices[reBar] - yMin) / (yMax - yMin) * (H - 36);
+    ctx.fillStyle = '#10b981';
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillText('PARE', px, py - 8);
+  }
+
+  let ins = 'Yöntem: ' + (e.pareMethod === 'pa' ? 'PA pivot kırılım (' + e.pareLb + ' bar high)' : e.pareMethod === 'pct' ? 'Yüzde (' + e.parePct + '%)' : 'ATR (' + e.pareAtr + 'x)') + '. ';
+  ins += e.pareMin + ' bar minimum bekleme, ' + e.pareTo + ' bar timeout. ';
+  if (reBar < 0) ins += '⚠️ Bu senaryoda kırılım olmadı, timeout ile iptal.';
+  else ins += 'Kırılım bar ' + reBar + ' (close+' + (reBar - closeBar) + ').';
+  $('pare-insight').textContent = ins;
+}
+
+function drawStubborn(e) {
+  const c = $('stub-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 140;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 25;
+  const tc = tcol();
+
+  // Show stubborn timeline: position survives N bars before stub stop
+  const N = Math.max(e.stubTo + 5, 15);
+  const xStep = (W - pad - 10) / N;
+  const yMid = H / 2;
+
+  // baseline
+  ctx.strokeStyle = 'rgba(128,128,128,0.3)'; ctx.lineWidth = 0.5;
+  ctx.beginPath(); ctx.moveTo(pad, yMid); ctx.lineTo(W - 8, yMid); ctx.stroke();
+
+  // bars indicating stubborn count
+  for (let i = 0; i < N; i++) {
+    const px = pad + i * xStep;
+    let col = 'rgba(128,128,128,0.15)';
+    if (i < e.stubTo) col = 'rgba(245,158,11,0.4)';
+    else col = 'rgba(239,68,68,0.7)';
+    ctx.fillStyle = col;
+    ctx.fillRect(px, yMid - 20, xStep - 1, 40);
+  }
+
+  // labels
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('counter=0', pad, yMid + 36);
+  ctx.fillText('counter=' + e.stubTo, pad + e.stubTo * xStep, yMid + 36);
+  ctx.fillStyle = '#ef4444';
+  ctx.fillText('STUBBORN STOP', pad + e.stubTo * xStep + 30, yMid - 25);
+
+  let ins = 'Pozisyon ters sinyal alıyor ama filtre nedeniyle reverse yapamıyor → counter artıyor. ' + e.stubTo + ' bar sonra zorla kapatılır. ';
+  ins += 'Hard stop: ' + e.stubHs + '% zarar olursa daha erken keser.';
+  if (e.dynChop) ins += ' [Dinamik mod açık → CHOP süresi ortalamasından öğrenir.]';
+  $('stub-insight').textContent = ins;
+}
+
+function drawPivotFlex(e) {
+  const c = $('pf-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 140;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 25;
+  const tc = tcol();
+
+  if (!e.pivotFlt) {
+    ctx.fillStyle = tc; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Pivot filtresi kapalı — Pivot Flex etkisiz.', W / 2, H / 2);
+    $('pf-insight').textContent = 'Pivot filtresi kapalıyken Pivot Flex devreye girmez.';
+    return;
+  }
+
+  // synth: long signal at bar 5 but pivot blocks it. price crosses pivot at bar 3+after
+  const N = 30;
+  const xStep = (W - pad - 10) / N;
+  const sigBar = 5;
+  const pivotLine = H * 0.55;
+  // price drifts up
+  ctx.strokeStyle = 'rgba(255,140,0,0.6)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(pad, pivotLine); ctx.lineTo(W - 8, pivotLine); ctx.stroke();
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.fillText('Pivot', W - 30, pivotLine - 4);
+
+  // valid bars window
+  ctx.fillStyle = 'rgba(217,70,239,0.10)';
+  ctx.fillRect(pad + sigBar * xStep, 4, e.pfValid * xStep, H - 22);
+
+  ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = pad + i * xStep;
+    let py = H - 30 - i * 1.5; // upward drift
+    py = clamp(py, 20, H - 22);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // signal marker
+  ctx.fillStyle = '#d946ef';
+  ctx.beginPath(); ctx.arc(pad + sigBar * xStep, H - 30 - sigBar * 1.5, 5, 0, Math.PI * 2); ctx.fill();
+  ctx.fillText('Sinyal (pivot altında)', pad + sigBar * xStep, H - 30 - sigBar * 1.5 - 8);
+
+  // entry: when price first goes above pivot in valid window
+  let entryBar = -1;
+  for (let i = sigBar + 1; i < Math.min(sigBar + e.pfValid, N); i++) {
+    const py = H - 30 - i * 1.5;
+    if (py < pivotLine) { entryBar = i; break; }
+  }
+  if (entryBar > 0) {
+    ctx.fillStyle = '#10b981';
+    const px = pad + entryBar * xStep;
+    const py = H - 30 - entryBar * 1.5;
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillText('Pivot Flex giriş', px, py - 8);
+  }
+
+  let ins = 'Sinyal var ama fiyat pivot altında → ' + e.pfValid + ' bar pencerede pivot üzerine geçilirse alır. ';
+  ins += 'Aksi sinyal gelirse beklenti iptal. ';
+  if (e.pfValid > 50) ins += '⚠️ Geçerlilik penceresi çok geniş, eski sinyaller ısrarla yeniden tetiklenebilir.';
+  $('pf-insight').textContent = ins;
+}
+
+function drawEP(e) {
+  const c = $('ep-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 140;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 25;
+  const tc = tcol();
+
+  if (!e.epOn) {
+    ctx.fillStyle = tc; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Entry Protection kapalı.', W / 2, H / 2);
+    $('ep-insight').textContent = 'Kapalı: reverse anında her zaman tetiklenir, koruma yok.';
+    $('ep-warn').style.display = 'none';
+    return;
+  }
+
+  $('ep-warn').style.display = val('emg-on') ? 'none' : 'block';
+
+  const N = Math.max(20, Math.min(60, e.epBars / 8));
+  const xStep = (W - pad - 10) / N;
+  const protectBars = N * 0.6;
+
+  // entry bar
+  ctx.fillStyle = '#10b981';
+  ctx.fillRect(pad, 20, 4, H - 38);
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('N giriş', pad + 6, 16);
+
+  // protected zone
+  ctx.fillStyle = 'rgba(16,185,129,0.10)';
+  ctx.fillRect(pad, 20, protectBars * xStep, H - 38);
+  ctx.strokeStyle = '#10b981'; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+  ctx.strokeRect(pad, 20, protectBars * xStep, H - 38);
+  ctx.setLineDash([]);
+
+  // attempted reverse markers (some inside, some outside)
+  const tries = [protectBars * 0.3, protectBars * 0.7, protectBars * 1.4];
+  tries.forEach((b, i) => {
+    const px = pad + b * xStep;
+    const inside = b < protectBars;
+    ctx.fillStyle = inside ? '#ef4444' : '#10b981';
+    ctx.beginPath(); ctx.arc(px, H / 2, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = tc; ctx.textAlign = 'center';
+    ctx.fillText(inside ? '✗ blok' : '✓ ok', px, H - 6);
+  });
+
+  $('ep-insight').textContent = 'Yeni N/REV girişinden sonra ' + e.epBars + ' bar boyunca tüm reverse istekleri bloklanır. SC, PARE, OPP, Stubborn etkilenmez. Acil SL açık olmalı yoksa zarar büyür.';
+}
+
+function buildEntryTree() {
+  const e = getEntryParams();
+  const revMode = val('rev-mode'); // 'normal' | 'closeonly' | 'pare' | 'protect' | 'profitpare' | 'sc'
+  const scActive = (revMode === 'sc');
+  const pareActive = (revMode === 'pare' || revMode === 'profitpare');
+
+  const scNote = scActive
+    ? '(reverse_mode = Smart Close → SC pending oluşabilir)'
+    : '<span style="color:#94a3b8;">(reverse_mode = ' + revMode + ' → SC pending YOK, bu adım fiilen devre dışı)</span>';
+  const pareNote = pareActive
+    ? '(reverse_mode = ' + revMode + ' → PARE pending oluşabilir)'
+    : '<span style="color:#94a3b8;">(reverse_mode = ' + revMode + ' → PARE pending YOK, bu adım fiilen devre dışı)</span>';
+
+  const html = `
+    <div class="tree-node entry"><b>Flat pozisyondayken sinyal geldi (final_prob → eşik)</b></div>
+    <div class="tree-indent">
+      <div class="tree-node condition ${scActive ? '' : 'skip'}">1️⃣ Pending SC Breakout var mı? ${scNote}
+        <div class="tree-indent">
+          <div class="tree-node action">→ Fiyat breakout level üzerine geçti + filtreler ok → <b>SC-BO entry</b></div>
+        </div>
+      </div>
+      <div class="tree-node condition">2️⃣ Normal sinyal (raw_long/short) + adx_ok + ¬choppy + ¬pivot_block + ¬sc_block + ¬time_block?
+        <div class="tree-indent">
+          <div class="tree-node action">→ <b>N entry</b> (current_entry_type="N", entry protection timer başlar)</div>
+        </div>
+      </div>
+      <div class="tree-node condition ${e.oppOn ? '' : 'skip'}">3️⃣ Opp Entry aktif + cooldown geçti + agresif eşik (${e.oppLong.toFixed(2)}/${e.oppShort.toFixed(2)})?
+        <div class="tree-indent">
+          <div class="tree-node action">→ <b>OPP entry</b> ${e.oppScStop ? '+ giriş seviyesi stop (' + e.oppScPct + '%)' : ''}</div>
+        </div>
+      </div>
+      <div class="tree-node condition ${e.pivotFlt && e.pivotFlex ? '' : 'skip'}">4️⃣ Pivot Flex pending + pivot doğru tarafa geçti + prob hala uygun?
+        <div class="tree-indent">
+          <div class="tree-node action">→ <b>PivotFlex entry</b> (sinyal tipi N veya OPP olarak korunur)</div>
+        </div>
+      </div>
+      <div class="tree-node condition ${pareActive ? '' : 'skip'}">5️⃣ PARE pending + min bar geçti + kırılım koşulu (${e.pareMethod})? ${pareNote}
+        <div class="tree-indent">
+          <div class="tree-node action">→ <b>PARE entry</b></div>
+        </div>
+      </div>
+    </div>
+  `;
+  $('entry-tree').innerHTML = html;
+}
+
+function updateEntryPanel() {
+  const e = getEntryParams();
+  updateEntryLabels(e);
+  drawSCBreakout(e);
+  drawPARE(e);
+  drawStubborn(e);
+  drawPivotFlex(e);
+  drawEP(e);
+  buildEntryTree();
+  // OPP simple insight
+  let oppIns = '';
+  if (!e.oppOn) oppIns = 'Opp Entry kapalı.';
+  else {
+    const band = e.oppLong - e.oppShort;
+    oppIns = 'Aktif. ' + (e.oppLogic === 'cross' ? 'Kesişim' : 'Seviye') + ' modu, bant=' + band.toFixed(2) + '. ';
+    if (band < 0.05) oppIns += '⚠️ Bant çok dar, normal sinyalle örtüşür → ekstra trade üretmez.';
+    else if (e.oppCd < 3) oppIns += '⚠️ Cooldown çok kısa, normal sinyalin hemen ardından opp tetikleyebilir.';
+  }
+  $('opp-insight').textContent = oppIns;
+}
+
+// ============================================
+// EXIT PANEL
+// ============================================
+function getExitParams() {
+  return {
+    advExits: val('adv-exits'),
+    exitCalc: val('exit-calc'),
+    earlyCalc: val('early-calc'),
+    atrLen: val('atr-len'),
+    emgOn: val('emg-on'),
+    emgPct: val('emg-pct'),
+    s1On: val('s1-on'),
+    s1TrigPct: val('s1-trig-pct'),
+    s1OffPct: val('s1-off-pct'),
+    s1TrigAtr: val('s1-trig-atr'),
+    s1OffAtr: val('s1-off-atr'),
+    s1Qty: val('s1-qty'),
+    s1Lock: val('s1-lock'),
+    s1Floor: val('s1-floor'),
+    s1LockPct: val('s1-lock-pct'),
+    s1LockAtr: val('s1-lock-atr'),
+    s1FloorPct: val('s1-floor-pct'),
+    s1FloorAtr: val('s1-floor-atr'),
+    s2TpAtr: val('s2-tp-atr'),
+    s2SlAtr: val('s2-sl-atr'),
+    s2TrAtr: val('s2-tr-atr'),
+    s2TpPct: val('s2-tp-pct'),
+    s2SlPct: val('s2-sl-pct'),
+    s2TrPct: val('s2-tr-pct'),
+    s2Qty: val('s2-qty'),
+    scenario: val('exit-scenario'),
+  };
+}
+
+function updateExitLabels(x) {
+  setText('atr-len-v', x.atrLen);
+  setText('emg-pct-v', x.emgPct.toFixed(1) + '%');
+  setText('s1-trig-pct-v', x.s1TrigPct.toFixed(1) + '%');
+  setText('s1-off-pct-v', x.s1OffPct.toFixed(1) + '%');
+  setText('s1-trig-atr-v', x.s1TrigAtr.toFixed(1));
+  setText('s1-off-atr-v', x.s1OffAtr.toFixed(1));
+  setText('s1-qty-v', x.s1Qty + '%');
+  setText('s1-lock-pct-v', x.s1LockPct.toFixed(2) + '%');
+  setText('s1-lock-atr-v', x.s1LockAtr.toFixed(2));
+  setText('s1-floor-pct-v', x.s1FloorPct.toFixed(1) + '%');
+  setText('s1-floor-atr-v', x.s1FloorAtr.toFixed(1));
+  setText('s2-tp-atr-v', x.s2TpAtr.toFixed(1));
+  setText('s2-sl-atr-v', x.s2SlAtr.toFixed(1));
+  setText('s2-tr-atr-v', x.s2TrAtr.toFixed(1));
+  setText('s2-tp-pct-v', x.s2TpPct.toFixed(1) + '%');
+  setText('s2-sl-pct-v', x.s2SlPct.toFixed(1) + '%');
+  setText('s2-tr-pct-v', x.s2TrPct.toFixed(1) + '%');
+  setText('s2-qty-v', x.s2Qty + '%');
+
+  const totalQty = x.s1Qty + x.s2Qty;
+  if (totalQty > 100) {
+    $('qty-warn').style.display = 'block';
+    $('qty-warn').textContent = '⚠️ Stage1 (' + x.s1Qty + '%) + Stage2 (' + x.s2Qty + '%) = ' + totalQty + '% > 100%. Pine kodu Stage 2 quantity\'sini ' + Math.max(0, 100 - x.s1Qty) + '%\'e kısacak.';
+  } else {
+    $('qty-warn').style.display = 'none';
+  }
+}
+
+function drawExitSim(x) {
+  const c = $('exit-sim'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 240;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 35;
+
+  const tc = tcol();
+  const entry = 100;
+  const atr = 1.0; // assumed
+  const N = 60;
+
+  // generate price scenario
+  const prices = [];
+  for (let i = 0; i < N; i++) {
+    let v;
+    if (x.scenario === 'strong') {
+      v = entry + i * 0.2 + Math.sin(i * 0.4) * 0.3;
+    } else if (x.scenario === 'reverse') {
+      v = i < 30 ? entry + i * 0.25 + Math.sin(i * 0.4) * 0.3 : entry + 7.5 - (i - 30) * 0.4 + Math.sin(i * 0.4) * 0.3;
+    } else if (x.scenario === 'fail') {
+      v = entry - i * 0.18 + Math.sin(i * 0.5) * 0.25;
+    } else {
+      v = entry + Math.sin(i * 0.3) * 1.5 + 1.0;
+    }
+    prices.push(v);
+  }
+
+  // compute SL/TP/trailing per bar
+  const tpLevel = x.exitCalc === 'atr' ? entry + atr * x.s2TpAtr : entry * (1 + x.s2TpPct / 100);
+  const initSL = x.exitCalc === 'atr' ? entry - atr * x.s2SlAtr : entry * (1 - x.s2SlPct / 100);
+  const emgSL = entry * (1 - x.emgPct / 100);
+  const s1Trig = x.earlyCalc === 'atr' ? entry + atr * x.s1TrigAtr : entry * (1 + x.s1TrigPct / 100);
+
+  // simulate state
+  let stage1Active = false, stage2Active = false, stage1Done = false;
+  let stage1Stop = null, stage2Stop = initSL;
+  if (x.emgOn) stage2Stop = Math.max(stage2Stop, emgSL);
+  let exited = false, exitBar = -1, exitReason = '';
+
+  const s1Stops = [], s2Stops = [], s1ActiveArr = [], s2ActiveArr = [];
+
+  for (let i = 0; i < N; i++) {
+    if (exited) {
+      s1Stops.push(null); s2Stops.push(null); s1ActiveArr.push(false); s2ActiveArr.push(false);
+      continue;
+    }
+    const high = prices[i] + 0.3;
+    const low = prices[i] - 0.3;
+    const close = prices[i];
+
+    // Check Stage 2 TP firing (must come before stage1 to mirror Pine logic)
+    if (!stage2Active && high >= tpLevel && (!stage1Active)) {
+      // partial TP fired → switch to stage 2 trailing
+      stage2Active = true;
+      stage1Active = false;
+      stage1Stop = null;
+      stage1Done = true;
+    }
+
+    // Stage 1 trigger
+    if (x.advExits && x.s1On && !stage1Active && !stage2Active && !stage1Done && high >= s1Trig) {
+      stage1Active = true;
+      const initS1 = x.earlyCalc === 'atr' ? close - atr * x.s1OffAtr : close * (1 - x.s1OffPct / 100);
+      stage1Stop = x.emgOn ? Math.max(initS1, emgSL) : initS1;
+    }
+
+    // Update trailing stops
+    if (stage2Active) {
+      const newS2 = x.exitCalc === 'atr' ? high - atr * x.s2TrAtr : high * (1 - x.s2TrPct / 100);
+      stage2Stop = Math.max(stage2Stop || -Infinity, newS2);
+    } else if (stage1Active) {
+      const newS1 = x.earlyCalc === 'atr' ? high - atr * x.s1OffAtr : high * (1 - x.s1OffPct / 100);
+      stage1Stop = Math.max(stage1Stop, newS1);
+    }
+
+    // Check stops
+    if (stage2Active && stage2Stop !== null && low <= stage2Stop) {
+      exited = true; exitBar = i; exitReason = 'Stage 2 trailing stop';
+    } else if (stage1Active && stage1Stop !== null && low <= stage1Stop) {
+      // partial close at stage 1 → continue with stage2 logic (lock mode)
+      stage1Active = false;
+      stage1Done = true;
+      // apply lock mode (Pine ile uyumlu floor + lock hesabı)
+      let floor = entry;
+      if (x.s1Floor === 'pct') floor = entry * (1 + x.s1FloorPct / 100);
+      else if (x.s1Floor === 'atr') floor = entry + atr * x.s1FloorAtr;
+      else if (x.s1Floor === 'free') floor = -Infinity;
+      if (x.s1Lock === 'be') stage2Stop = (x.s1Floor === 'free') ? entry : floor;
+      else if (x.s1Lock === 'lock') {
+        const lockOff = x.earlyCalc === 'atr' ? atr * x.s1LockAtr : s1Trig * (x.s1LockPct / 100);
+        const rawStop = s1Trig - lockOff;
+        stage2Stop = (x.s1Floor === 'free') ? rawStop : Math.max(floor, rawStop);
+      }
+      stage1Stop = null;
+    } else if (!stage1Active && !stage2Active && low <= stage2Stop) {
+      exited = true; exitBar = i; exitReason = 'Initial SL';
+    }
+
+    s1Stops.push(stage1Active ? stage1Stop : null);
+    s2Stops.push(stage2Stop);
+    s1ActiveArr.push(stage1Active);
+    s2ActiveArr.push(stage2Active);
+  }
+
+  // draw
+  const allVals = [entry, ...prices, tpLevel, initSL, emgSL, s1Trig, ...s1Stops.filter(v => v !== null), ...s2Stops.filter(v => v !== null)];
+  const yMin = Math.min(...allVals) - 0.5, yMax = Math.max(...allVals) + 0.5;
+  const xStep = (W - pad - 10) / N;
+  const yScale = (v) => H - 25 - (v - yMin) / (yMax - yMin) * (H - 45);
+
+  // grid
+  ctx.strokeStyle = 'rgba(128,128,128,0.15)'; ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 4; g++) {
+    const v = yMin + (yMax - yMin) * (g / 4);
+    const py = yScale(v);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(1), pad - 3, py + 3);
+  }
+
+  // entry line
+  ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(pad, yScale(entry)); ctx.lineTo(W - 8, yScale(entry)); ctx.stroke();
+  // TP line
+  ctx.strokeStyle = '#10b981';
+  ctx.beginPath(); ctx.moveTo(pad, yScale(tpLevel)); ctx.lineTo(W - 8, yScale(tpLevel)); ctx.stroke();
+  // emergency SL
+  if (x.emgOn) {
+    ctx.strokeStyle = '#ef4444';
+    ctx.beginPath(); ctx.moveTo(pad, yScale(emgSL)); ctx.lineTo(W - 8, yScale(emgSL)); ctx.stroke();
+  }
+  ctx.setLineDash([]);
+
+  // s1 trigger
+  if (x.advExits && x.s1On) {
+    ctx.strokeStyle = 'rgba(245,158,11,0.4)'; ctx.lineWidth = 1; ctx.setLineDash([2, 4]);
+    ctx.beginPath(); ctx.moveTo(pad, yScale(s1Trig)); ctx.lineTo(W - 8, yScale(s1Trig)); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // s2 stop trail
+  ctx.strokeStyle = '#a855f7'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  let started = false;
+  for (let i = 0; i < N; i++) {
+    if (s2Stops[i] === null) continue;
+    const px = pad + i * xStep;
+    const py = yScale(s2Stops[i]);
+    if (!started) { ctx.moveTo(px, py); started = true; }
+    else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // s1 stop trail
+  ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  started = false;
+  for (let i = 0; i < N; i++) {
+    if (s1Stops[i] === null) continue;
+    const px = pad + i * xStep;
+    const py = yScale(s1Stops[i]);
+    if (!started) { ctx.moveTo(px, py); started = true; }
+    else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // price line
+  ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = pad + i * xStep;
+    const py = yScale(prices[i]);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // exit marker
+  if (exited && exitBar > 0) {
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath(); ctx.arc(pad + exitBar * xStep, yScale(prices[exitBar]), 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('EXIT: ' + exitReason, pad + exitBar * xStep, yScale(prices[exitBar]) - 10);
+  }
+
+  // labels
+  ctx.fillStyle = '#10b981'; ctx.textAlign = 'left'; ctx.font = '10px sans-serif';
+  ctx.fillText('TP @ ' + tpLevel.toFixed(2), pad + 4, yScale(tpLevel) - 3);
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('Entry @ ' + entry.toFixed(2), pad + 4, yScale(entry) - 3);
+  if (x.emgOn) {
+    ctx.fillStyle = '#ef4444';
+    ctx.fillText('Emg SL @ ' + emgSL.toFixed(2), pad + 4, yScale(emgSL) + 12);
+  }
+
+  let ins = '';
+  if (exited) ins = 'Pozisyon bar ' + exitBar + '\'da kapandı: ' + exitReason + '. Kâr/zarar: ' + ((prices[exitBar] - entry).toFixed(2)) + ' (' + (((prices[exitBar] - entry) / entry * 100).toFixed(2)) + '%).';
+  else ins = 'Pozisyon hala açık. Stage 2 stop: ' + (s2Stops[N - 1] !== null ? s2Stops[N - 1].toFixed(2) : 'na');
+  if (!x.advExits) ins += ' [Gelişmiş çıkışlar kapalı, sadece acil SL aktif.]';
+  $('exit-insight').textContent = ins;
+}
+
+function buildStageTimeline() {
+  const x = getExitParams();
+  if (!x.advExits) {
+    $('stage-timeline').innerHTML = '<div class="insight">Gelişmiş çıkışlar kapalı. Acil SL ' + (x.emgOn ? 'aktif (' + x.emgPct + '%)' : 'kapalı — pozisyon korumasız!') + '. Pozisyonlar yalnızca ters sinyal/SC/Stubborn ile kapanır.</div>';
+    return;
+  }
+  const html = `
+    <div class="timeline">
+      <div class="tl-step active">Giriş<br><small>Initial SL @ entry-${x.exitCalc === 'atr' ? x.s2SlAtr + '×ATR' : x.s2SlPct + '%'}</small></div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-step ${x.s1On ? 'active' : 'idle'}">Stage 1 Trigger<br><small>+${x.earlyCalc === 'atr' ? x.s1TrigAtr + '×ATR' : x.s1TrigPct + '%'}</small></div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-step ${x.s1On ? 'active' : 'idle'}">Stage 1 Trail<br><small>%${x.s1Qty} kapatır</small></div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-step active">S2 TP<br><small>+${x.exitCalc === 'atr' ? x.s2TpAtr + '×ATR' : x.s2TpPct + '%'} → %${x.s2Qty} kapatır</small></div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-step active">Stage 2 Trail<br><small>kalan miktar</small></div>
+    </div>
+    <div class="insight" style="margin-top:8px;">
+      Stage 1 sonrası: <b>${x.s1Lock === 'be' ? 'Girişe çekilir (BE)' : x.s1Lock === 'lock' ? 'S1 seviyesinden kilitlenir' : 'Ana stop değişmez'}</b>.
+      Floor: <b>${x.s1Floor === 'entry' ? 'Giriş seviyesi' : x.s1Floor === 'pct' ? 'Giriş + %' : x.s1Floor === 'atr' ? 'Giriş + ATR' : 'Sınır yok'}</b>.
+    </div>
+  `;
+  $('stage-timeline').innerHTML = html;
+}
+
+function updateExitPanel() {
+  const x = getExitParams();
+  updateExitLabels(x);
+  drawExitSim(x);
+  buildStageTimeline();
+  updateProbExitPanel();
+}
+
+// ============================================
+// PROB EXIT + DELTA + WEAKNESS PANEL
+// ============================================
+function getProbExitParams() {
+  return {
+    pxOn: val('px-on'),
+    pxMode: val('px-mode'),
+    pxExitLong: val('px-exit-long'),
+    pxExitShort: val('px-exit-short'),
+    pdxOn: val('pdx-on'),
+    pdxLen: val('pdx-len'),
+    pdxThr: val('pdx-thr'),
+    pxScenario: val('px-scenario'),
+    pxTrailingOn: val('px-trailing-on'),
+    compat: val('compat-mode'),
+  };
+}
+
+function getProbExitSeries(scenario, N = 120) {
+  // long pozisyon açıldı varsayılır → prob 0.65'ten başlar
+  const out = [];
+  for (let i = 0; i < N; i++) {
+    let v;
+    if (scenario === 'slow') {
+      // kademeli düşüş 0.65 → 0.30
+      v = 0.65 - (i / N) * 0.35 + Math.sin(i * 0.4) * 0.03;
+    } else if (scenario === 'cliff') {
+      // 70 bara kadar stabil, sonra 5 barda çöküş
+      if (i < 70) v = 0.62 + Math.sin(i * 0.3) * 0.04;
+      else if (i < 75) v = 0.62 - (i - 70) * 0.08;
+      else v = 0.22 + Math.sin(i * 0.3) * 0.04;
+    } else if (scenario === 'wobble') {
+      // dalgalı, ara ara eşik altına iner geri çıkar
+      v = 0.55 + Math.sin(i * 0.5) * 0.12 + Math.cos(i * 0.23) * 0.06;
+    } else {
+      // trend: prob hep yüksek
+      v = 0.68 + Math.sin(i * 0.2) * 0.05;
+    }
+    out.push(Math.max(0.01, Math.min(0.99, v)));
+  }
+  return out;
+}
+
+function detectProbExits(probs, x) {
+  // long pozisyonda olduğu varsayılır
+  const fired = []; // { i, type: 'weak'|'delta'|'blocked', reason }
+  let exited = false;
+  const deltaEnabled = x.pdxOn && !x.compat;
+  for (let i = 1; i < probs.length; i++) {
+    if (exited) break;
+    const weak = x.pxOn && probs[i] < x.pxExitLong;
+    let delta = false;
+    if (deltaEnabled && i >= x.pdxLen) {
+      const change = probs[i] - probs[i - x.pdxLen];
+      if (change < x.pdxThr) delta = true;
+    }
+    if (weak || delta) {
+      // Korumalı modda trailing aktifse blokla
+      if (x.pxMode === 'prot' && x.pxTrailingOn) {
+        fired.push({ i, type: 'blocked', reason: weak ? 'weak (trailing var)' : 'delta (trailing var)' });
+        // exit'lenmedi, devam
+      } else {
+        fired.push({ i, type: weak ? 'weak' : 'delta', reason: weak ? `prob ${probs[i].toFixed(2)} < ${x.pxExitLong.toFixed(2)}` : `Δ${(probs[i] - probs[i - x.pdxLen]).toFixed(2)} < ${x.pdxThr.toFixed(2)}` });
+        exited = true;
+      }
+    }
+  }
+  return fired;
+}
+
+function drawProbExitSim() {
+  const c = $('px-canvas'); if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 280;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const tc = tcol();
+  const x = getProbExitParams();
+  const N = 120;
+  const probs = getProbExitSeries(x.pxScenario, N);
+  const fired = detectProbExits(probs, x);
+
+  const padL = 38, padR = 12, padT = 14, padB = 22;
+  const plotH = H - padT - padB;
+  const xStep = (W - padL - padR) / N;
+
+  // bands
+  const exitY = padT + (1 - x.pxExitLong) * plotH;
+  ctx.fillStyle = 'rgba(34,197,94,0.10)';
+  ctx.fillRect(padL, padT, W - padL - padR, exitY - padT);
+  ctx.fillStyle = 'rgba(239,68,68,0.10)';
+  ctx.fillRect(padL, exitY, W - padL - padR, padT + plotH - exitY);
+
+  // grid
+  ctx.strokeStyle = 'rgba(128,128,128,0.12)'; ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 4; g++) {
+    const v = g / 4;
+    const py = padT + (1 - v) * plotH;
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(W - padR, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(2), padL - 3, py + 3);
+  }
+
+  // exit threshold line
+  ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1;
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath(); ctx.moveTo(padL, exitY); ctx.lineTo(W - padR, exitY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#ef4444'; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('exit_long ' + x.pxExitLong.toFixed(2), padL + 4, exitY - 3);
+
+  // prob curve
+  ctx.strokeStyle = '#a855f7'; ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = padL + i * xStep;
+    const py = padT + (1 - probs[i]) * plotH;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // delta windows: tetiklenen delta noktalarında pencere göster
+  fired.filter(f => f.type === 'delta').forEach(f => {
+    const startI = Math.max(0, f.i - x.pdxLen);
+    const px0 = padL + startI * xStep;
+    const px1 = padL + f.i * xStep;
+    const py0 = padT + (1 - probs[startI]) * plotH;
+    const py1 = padT + (1 - probs[f.i]) * plotH;
+    ctx.strokeStyle = 'rgba(245,158,11,0.6)'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(px0, py0); ctx.lineTo(px1, py1); ctx.stroke();
+    // Δ etiketi
+    ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Δ=' + (probs[f.i] - probs[startI]).toFixed(2), (px0 + px1) / 2, Math.min(py0, py1) - 6);
+  });
+
+  // exit markers
+  fired.forEach(f => {
+    const px = padL + f.i * xStep;
+    const py = padT + (1 - probs[f.i]) * plotH;
+    if (f.type === 'weak') {
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ef4444'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('⬇', px, py + 16);
+    } else if (f.type === 'delta') {
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('⚡', px, py + 16);
+    } else {
+      ctx.fillStyle = '#3b82f6';
+      ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#3b82f6'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('🛡', px, py - 8);
+    }
+  });
+
+  // insight
+  const ins = [];
+  const realExits = fired.filter(f => f.type !== 'blocked');
+  const blockedCount = fired.filter(f => f.type === 'blocked').length;
+  const firstExit = realExits[0];
+
+  if (!x.pxOn && !(x.pdxOn && !x.compat)) {
+    ins.push('⚠️ Hiçbir prob exit aktif değil. Pozisyon yalnızca Stage 1/2, ters sinyal veya acil SL ile kapanır.');
+  } else if (firstExit) {
+    ins.push(`İlk çıkış bar <b>#${firstExit.i}</b>: <b>${firstExit.type === 'weak' ? '⬇ Weakness' : '⚡ Delta'}</b> tetiklendi (${firstExit.reason}).`);
+  } else {
+    ins.push(`Hiç exit tetiklenmedi — prob hiç eşik altına düşmedi veya delta yeterince sert değil.`);
+  }
+
+  if (blockedCount > 0) {
+    ins.push(`🛡️ <b>${blockedCount}</b> exit korumalı modda bloklandı (trailing aktif → trailing kendi işini yapsın).`);
+  }
+
+  if (x.pdxOn && x.compat) {
+    ins.push(`⚠️ Delta exit slider açık ama <code>compat_v843_mode</code> da açık — Pine'da delta exit DEVRE DIŞI. Compat'ı kapatmazsan etkisiz.`);
+  }
+
+  if (x.pxScenario === 'wobble' && realExits.length > 0 && x.pxMode === 'agg') {
+    ins.push(`💡 Dalgalı senaryoda <b>Agresif</b> mod erken çıkıyor — false-positive riski. Korumalı moda alıp Stage 1/2 ile koru.`);
+  }
+  if (x.pxScenario === 'cliff' && realExits.length === 0 && !x.pdxOn) {
+    ins.push(`💡 Ani çöküş senaryosu — <b>Delta Exit açık değil</b>, Weakness eşiği geç tepki veriyor. Delta'yı aç (compat kapalıyken).`);
+  }
+  if (x.pxScenario === 'trend' && realExits.length > 0) {
+    ins.push(`⚠️ Trend senaryosunda exit tetiklendi — eşikler çok agresif, kâr potansiyelini kesiyorsun.`);
+  }
+
+  $('px-insight').innerHTML = ins.join('<br>');
+}
+
+function buildProbExitMatrix() {
+  const x = getProbExitParams();
+  const target = $('px-matrix'); if (!target) return;
+  const deltaActive = x.pdxOn && !x.compat;
+  const weakActive = x.pxOn;
+
+  const rows = [
+    {
+      cond: 'Prob eşik üstünde, trend devam',
+      weak: { fire: false, txt: '—' },
+      delta: { fire: false, txt: '—' },
+      action: 'HOLD — pozisyon devam',
+      col: '#10b981'
+    },
+    {
+      cond: 'Prob eşik altına yavaşça düştü',
+      weak: { fire: weakActive, txt: weakActive ? '✅ Tetik' : '❌ Kapalı' },
+      delta: { fire: false, txt: 'Δ küçük, tetiklemez' },
+      action: weakActive ? (x.pxMode === 'agg' ? '⬇ Anında çık' : (x.pxTrailingOn ? '🛡 Trailing\'e bırak' : '⬇ Çık')) : 'Beklemede',
+      col: weakActive ? '#ef4444' : '#94a3b8'
+    },
+    {
+      cond: 'Prob ani çöktü (cliff drop)',
+      weak: { fire: weakActive, txt: weakActive ? '✅ Geç tetik' : '❌ Kapalı' },
+      delta: { fire: deltaActive, txt: deltaActive ? '⚡ ERKEN TETİK' : '❌ Kapalı/compat' },
+      action: deltaActive ? (x.pxMode === 'agg' ? '⚡ Hızlı çık' : (x.pxTrailingOn ? '🛡 Bloklu' : '⚡ Çık')) : (weakActive ? '⬇ Geç çık' : 'Beklemede'),
+      col: deltaActive ? '#f59e0b' : (weakActive ? '#ef4444' : '#94a3b8')
+    },
+    {
+      cond: 'Prob eşik etrafında dalgalı',
+      weak: { fire: weakActive, txt: weakActive ? '⚠️ False-positive riski' : '❌ Kapalı' },
+      delta: { fire: false, txt: 'Δ küçük' },
+      action: weakActive && x.pxMode === 'agg' ? '⬇ Erken çıkar (riskli)' : (weakActive && x.pxTrailingOn ? '🛡 Trailing korur' : 'HOLD'),
+      col: weakActive && x.pxMode === 'agg' ? '#f59e0b' : '#10b981'
+    },
+    {
+      cond: 'Prob düşük + Trailing aktif (Stage 2)',
+      weak: { fire: weakActive, txt: weakActive ? '✅ Tetik' : '❌ Kapalı' },
+      delta: { fire: deltaActive, txt: deltaActive ? '✅ Tetik' : '❌ Kapalı' },
+      action: x.pxMode === 'prot' ? '🛡 BLOKLU — Stage 2 işini yapacak' : '⬇/⚡ Anında çık',
+      col: x.pxMode === 'prot' ? '#3b82f6' : '#ef4444'
+    },
+  ];
+
+  let html = '<table style="width:100%;border-collapse:collapse;font-size:12px;">';
+  html += '<thead><tr style="background:rgba(168,85,247,0.10);">';
+  html += '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid var(--color-border-tertiary);">Senaryo</th>';
+  html += '<th style="padding:6px 8px;text-align:center;border-bottom:1px solid var(--color-border-tertiary);">⬇ Weakness</th>';
+  html += '<th style="padding:6px 8px;text-align:center;border-bottom:1px solid var(--color-border-tertiary);">⚡ Delta</th>';
+  html += '<th style="padding:6px 8px;text-align:left;border-bottom:1px solid var(--color-border-tertiary);">Sonuç</th>';
+  html += '</tr></thead><tbody>';
+  rows.forEach(r => {
+    html += '<tr>';
+    html += `<td style="padding:6px 8px;border-bottom:1px solid var(--color-border-tertiary);">${r.cond}</td>`;
+    html += `<td style="padding:6px 8px;text-align:center;border-bottom:1px solid var(--color-border-tertiary);color:${r.weak.fire ? '#ef4444' : '#94a3b8'};">${r.weak.txt}</td>`;
+    html += `<td style="padding:6px 8px;text-align:center;border-bottom:1px solid var(--color-border-tertiary);color:${r.delta.fire ? '#f59e0b' : '#94a3b8'};">${r.delta.txt}</td>`;
+    html += `<td style="padding:6px 8px;border-bottom:1px solid var(--color-border-tertiary);color:${r.col};font-weight:600;">${r.action}</td>`;
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+
+  // configuration summary
+  html += '<div class="insight" style="margin-top:10px;">';
+  html += '<b>Aktif konfigürasyon:</b> ';
+  const activeBadges = [];
+  if (weakActive) activeBadges.push(`⬇ Weakness Exit (${x.pxMode === 'agg' ? 'Agresif' : 'Korumalı'}, eşik long&lt;${x.pxExitLong.toFixed(2)})`);
+  if (deltaActive) activeBadges.push(`⚡ Delta Exit (pencere=${x.pdxLen} bar, eşik=${x.pdxThr.toFixed(2)})`);
+  if (x.pdxOn && x.compat) activeBadges.push(`<span style="color:#f59e0b;">⚠️ Delta açık ama compat kilidiyle pasif</span>`);
+  if (activeBadges.length === 0) activeBadges.push('Hiçbir prob exit aktif değil.');
+  html += activeBadges.join(' • ');
+  html += '</div>';
+
+  target.innerHTML = html;
+}
+
+function updateProbExitPanel() {
+  setText('px-exit-long-v', val('px-exit-long').toFixed(2));
+  setText('px-exit-short-v', val('px-exit-short').toFixed(2));
+  setText('pdx-len-v', val('pdx-len'));
+  setText('pdx-thr-v', val('pdx-thr').toFixed(2));
+  drawProbExitSim();
+  buildProbExitMatrix();
+}
+
+// ============================================
+// REGIME PANEL
+// ============================================
+function getRegimeParams() {
+  return {
+    fltType: val('flt-type'),
+    chopLen: val('chop-len'),
+    chopThr: val('chop-thr'),
+    erLen: val('er-len'),
+    erThr: val('er-thr'),
+    adxOn: val('adx-on'),
+    adxLen: val('adx-len'),
+    adxThr: val('adx-thr'),
+    adxForce: val('adx-force'),
+    market: val('regime-mkt'),
+  };
+}
+
+function updateRegimeLabels(r) {
+  setText('chop-len-v', r.chopLen);
+  setText('chop-thr-v', r.chopThr);
+  setText('er-len-v', r.erLen);
+  setText('er-thr-v', r.erThr.toFixed(2));
+  setText('adx-len-v', r.adxLen);
+  setText('adx-thr-v', r.adxThr);
+  setText('adx-force-v', r.adxForce);
+}
+
+let regimeCache = null;
+function getSyntheticPrices(market, N = 200) {
+  // deterministic per market
+  const seed = market === 'mixed' ? 1 : market === 'trend' ? 2 : market === 'chop' ? 3 : 4;
+  const prices = []; let v = 100;
+  for (let i = 0; i < N; i++) {
+    let drift, noise;
+    if (market === 'trend') { drift = Math.sin(i * 0.04) * 0.4; noise = Math.sin(i * seed * 0.7) * 0.2; }
+    else if (market === 'chop') { drift = 0; noise = Math.sin(i * 0.5 + seed) * 0.5 + Math.cos(i * 0.7) * 0.3; }
+    else if (market === 'bist') {
+      drift = Math.sin(i * 0.06) * 0.3 * (i > 100 && i < 130 ? 1.8 : 0.5);
+      noise = Math.sin(i * 0.4 + seed) * (i > 100 && i < 130 ? 0.8 : 0.2);
+    } else { // mixed
+      drift = i < 60 ? 0.25 : i < 120 ? -0.05 + Math.sin(i * 0.3) * 0.05 : 0.3;
+      noise = Math.sin(i * 0.5 + seed) * (i > 60 && i < 120 ? 0.5 : 0.2);
+    }
+    v += drift + noise;
+    prices.push(v);
+  }
+  return prices;
+}
+
+function calcCHOP(prices, len) {
+  const out = [];
+  for (let i = 0; i < prices.length; i++) {
+    if (i < len) { out.push(NaN); continue; }
+    let atrSum = 0;
+    let hi = -Infinity, lo = Infinity;
+    for (let j = i - len + 1; j <= i; j++) {
+      if (j > 0) atrSum += Math.abs(prices[j] - prices[j - 1]);
+      hi = Math.max(hi, prices[j]);
+      lo = Math.min(lo, prices[j]);
+    }
+    const range = Math.max(hi - lo, 0.0001);
+    out.push(100 * Math.log10(atrSum / range) / Math.log10(len));
+  }
+  return out;
+}
+
+function calcER(prices, len) {
+  const out = [];
+  for (let i = 0; i < prices.length; i++) {
+    if (i < len) { out.push(NaN); continue; }
+    const change = Math.abs(prices[i] - prices[i - len]);
+    let sumChange = 0;
+    for (let j = i - len + 1; j <= i; j++) sumChange += Math.abs(prices[j] - prices[j - 1]);
+    out.push(change / Math.max(sumChange, 0.0001));
+  }
+  return out;
+}
+
+// Wilder DMI/ADX hesabı — Pine ta.dmi taklidi
+function calcADX(prices, len) {
+  const N = prices.length;
+  const adx = new Array(N).fill(NaN);
+  const dPlusArr = new Array(N).fill(NaN);
+  const dMinusArr = new Array(N).fill(NaN);
+  if (N < len * 2) return { adx, dPlus: dPlusArr, dMinus: dMinusArr };
+
+  // Sentetik OHLC: close=prices, high/low ±0.3 oynaklık
+  const high = prices.map((p, i) => p + Math.abs(Math.sin(i * 0.4)) * 0.4 + 0.1);
+  const low = prices.map((p, i) => p - Math.abs(Math.cos(i * 0.4)) * 0.4 - 0.1);
+
+  const tr = new Array(N).fill(0);
+  const plusDM = new Array(N).fill(0);
+  const minusDM = new Array(N).fill(0);
+  for (let i = 1; i < N; i++) {
+    tr[i] = Math.max(high[i] - low[i], Math.abs(high[i] - prices[i - 1]), Math.abs(low[i] - prices[i - 1]));
+    const upMove = high[i] - high[i - 1];
+    const downMove = low[i - 1] - low[i];
+    plusDM[i] = (upMove > downMove && upMove > 0) ? upMove : 0;
+    minusDM[i] = (downMove > upMove && downMove > 0) ? downMove : 0;
+  }
+
+  // Wilder smoothing (RMA)
+  const rma = (arr, period) => {
+    const out = new Array(arr.length).fill(NaN);
+    let sum = 0;
+    for (let i = 1; i <= period; i++) sum += arr[i] || 0;
+    out[period] = sum / period;
+    for (let i = period + 1; i < arr.length; i++) {
+      out[i] = (out[i - 1] * (period - 1) + arr[i]) / period;
+    }
+    return out;
+  };
+
+  const trS = rma(tr, len);
+  const plusDMS = rma(plusDM, len);
+  const minusDMS = rma(minusDM, len);
+
+  const dx = new Array(N).fill(0);
+  for (let i = len; i < N; i++) {
+    const dPlus = trS[i] > 0 ? 100 * plusDMS[i] / trS[i] : 0;
+    const dMinus = trS[i] > 0 ? 100 * minusDMS[i] / trS[i] : 0;
+    dPlusArr[i] = dPlus;
+    dMinusArr[i] = dMinus;
+    const sum = dPlus + dMinus;
+    dx[i] = sum > 0 ? 100 * Math.abs(dPlus - dMinus) / sum : 0;
+  }
+
+  const adxRaw = rma(dx, len);
+  for (let i = 0; i < N; i++) adx[i] = adxRaw[i];
+  return { adx, dPlus: dPlusArr, dMinus: dMinusArr };
+}
+
+function drawRegime(r) {
+  const c = $('regime-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 220;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 30;
+
+  const tc = tcol();
+  const prices = getSyntheticPrices(r.market, 200);
+  const chop = calcCHOP(prices, r.chopLen);
+  const er = calcER(prices, r.erLen);
+  const adxData = calcADX(prices, r.adxLen);
+  const adx = adxData.adx;
+  const dPlus = adxData.dPlus;
+  const dMinus = adxData.dMinus;
+
+  // CHOP/ER bloku — turuncu (yatay piyasa)
+  const choppy = prices.map((_, i) => {
+    if (r.fltType === 'none') return false;
+    if (r.fltType === 'chop') return chop[i] > r.chopThr;
+    if (r.fltType === 'er') return er[i] < r.erThr;
+    return chop[i] > r.chopThr || er[i] < r.erThr;
+  });
+
+  // ADX bloku — mavi (zayıf yön gücü)
+  const adxBlocked = prices.map((_, i) => {
+    if (!r.adxOn || isNaN(adx[i])) return false;
+    return adx[i] < r.adxThr;
+  });
+
+  // Toplam blok: ya CHOP ya ADX bloklar
+  const anyBlock = prices.map((_, i) => choppy[i] || adxBlocked[i]);
+
+  const N = prices.length;
+  const xStep = (W - pad - 10) / N;
+  const yMin = Math.min(...prices) - 1, yMax = Math.max(...prices) + 1;
+
+  // background bands per bar — CHOP turuncu, ADX mavi, ikisi birden mor tonlu
+  for (let i = 0; i < N; i++) {
+    if (choppy[i] && adxBlocked[i]) {
+      ctx.fillStyle = 'rgba(168,85,247,0.22)'; // mor — ikisi birden
+    } else if (choppy[i]) {
+      ctx.fillStyle = 'rgba(245,158,11,0.18)'; // turuncu — CHOP/ER
+    } else if (adxBlocked[i]) {
+      ctx.fillStyle = 'rgba(59,130,246,0.18)'; // mavi — ADX zayıf
+    } else continue;
+    ctx.fillRect(pad + i * xStep, 4, xStep + 0.5, H - 26);
+  }
+
+  // grid
+  ctx.strokeStyle = 'rgba(128,128,128,0.12)'; ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 3; g++) {
+    const v = yMin + (yMax - yMin) * (g / 3);
+    const py = H - 22 - (v - yMin) / (yMax - yMin) * (H - 40);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(0), pad - 3, py + 3);
+  }
+
+  // price
+  ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = pad + i * xStep;
+    const py = H - 22 - (prices[i] - yMin) / (yMax - yMin) * (H - 40);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // ADX hattı (alt mini panel olarak değil, bilgi olarak)
+  if (r.adxOn) {
+    const adxValid = adx.filter(v => !isNaN(v));
+    const avgAdx = adxValid.length ? adxValid.reduce((a,b) => a+b, 0) / adxValid.length : 0;
+    ctx.fillStyle = '#3b82f6'; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText('Ort. ADX: ' + avgAdx.toFixed(1), W - 8, 14);
+  }
+
+  // legend
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+  const blockedChop = choppy.filter(Boolean).length;
+  const blockedAdx = adxBlocked.filter(Boolean).length;
+  const blockedAny = anyBlock.filter(Boolean).length;
+  const pctChop = (blockedChop / N * 100).toFixed(0);
+  const pctAdx = (blockedAdx / N * 100).toFixed(0);
+  const pctAny = (blockedAny / N * 100).toFixed(0);
+
+  let legendY = 14;
+  ctx.fillText('CHOP/ER bloku: %' + pctChop + ' bar', pad + 4, legendY);
+  if (r.adxOn) {
+    legendY += 13;
+    ctx.fillText('ADX bloku: %' + pctAdx + ' bar', pad + 4, legendY);
+    legendY += 13;
+    ctx.fillStyle = '#a855f7';
+    ctx.fillText('Toplam engel: %' + pctAny + ' bar', pad + 4, legendY);
+  }
+
+  let ins = 'Filtre: ' + r.fltType;
+  if (r.adxOn) ins += ' + ADX(' + r.adxThr + ')';
+  ins += '. CHOP/ER engel: %' + pctChop;
+  if (r.adxOn) ins += ', ADX engel: %' + pctAdx + ', toplam engel: %' + pctAny;
+  ins += '. ';
+  const totalPct = parseFloat(pctAny);
+  if (totalPct > 65) ins += '⚠️ Çok fazla bloklanıyor — eşikleri gevşet (CHOP düşür / ER artır / ADX eşiği indir).';
+  else if (totalPct < 10 && (r.fltType !== 'none' || r.adxOn)) ins += '⚠️ Filtreler etkisiz — eşikleri sıkılaştır veya filtreyi kapat (overhead boşa).';
+  else ins += 'Sağlıklı bant.';
+  $('regime-insight').textContent = ins;
+}
+
+function drawDChop(r) {
+  const c = $('dchop-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 160;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 30;
+  const tc = tcol();
+
+  // Pine'daki gerçek mantığı taklit:
+  // is_choppy iken duration++ , exit edince avg = avg*0.95 + duration*0.05
+  // dynamic_chop_wait = round(min(30, max(3, avg * 0.5)))
+  const prices = getSyntheticPrices(r.market, 200);
+  const chop = calcCHOP(prices, r.chopLen);
+  const er = calcER(prices, r.erLen);
+
+  const isChoppyAt = (i) => {
+    if (r.fltType === 'none') return false;
+    if (r.fltType === 'chop') return chop[i] > r.chopThr;
+    if (r.fltType === 'er') return er[i] < r.erThr;
+    return chop[i] > r.chopThr || er[i] < r.erThr;
+  };
+
+  let duration = 0;
+  let avg = 10.0;
+  const dynSeries = [];
+  for (let i = 0; i < prices.length; i++) {
+    if (isChoppyAt(i)) {
+      duration += 1;
+    } else {
+      if (duration > 0) avg = avg * 0.95 + duration * 0.05;
+      duration = 0;
+    }
+    const dyn = Math.round(Math.min(30, Math.max(3, avg * 0.5)));
+    dynSeries.push(dyn);
+  }
+
+  const N = dynSeries.length;
+  const xStep = (W - pad - 10) / N;
+  const yMin = 0, yMax = 30;
+
+  ctx.strokeStyle = 'rgba(128,128,128,0.15)'; ctx.lineWidth = 0.5;
+  [0, 10, 20, 30].forEach(y => {
+    const py = H - 18 - y / yMax * (H - 36);
+    ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(W - 8, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(y, pad - 3, py + 3);
+  });
+
+  // Sabit stubborn_timeout referansı (kullanıcı seçimi)
+  const stubTo = parseInt(val('stub-to')) || 10;
+  const refY = H - 18 - Math.min(30, stubTo) / yMax * (H - 36);
+  ctx.strokeStyle = 'rgba(245,158,11,0.5)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(pad, refY); ctx.lineTo(W - 8, refY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#f59e0b'; ctx.textAlign = 'left'; ctx.font = '10px sans-serif';
+  ctx.fillText('sabit stubborn_timeout=' + stubTo, pad + 4, refY - 3);
+
+  ctx.strokeStyle = '#534AB7'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const py = H - 18 - dynSeries[i] / yMax * (H - 36);
+    if (i === 0) ctx.moveTo(pad, py); else ctx.lineTo(pad + i * xStep, py);
+  }
+  ctx.stroke();
+
+  const finalDyn = dynSeries[N - 1];
+  ctx.fillStyle = '#534AB7'; ctx.textAlign = 'right'; ctx.font = 'bold 11px sans-serif';
+  ctx.fillText('dyn=' + finalDyn + ' bar', W - 8, 14);
+
+  $('dchop-insight').textContent =
+    'Formül: dyn = round(clamp(avg_chop_duration × 0.5, 3, 30)). Şu anki: ' + finalDyn + ' bar (sabit ' + stubTo + ' bar yerine). ' +
+    (val('dyn-chop')
+      ? '✅ Dynamic CHOP timeout aktif → stubborn modda dyn değeri kullanılır.'
+      : '⚪ Dynamic CHOP timeout kapalı → sabit ' + stubTo + ' bar kullanılır (Entry sekmesinden açılabilir).');
+}
+
+function buildRegimeTree() {
+  const r = getRegimeParams();
+  const html = `
+    <div class="tree-node entry">Sinyal geldi (raw_long_signal / raw_short_signal)</div>
+    <div class="tree-indent">
+      <div class="tree-node condition ${r.adxOn ? '' : 'skip'}">1️⃣ ADX kapısı: ADX > ${r.adxThr}? (use_adx_filter)
+        <div class="tree-indent">
+          <div class="tree-node action skip">→ ADX altında: sinyal bloklanır (adx_pass_level=false)</div>
+        </div>
+      </div>
+      <div class="tree-node condition ${r.adxOn ? '' : 'skip'}">2️⃣ Yön zorunluluğu: ADX > ${r.adxForce}? (paralel kontrol)
+        <div class="tree-indent">
+          <div class="tree-node action">→ ADX > ${r.adxForce}: <b>long sinyal için +DI > -DI ZORUNLU</b>, short için tersi</div>
+          <div class="tree-node action skip">→ ADX ≤ ${r.adxForce}: yön kontrolü serbest, sadece eşik geçmesi yeterli</div>
+        </div>
+      </div>
+      <div class="tree-node condition ${r.fltType !== 'none' ? '' : 'skip'}">3️⃣ Rejim filtresi (CHOP/ER): is_choppy?
+        <div class="tree-indent">
+          <div class="tree-node action skip">→ ${r.fltType === 'chop' ? 'CHOP > ' + r.chopThr : r.fltType === 'er' ? 'ER < ' + r.erThr : r.fltType === 'both' ? 'CHOP > ' + r.chopThr + ' OR ER < ' + r.erThr : 'kapalı'} ise işlem bloklanır, block_count++</div>
+        </div>
+      </div>
+      <div class="tree-node action">Tüm filtreler ok → giriş tetiklenir (adx_ok_long/short hesaplanır)</div>
+    </div>
+    <div class="card-sub" style="margin-top:8px;">
+      <b>Pine kodu:</b> <code>adx_ok_long = adx_pass_level AND (adx_dir_mandatory ? trend_up : true)</code>. Yani 1️⃣ ve 2️⃣ kontrolleri AYNI ANDA çalışır — 2️⃣ yi 1️⃣ in altına gömme. ADX eşiği zaten 2️⃣ den büyük ise force devreye giremez (çünkü 1️⃣ önce iptal eder).
+      ${r.adxOn && r.adxThr > r.adxForce ? '<br><b style="color:#ef4444;">⚠️ Şu an: adx_thresh (' + r.adxThr + ') > adx_force_thresh (' + r.adxForce + ') → force kontrol PRATİKTE devreye giremez.</b>' : ''}
+    </div>
+  `;
+  $('regime-tree').innerHTML = html;
+}
+
+function updateRegimePanel() {
+  const r = getRegimeParams();
+  updateRegimeLabels(r);
+  drawRegime(r);
+  drawDChop(r);
+  buildRegimeTree();
+
+  let adxIns = '';
+  if (!r.adxOn) adxIns = 'ADX kapalı.';
+  else {
+    adxIns = 'Eşik=' + r.adxThr + ' (giriş kapısı), Force=' + r.adxForce + ' (yön zorunluluğu). ';
+    if (r.adxThr > r.adxForce) adxIns += '⚠️ Eşik > Force → force devreye giremez.';
+    else if (r.adxThr < 15) adxIns += '⚠️ Eşik çok düşük, neredeyse her bar geçer.';
+  }
+  $('adx-insight').textContent = adxIns;
+}
+
+// ============================================
+// REVERSE PANEL
+// ============================================
+function getRevParams() {
+  return {
+    mode: val('rev-mode'),
+    blockBeh: val('rev-block'),
+    profitPct: val('rev-pct'),
+    profitMode: val('rev-pm'),
+    atrMult: val('rev-atr'),
+    hyst: val('rev-hyst'),
+    hystPct: val('rev-hp'),
+    pnl: val('rev-pnl'),
+  };
+}
+
+function updateRevLabels(rv) {
+  setText('rev-pct-v', rv.profitPct.toFixed(1) + '%');
+  setText('rev-atr-v', rv.atrMult.toFixed(1));
+  setText('rev-hp-v', rv.hystPct.toFixed(1) + '%');
+  setText('rev-pnl-v', (rv.pnl >= 0 ? '+' : '') + rv.pnl.toFixed(1) + '%');
+}
+
+function evalReverseAction(mode, pnl, threshold) {
+  const inProfit = pnl > threshold;
+  if (mode === 'normal') return { act: 'REVERSE', col: '#3b82f6', desc: 'Pozisyon kapatılır + ters yön açılır' };
+  if (mode === 'closeonly') return { act: 'KAPAT', col: '#94a3b8', desc: 'Pozisyon kapatılır, yeni giriş yok' };
+  if (mode === 'pare') return { act: 'KAPAT + PARE', col: '#0d9488', desc: 'Kapatılır, kırılım bekler' };
+  if (mode === 'protect') return inProfit
+    ? { act: 'HOLD', col: '#10b981', desc: 'Kâr koruma → ters sinyal yok sayılır' }
+    : { act: 'REVERSE', col: '#3b82f6', desc: 'Kârda değil → reverse yapılır' };
+  if (mode === 'profitpare') return inProfit
+    ? { act: 'KAPAT + PARE', col: '#0d9488', desc: 'Kârda → kapat, kırılım bekle' }
+    : { act: 'REVERSE', col: '#3b82f6', desc: 'Kârda değil → reverse' };
+  if (mode === 'sc') return inProfit
+    ? { act: 'SC + BREAKOUT BEKLE', col: '#a855f7', desc: 'Smart close → kırılım level oluştur' }
+    : { act: 'REVERSE', col: '#3b82f6', desc: 'Kârda değil → reverse' };
+  return { act: '?', col: '#94a3b8', desc: '' };
+}
+
+function drawRevScenario(rv) {
+  const c = $('rev-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 300, H = 160;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const pad = 25;
+  const tc = tcol();
+
+  const threshold = rv.profitMode === 'pct' ? rv.profitPct : rv.atrMult * 0.7;
+  const action = evalReverseAction(rv.mode, rv.pnl, threshold);
+
+  // big action box
+  ctx.fillStyle = action.col + '22';
+  ctx.fillRect(pad, 20, W - pad - 8, H - 40);
+  ctx.strokeStyle = action.col; ctx.lineWidth = 2;
+  ctx.strokeRect(pad, 20, W - pad - 8, H - 40);
+
+  ctx.fillStyle = action.col; ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText(action.act, W / 2, H / 2 - 4);
+  ctx.fillStyle = tcolPri(); ctx.font = '11px sans-serif';
+  ctx.fillText(action.desc, W / 2, H / 2 + 18);
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif';
+  ctx.fillText('Eşik: ' + threshold.toFixed(2) + '% | PnL: ' + (rv.pnl >= 0 ? '+' : '') + rv.pnl.toFixed(1) + '% | Kâr durumu: ' + (rv.pnl > threshold ? 'KÂRDA' : 'KÂRDA DEĞİL'), W / 2, H - 10);
+
+  let ins = 'Reverse mode: <b>' + rv.mode + '</b>. ';
+  if (rv.hyst) ins += 'Hysteresis aktif (' + rv.hystPct + '% buffer) → kâr eşiği aşıldıktan sonra geri inerken buffer kullanır.';
+  $('rev-insight').innerHTML = ins;
+}
+
+function buildRevTree(rv) {
+  const threshold = rv.profitMode === 'pct' ? rv.profitPct : rv.atrMult * 0.7;
+  const inProfit = rv.pnl > threshold;
+  const html = `
+    <div class="tree-node entry"><b>Long pozisyondayken raw_short_signal geldi (veya tersi)</b></div>
+    <div class="tree-indent">
+      <div class="tree-node condition">should_act_on_opposite? (= reverse_mode != "Kârdayken Koru" VEYA kârda değil)</div>
+      <div class="tree-indent">
+        <div class="tree-node condition ${rv.mode === 'sc' && inProfit ? '' : 'skip'}">force_close_sc? (Smart Close, kârda)
+          <div class="tree-indent">
+            <div class="tree-node action">→ strategy.close + sc_ref_price = close + breakout pending</div>
+            <div class="tree-node action">→ Eski yön ${val('sc-block')} bar bloklanır</div>
+          </div>
+        </div>
+        <div class="tree-node condition">stubborn_timeout/hard_stop?
+          <div class="tree-indent"><div class="tree-node action">→ strategy.close, last_action_type = STUBBORN</div></div>
+        </div>
+        <div class="tree-node condition ${(rv.mode === 'normal' || (rv.mode === 'protect' && !inProfit) || (rv.mode === 'profitpare' && !inProfit) || (rv.mode === 'sc' && !inProfit)) ? '' : 'skip'}">allow_rev_now + ¬entry_protection?
+          <div class="tree-indent">
+            <div class="tree-node action">reverse_short_possible (filtreler ok)? → strategy.entry("Short", REV)</div>
+            <div class="tree-node action ${val('rev-block') === 'close' ? '' : 'skip'}">Aksi → CloseOnlyIfBlocked = close</div>
+          </div>
+        </div>
+        <div class="tree-node condition ${(rv.mode === 'pare' || (rv.mode === 'profitpare' && inProfit)) ? '' : 'skip'}">close_and_pare? → strategy.close + PARE pending arm</div>
+        <div class="tree-node condition ${rv.mode === 'closeonly' ? '' : 'skip'}">close_no_reentry? → strategy.close</div>
+      </div>
+    </div>
+  `;
+  $('rev-tree').innerHTML = html;
+}
+
+function drawRevMap(rv) {
+  const c = $('rev-map-canvas'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 320;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+
+  const tc = tcol();
+  const tcp = tcolPri();
+  const threshold = rv.profitMode === 'pct' ? rv.profitPct : rv.atrMult * 0.7;
+  const hyst = rv.hyst ? rv.hystPct : 0;
+
+  const modes = [
+    { id: 'normal',     name: 'Normal (Direkt Reverse)' },
+    { id: 'closeonly',  name: 'Sadece Kapat' },
+    { id: 'pare',       name: 'Kapat + PA Re-Entry' },
+    { id: 'protect',    name: 'Kârdayken Koru' },
+    { id: 'profitpare', name: 'Kârdayken Kapat + PARE' },
+    { id: 'sc',         name: 'Smart Close (SC Breakout)' },
+  ];
+
+  const labelW = 180;
+  const padL = labelW + 10;
+  const padR = 14;
+  const padT = 28;
+  const padB = 38;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+  const rowH = plotH / modes.length;
+
+  const xMin = -5, xMax = 5;
+  const xToPx = (v) => padL + (v - xMin) / (xMax - xMin) * plotW;
+
+  ctx.fillStyle = 'rgba(128,128,128,0.04)';
+  ctx.fillRect(padL, padT, plotW, plotH);
+
+  ctx.strokeStyle = 'rgba(128,128,128,0.15)'; ctx.lineWidth = 0.5;
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  for (let v = xMin; v <= xMax; v += 1) {
+    const px = xToPx(v);
+    ctx.beginPath(); ctx.moveTo(px, padT); ctx.lineTo(px, padT + plotH); ctx.stroke();
+    ctx.fillText((v >= 0 ? '+' : '') + v + '%', px, padT + plotH + 14);
+  }
+  ctx.strokeStyle = 'rgba(128,128,128,0.4)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(xToPx(0), padT); ctx.lineTo(xToPx(0), padT + plotH); ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(168,85,247,0.6)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(xToPx(threshold), padT); ctx.lineTo(xToPx(threshold), padT + plotH); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#a855f7'; ctx.textAlign = 'left'; ctx.font = '10px sans-serif';
+  ctx.fillText('eşik=' + threshold.toFixed(2) + '%', xToPx(threshold) + 4, padT - 6);
+
+  const pnlPx = xToPx(rv.pnl);
+
+  modes.forEach((m, i) => {
+    const yTop = padT + i * rowH + 4;
+    const yBot = padT + (i + 1) * rowH - 4;
+    const segH = yBot - yTop;
+    const yMid = (yTop + yBot) / 2;
+
+    ctx.fillStyle = m.id === rv.mode ? tcp : tc;
+    ctx.font = m.id === rv.mode ? 'bold 11px sans-serif' : '11px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(m.name, padL - 12, yMid + 4);
+
+    if (m.id === rv.mode) {
+      ctx.fillStyle = '#ef4444'; ctx.textAlign = 'left'; ctx.font = '12px sans-serif';
+      ctx.fillText('▶', 4, yMid + 4);
+    }
+
+    const stepW = 1.2;
+    for (let x = padL; x < padL + plotW; x += stepW) {
+      const pnlAt = xMin + (x - padL) / plotW * (xMax - xMin);
+      const a = evalReverseAction(m.id, pnlAt, threshold);
+      ctx.fillStyle = a.col + 'cc';
+      ctx.fillRect(x, yTop, stepW + 0.6, segH);
+    }
+
+    if (rv.hyst && (m.id === 'protect' || m.id === 'profitpare' || m.id === 'sc')) {
+      const lo = xToPx(threshold - hyst);
+      const hi = xToPx(threshold);
+      ctx.fillStyle = 'rgba(255,255,255,0.18)';
+      ctx.fillRect(lo, yTop, hi - lo, segH);
+      ctx.strokeStyle = 'rgba(168,85,247,0.5)'; ctx.setLineDash([2,2]); ctx.lineWidth = 0.5;
+      ctx.strokeRect(lo, yTop, hi - lo, segH);
+      ctx.setLineDash([]);
+    }
+
+    ctx.strokeStyle = 'rgba(128,128,128,0.2)'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(padL, yBot + 2); ctx.lineTo(padL + plotW, yBot + 2); ctx.stroke();
+
+    const curAct = evalReverseAction(m.id, rv.pnl, threshold);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 4;
+    ctx.fillText(curAct.act, pnlPx, yMid + 4);
+    ctx.shadowBlur = 0;
+  });
+
+  // PnL dikey çizgisi (üstte çiz ki diğer her şeyin üzerinde olsun)
+  ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.8;
+  ctx.beginPath(); ctx.moveTo(pnlPx, padT - 4); ctx.lineTo(pnlPx, padT + plotH + 4); ctx.stroke();
+  ctx.fillStyle = '#ef4444'; ctx.textAlign = 'center'; ctx.font = 'bold 10px sans-serif';
+  ctx.fillText('PnL ' + (rv.pnl >= 0 ? '+' : '') + rv.pnl.toFixed(1) + '%', pnlPx, padT - 6);
+
+  ctx.fillStyle = tc; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('Açık Pozisyon PnL (%)', padL + plotW / 2, H - 6);
+}
+
+function updateRevPanel() {
+  const rv = getRevParams();
+  updateRevLabels(rv);
+  drawRevScenario(rv);
+  drawRevMap(rv);
+  buildRevTree(rv);
+}
+
+// ============================================
+// DIAGNOSIS PANEL
+// ============================================
+function getAllParams() { return Object.assign({}, getSignalParams(), getEntryParams(), getExitParams(), getRegimeParams(), getRevParams()); }
+
+function drawDiagRadar() {
+  const all = getAllParams();
+  const c = $('diag-radar'); const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 280;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const cx = W / 2, cy = H / 2 + 4, R = Math.min(W, H) * 0.35;
+
+  const labels = [
+    'k (sigmoid keskinlik)',
+    'eşik bandı dar?',
+    'reverse agresif?',
+    'exit gevşek?',
+    'filtre fazla sıkı?',
+    'opp+normal çakışma',
+    'EP koruması yok?',
+    'qty toplam >100',
+  ];
+  // exit gevşek? — TP mesafesi ve trailing offset birlikte değerlendirilir.
+  // ATR modu: tp 1→0, 9→1 ; trail 0.3→0, 5→1
+  // Yüzde modu: tp 0.5→0, 30→1 ; trail 0.3→0, 5→1
+  // Acil SL kapalıysa +0.2 ceza, gelişmiş çıkış kapalıysa nötr 0.5
+  let exitLooseScore = 0.5;
+  if (all.advExits) {
+    let tpScore, trScore;
+    if (all.exitCalc === 'atr') {
+      tpScore = clamp((all.s2TpAtr - 1) / 8, 0, 1);
+      trScore = clamp((all.s2TrAtr - 0.3) / 4.7, 0, 1);
+    } else {
+      tpScore = clamp((all.s2TpPct - 0.5) / 29.5, 0, 1);
+      trScore = clamp((all.s2TrPct - 0.3) / 4.7, 0, 1);
+    }
+    exitLooseScore = (tpScore * 0.6) + (trScore * 0.4);
+    if (!all.emgOn) exitLooseScore = clamp(exitLooseScore + 0.2, 0, 1);
+  }
+
+  const scores = [
+    all.coreModel === '2' ? clamp((all.evoK - 0.1) / 2.9, 0, 1) : 0.3,
+    clamp(1 - (all.thrBuy - all.thrSell) / 0.4, 0, 1),
+    all.mode === 'normal' && !all.epOn ? 1 : 0.3,
+    exitLooseScore,
+    all.fltType === 'both' && all.chopThr < 50 ? 0.9 : all.fltType === 'none' ? 0 : 0.4,
+    all.oppOn && Math.abs(all.oppLong - all.thrBuy) < 0.05 ? 0.9 : 0.2,
+    all.epOn && !all.emgOn ? 1.0 : 0.2,
+    (all.s1Qty + all.s2Qty) > 100 ? 1.0 : 0.2,
+  ];
+
+  const n = labels.length;
+  const tc = tcol();
+  for (let ring = 1; ring <= 3; ring++) {
+    ctx.strokeStyle = 'rgba(128,128,128,0.18)'; ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const ang = (i / n) * Math.PI * 2 - Math.PI / 2;
+      const r = R * (ring / 3);
+      const x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath(); ctx.stroke();
+  }
+
+  for (let i = 0; i < n; i++) {
+    const ang = (i / n) * Math.PI * 2 - Math.PI / 2;
+    ctx.strokeStyle = 'rgba(128,128,128,0.18)'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(ang) * R, cy + Math.sin(ang) * R); ctx.stroke();
+    const lx = cx + Math.cos(ang) * (R + 22), ly = cy + Math.sin(ang) * (R + 18);
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(labels[i], lx, ly);
+  }
+
+  const overall = scores.reduce((a, b) => a + b, 0) / n;
+  const fillCol = overall < 0.35 ? 'rgba(16,185,129,0.22)' : overall < 0.6 ? 'rgba(245,158,11,0.22)' : 'rgba(239,68,68,0.22)';
+  const strokeCol = overall < 0.35 ? '#10b981' : overall < 0.6 ? '#f59e0b' : '#ef4444';
+  ctx.fillStyle = fillCol; ctx.strokeStyle = strokeCol; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const ang = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const r = R * scores[i];
+    const x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+
+  const lvl = overall < 0.35 ? 'Düşük' : overall < 0.6 ? 'Orta' : 'Yüksek';
+  $('diag-radar-insight').textContent = 'Birleşik risk: ' + Math.round(overall * 100) + '% (' + lvl + '). En büyük katkıyı: ' + labels[scores.indexOf(Math.max(...scores))];
+}
+
+function buildInteractionMatrix() {
+  const all = getAllParams();
+  const interactions = [
+    { a: 'compat_v843_mode (açık)', b: 'fat_tail / recursive prior / prob_delta_exit / dyn_chop', state: all.compat ? 'bad' : 'ok', txt: all.compat ? 'Yeni modüller kapatıldı (V8.4.3 davranışı)' : 'Yeni modüller aktif olabilir' },
+    { a: 'use_advanced_exits', b: 'use_emergency_sl', state: all.advExits || all.emgOn ? 'ok' : 'bad', txt: !all.advExits && !all.emgOn ? 'Pozisyon TAMAMEN korumasız!' : 'En az bir koruma var' },
+    { a: 'Stage 1 qty', b: 'Stage 2 qty', state: (all.s1Qty + all.s2Qty) > 100 ? 'warn' : 'ok', txt: (all.s1Qty + all.s2Qty) > 100 ? 'Toplam %' + (all.s1Qty + all.s2Qty) + ' → S2 kısılır' : 'Toplam %' + (all.s1Qty + all.s2Qty) },
+    { a: 'use_entry_protection', b: 'use_emergency_sl', state: all.epOn && !all.emgOn ? 'bad' : 'ok', txt: all.epOn && !all.emgOn ? 'EP açık + acil SL kapalı = ölümcül' : 'Uyumlu' },
+    { a: 'reverse_mode = SC', b: 'use_pa_reentry', state: all.mode === 'sc' && !all.scPaReentry ? 'warn' : 'ok', txt: all.mode === 'sc' && !all.scPaReentry ? 'SC kapatır ama re-entry yok → işlem yarıda kalır' : 'Uyumlu' },
+    { a: 'opp_logic_type = level', b: 'cooldown', state: all.oppOn && all.oppLogic === 'level' && all.oppCd < 5 ? 'warn' : 'ok', txt: all.oppOn && all.oppLogic === 'level' && all.oppCd < 5 ? 'Level + kısa cd → aşırı işlem' : 'OK' },
+    { a: 'pivot_filter', b: 'pivot_flex', state: !all.pivotFlt && all.pivotFlex ? 'warn' : 'ok', txt: !all.pivotFlt ? 'Pivot kapalıysa flex etkisiz' : 'Aktif' },
+    { a: 'CHOP+ER ikisi', b: 'işlem oranı', state: all.fltType === 'both' && all.chopThr < 50 ? 'warn' : 'ok', txt: all.fltType === 'both' && all.chopThr < 50 ? 'İki filtre + sıkı eşik → çoğu bar bloklu' : 'Dengeli' },
+    { a: 'core_model = Klasik', b: 'evo_dyn_thresh', state: all.coreModel === '1' && all.evoDynThr ? 'ok' : 'ok', txt: 'Eşikler vol ile dinamik (motor bağımsız)' },
+    { a: 'reverse_mode = Hold', b: 'block_behavior', state: 'ok', txt: 'Reverse engellense bile davranış: ' + all.blockBeh },
+  ];
+
+  let html = '<table style="width:100%;border-collapse:collapse;font-size:11px;">';
+  html += '<tr style="background:var(--color-background-primary);"><th style="padding:6px;text-align:left;border-bottom:0.5px solid var(--color-border-tertiary);">Modül A</th><th style="padding:6px;text-align:left;border-bottom:0.5px solid var(--color-border-tertiary);">Etkileşim</th><th style="padding:6px;text-align:left;border-bottom:0.5px solid var(--color-border-tertiary);">Modül B</th><th style="padding:6px;text-align:left;border-bottom:0.5px solid var(--color-border-tertiary);">Durum</th><th style="padding:6px;text-align:left;border-bottom:0.5px solid var(--color-border-tertiary);">Not</th></tr>';
+  interactions.forEach(it => {
+    const cls = 'pill-' + it.state;
+    const lbl = it.state === 'ok' ? 'OK' : it.state === 'warn' ? 'DİKKAT' : 'ÇAKIŞMA';
+    html += `<tr><td style="padding:6px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);">${it.a}</td><td style="padding:6px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);">↔</td><td style="padding:6px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);">${it.b}</td><td style="padding:6px;border-bottom:0.5px solid var(--color-border-tertiary);"><span class="pill ${cls}">${lbl}</span></td><td style="padding:6px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);">${it.txt}</td></tr>`;
+  });
+  html += '</table>';
+  $('interaction-matrix').innerHTML = html;
+}
+
+function buildFullDiag() {
+  const all = getAllParams();
+  const issues = [], goods = [];
+
+  // signal
+  if (all.coreModel === '2' && all.evoK > 2.0) issues.push('Evo k=' + all.evoK.toFixed(1) + ' çok yüksek — sigmoid neredeyse step function.');
+  if (all.thrBuy - all.thrSell < 0.05) issues.push('Eşik bandı çok dar (' + (all.thrBuy - all.thrSell).toFixed(2) + ') → false sinyaller.');
+  if (all.coreModel !== '1' && all.evoMax - all.evoMin < 15) issues.push('len_max−len_min farkı küçük → adaptif etki ihmal edilebilir.');
+  if (all.coreModel === '1') goods.push('Klasik motor — statik MA, regime farkı yok.');
+
+  // exits
+  if (!all.advExits && !all.emgOn) issues.push('Stage1+2 kapalı VE acil SL kapalı → pozisyon korumasız!');
+  if (all.advExits && all.s1On && (all.s1Qty + all.s2Qty) > 100) issues.push('Stage1 + Stage2 quantity toplamı > 100 → Pine S2\'yi kısacak.');
+  if (all.advExits && all.s2TpAtr < all.s2SlAtr) issues.push('TP × ATR < SL × ATR → risk/ödül oranı 1:1\'in altında.');
+
+  // regime
+  if (all.fltType === 'both' && all.chopThr < 50) issues.push('CHOP+ER ikisi + sıkı eşik → çoğu bar bloklanır.');
+  if (all.fltType === 'none') goods.push('Filtre yok — her sinyal işlenir (overtrading riski).');
+
+  // entry protection
+  if (all.epOn && !all.emgOn) issues.push('Entry Protection açık + Acil SL kapalı → koruma süresince pozisyon kör.');
+
+  // reverse
+  if (all.mode === 'sc' && !all.scPaReentry) issues.push('Reverse=SC ama PA Re-Entry kapalı → SC kapatır, re-entry yok.');
+  if (all.mode === 'normal' && all.epOn && all.epBars > 240) issues.push('Normal reverse + uzun EP (' + all.epBars + ' bar) → reverse büyük olasılıkla bloklanır.');
+
+  // opp
+  if (all.oppOn && Math.abs(all.oppLong - all.thrBuy) < 0.03) issues.push('Opp eşiği normal eşikle çakışıyor → ekstra trade üretmez.');
+
+  // compat
+  if (all.compat) goods.push('V8.4.3 uyumluluk modu açık — yeni modüller kapatıldı, davranış stabilize.');
+  else goods.push('Yeni modüller (fat-tail, recursive prior vb.) aktif olabilir.');
+
+  let html = '';
+  if (issues.length) {
+    html += '<div style="color:var(--color-text-danger);font-weight:500;margin-bottom:6px;">Dikkat noktaları</div>';
+    issues.forEach(i => { html += '<div style="margin-bottom:4px;padding:6px 10px;background:var(--color-background-primary);border-left:2px solid var(--color-border-danger);border-radius:var(--border-radius-sm);font-size:12px;">' + i + '</div>'; });
+  }
+  if (goods.length) {
+    html += '<div style="color:var(--color-text-success);font-weight:500;margin:10px 0 6px;">Sağlıklı ayarlar</div>';
+    goods.forEach(g => { html += '<div style="margin-bottom:4px;padding:6px 10px;background:var(--color-background-primary);border-left:2px solid var(--color-border-success);border-radius:var(--border-radius-sm);font-size:12px;">' + g + '</div>'; });
+  }
+  $('full-diag').innerHTML = html;
+}
+
+function updateDiagPanel() {
+  drawDiagRadar();
+  buildInteractionMatrix();
+  buildFullDiag();
+}
+
+// ============================================
+// MASTER UPDATE
+// ============================================
+function updateAll() {
+  updateSignalPanel();
+  updateEntryPanel();
+  updateExitPanel();
+  updateRegimePanel();
+  updateRevPanel();
+  updateDiagPanel();
+  updateUnifiedPanel();
+}
+
+// ============================================
+// UNIFIED PANEL — tam zincir görünümü
+// ============================================
+function getUnifiedParams() {
+  // Ortak: sinyal motoru parametreleri + rejim + prob exit + lokal kontroller
+  const sig = getSignalParams();
+  const reg = getRegimeParams();
+  const px = getProbExitParams();
+  return {
+    ...sig,
+    fltType: reg.fltType,
+    chopLen: reg.chopLen,
+    chopThr: reg.chopThr,
+    erLen: reg.erLen,
+    erThr: reg.erThr,
+    adxOn: reg.adxOn,
+    adxLen: reg.adxLen,
+    adxThr: reg.adxThr,
+    adxForce: reg.adxForce,
+    pxOn: px.pxOn,
+    pxMode: px.pxMode,
+    pxExitLong: px.pxExitLong,
+    pxExitShort: px.pxExitShort,
+    pdxOn: px.pdxOn,
+    pdxLen: px.pdxLen,
+    pdxThr: px.pdxThr,
+    compat: px.compat,
+    market: val('uni-mkt') || 'mixed',
+    posDir: val('uni-pos') || 'long',
+    trailingOn: val('uni-trailing'),
+    // Fat-tail
+    ftOn: val('ft-on'),
+    ftNu: val('ft-nu'),
+    // Recursive prior
+    rpOn: val('rp-on'),
+    rpBase: val('rp-base'),
+    rpLow: val('rp-low'),
+    // Pivot filter
+    pivotOn: val('uni-pivot-on'),
+    pivotT1: val('uni-pivot-t1'),
+    pivotT2: val('uni-pivot-t2'),
+    pivotT3: val('uni-pivot-t3'),
+    pivotFlex: val('uni-pivot-flex'),
+    pivotFlexValid: val('uni-pf-valid'),
+    barCount: val('uni-bars') || 200,
+  };
+}
+
+function drawUnifiedPosterior(p) {
+  const c = $('uni-posterior'); if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 170;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const tc = tcol();
+  const padL = 38, padR = 12, padT = 12, padB = 22;
+  const plotH = H - padT - padB;
+  const plotW = W - padL - padR;
+  const th = effectiveThresholds(p);
+
+  // Z-skor [-3, 3] → final_prob hesabı (Smart Bayesian klasik posterior eğrisi)
+  // Prior sabit 0.5 varsay (ortalama trend), likelihood = sigmoid(z) veya fat-tail varsa sigmoid(z/tScale)
+  const N = 200;
+  const ftEnabled = p.ftOn && !p.compat && p.coreModel !== '2';
+  const nuSafe = Math.max(p.ftNu || 5.0, 2.1);
+  const tScale = Math.sqrt(nuSafe / (nuSafe - 2));
+  const points = [];
+  const refPoints = []; // referans Gaussian (fat-tail kapalıyken eşittir)
+  for (let i = 0; i < N; i++) {
+    const z = -3 + (i / (N - 1)) * 6;
+    // Aktif (fat-tail varsa scaled)
+    const zUsed = ftEnabled ? z / tScale : z;
+    const like = 1 / (1 + Math.exp(-zUsed));
+    const prior = 0.5;
+    let prob = (prior * like) / (prior * like + (1 - prior) * (1 - like));
+    points.push({ z, prob: Math.max(0.001, Math.min(0.999, prob)) });
+    // Referans (her zaman Gaussian)
+    const likeRef = 1 / (1 + Math.exp(-z));
+    let probRef = (prior * likeRef) / (prior * likeRef + (1 - prior) * (1 - likeRef));
+    refPoints.push({ z, prob: Math.max(0.001, Math.min(0.999, probRef)) });
+  }
+
+  // arkaplan bantları
+  const buyY = padT + (1 - th.buy) * plotH;
+  const sellY = padT + (1 - th.sell) * plotH;
+  ctx.fillStyle = 'rgba(34,197,94,0.10)';
+  ctx.fillRect(padL, padT, plotW, buyY - padT);
+  ctx.fillStyle = 'rgba(239,68,68,0.10)';
+  ctx.fillRect(padL, sellY, plotW, padT + plotH - sellY);
+
+  // grid
+  ctx.strokeStyle = 'rgba(128,128,128,0.12)'; ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 4; g++) {
+    const v = g / 4;
+    const py = padT + (1 - v) * plotH;
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(W - padR, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(2), padL - 3, py + 3);
+  }
+  // x-axis labels
+  ctx.fillStyle = tc; ctx.textAlign = 'center';
+  for (let g = -3; g <= 3; g++) {
+    const px = padL + ((g + 3) / 6) * plotW;
+    ctx.fillText('z=' + g, px, H - 6);
+  }
+
+  // threshold lines
+  ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padL, buyY); ctx.lineTo(W - padR, buyY); ctx.stroke();
+  ctx.strokeStyle = '#ef4444';
+  ctx.beginPath(); ctx.moveTo(padL, sellY); ctx.lineTo(W - padR, sellY); ctx.stroke();
+
+  // exit threshold (kullanıcı yönüne göre)
+  const exitThr = p.posDir === 'long' ? p.pxExitLong : p.pxExitShort;
+  const exitY = padT + (1 - exitThr) * plotH;
+  ctx.strokeStyle = '#f59e0b'; ctx.setLineDash([4, 3]); ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padL, exitY); ctx.lineTo(W - padR, exitY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#f59e0b'; ctx.textAlign = 'left'; ctx.font = '10px sans-serif';
+  ctx.fillText('exit_' + p.posDir + ' ' + exitThr.toFixed(2), padL + 4, exitY - 3);
+
+  // Referans Gaussian eğrisi (fat-tail aktifken kıyas için kesik çizgi)
+  if (ftEnabled) {
+    ctx.strokeStyle = 'rgba(148,163,184,0.6)'; ctx.lineWidth = 1.2;
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath();
+    refPoints.forEach((pt, i) => {
+      const px = padL + ((pt.z + 3) / 6) * plotW;
+      const py = padT + (1 - pt.prob) * plotH;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // posterior curve (aktif)
+  ctx.strokeStyle = '#a855f7'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  points.forEach((pt, i) => {
+    const px = padL + ((pt.z + 3) / 6) * plotW;
+    const py = padT + (1 - pt.prob) * plotH;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+
+  // İçgörü: hangi z-skoru aralığı hangi bölgede
+  const zBuy = points.find(pt => pt.prob >= th.buy);
+  const zSell = [...points].reverse().find(pt => pt.prob <= th.sell);
+  const zExit = p.posDir === 'long'
+    ? [...points].reverse().find(pt => pt.prob <= exitThr)
+    : points.find(pt => pt.prob >= exitThr);
+
+  let ins = `Posterior eğrisi sigmoid şeklinde — z-skoru sıfırdan uzaklaştıkça prob 0/1'e doyar. `;
+  if (ftEnabled) {
+    ins += `<b style="color:#a855f7;">Mor=Fat-tail (ν=${nuSafe.toFixed(1)})</b>, kesik gri=referans Gaussian. Fat-tail z'yi <b>${tScale.toFixed(2)}</b> kat sıkıştırır → eğri yatıklaşır, ekstrem z'lerde bile prob 0/1'e az yaklaşır = <b>daha temkinli motor</b>. `;
+  } else if (p.ftOn && p.compat) {
+    ins += `<span style="color:#f59e0b;">⚠️ Fat-tail toggle açık ama compat_v843_mode da açık → Pine'da pasif.</span> `;
+  } else if (p.coreModel === '2') {
+    ins += `<span style="color:#94a3b8;">(Fat-tail Mod 2/Evo'da kullanılmaz.)</span> `;
+  }
+  ins += `Long sinyal için z &gt; <b>${zBuy ? zBuy.z.toFixed(2) : '∞'}</b> gerekir. `;
+  ins += `Short için z &lt; <b>${zSell ? zSell.z.toFixed(2) : '-∞'}</b>. `;
+  if (p.posDir === 'long' && zExit) {
+    ins += `Long exit z &lt; <b>${zExit.z.toFixed(2)}</b>'de tetiklenir.`;
+  } else if (p.posDir === 'short' && zExit) {
+    ins += `Short exit z &gt; <b>${zExit.z.toFixed(2)}</b>'de tetiklenir.`;
+  }
+
+  // Recursive prior bilgisi
+  if (p.rpOn && !p.compat && p.coreModel !== '2') {
+    const norm = Math.max(0, Math.min(1, ((p.envVol || 1.0) - 0.3) / 2.7));
+    const alphaCur = (p.rpBase || 0.92) + ((p.rpLow || 0.97) - (p.rpBase || 0.92)) * norm;
+    ins += `<br>🔁 <b>Rekürsif prior aktif</b>: vol=${(p.envVol || 1.0).toFixed(1)}x → α=<b>${alphaCur.toFixed(3)}</b> (bellek). α büyük=geçmişe ağırlık, α küçük=hızlı unutur. <span style="color:#94a3b8;">Not: bu eğri tek-bar posterior; rekürsif etki ana zincirde (aşağıda) görünür.</span>`;
+  } else if (p.rpOn && p.compat) {
+    ins += `<br><span style="color:#f59e0b;">⚠️ Rekürsif prior toggle açık ama compat_v843_mode da açık → Pine'da pasif.</span>`;
+  }
+  $('uni-posterior-insight').innerHTML = ins;
+}
+
+function detectFilterBlocks(prices, p) {
+  // Her bar için hangi filtre bloku aktif: chop/er/adx
+  const N = prices.length;
+  const chop = calcCHOP(prices, p.chopLen);
+  const er = calcER(prices, p.erLen);
+  const adxData = calcADX(prices, p.adxLen);
+  const adx = adxData.adx;
+  const dPlus = adxData.dPlus;
+  const dMinus = adxData.dMinus;
+
+  const blocks = [];
+  for (let i = 0; i < N; i++) {
+    let chopBlock = false, adxBlock = false;
+    if (p.fltType === 'chop') chopBlock = chop[i] > p.chopThr;
+    else if (p.fltType === 'er') chopBlock = er[i] < p.erThr;
+    else if (p.fltType === 'both') chopBlock = chop[i] > p.chopThr || er[i] < p.erThr;
+
+    if (p.adxOn && !isNaN(adx[i])) {
+      adxBlock = adx[i] < p.adxThr;
+    }
+    blocks.push({ chopBlock, adxBlock, dPlus: dPlus[i], dMinus: dMinus[i], adxVal: adx[i] });
+  }
+  return blocks;
+}
+
+function computePivotLevels(prices, p) {
+  // Pine: pivot = (H+L+C)/3 önceki gün/seçili TF'den
+  // Sentetikte: her ~40 barda bir "gün" bitiyor varsay
+  // T-1 = en son biten gün, T-2 = öncesi, T-3 = öncesi
+  const N = prices.length;
+  const dayLen = 40;
+  const out = new Array(N).fill(NaN);
+  if (!p.pivotOn) return out;
+
+  // Her gün için pivot seviyesi hesapla
+  const dayPivots = []; // {endIdx, pivot}
+  for (let dStart = 0; dStart < N; dStart += dayLen) {
+    const dEnd = Math.min(dStart + dayLen - 1, N - 1);
+    let hi = -Infinity, lo = Infinity;
+    for (let i = dStart; i <= dEnd; i++) {
+      if (prices[i] > hi) hi = prices[i];
+      if (prices[i] < lo) lo = prices[i];
+    }
+    const cl = prices[dEnd];
+    dayPivots.push({ endIdx: dEnd, pivot: (hi + lo + cl) / 3 });
+  }
+
+  // Her bar için aktif pivot — geçen günlerin T-1/T-2/T-3 ortalaması
+  const useT1 = p.pivotT1, useT2 = p.pivotT2, useT3 = p.pivotT3;
+  const anySelected = useT1 || useT2 || useT3;
+  for (let i = 0; i < N; i++) {
+    // Bu bar hangi günde?
+    const curDay = Math.floor(i / dayLen);
+    if (curDay < 1) continue; // T-1 yok
+    const sums = [];
+    if ((useT1 || !anySelected) && curDay - 1 >= 0) sums.push(dayPivots[curDay - 1].pivot);
+    if (useT2 && curDay - 2 >= 0) sums.push(dayPivots[curDay - 2].pivot);
+    if (useT3 && curDay - 3 >= 0) sums.push(dayPivots[curDay - 3].pivot);
+    if (sums.length === 0 && curDay - 1 >= 0) sums.push(dayPivots[curDay - 1].pivot);
+    if (sums.length > 0) out[i] = sums.reduce((a, b) => a + b, 0) / sums.length;
+  }
+  return out;
+}
+
+function drawUnifiedChain(p) {
+  const c = $('uni-chain'); if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.offsetWidth || 600, H = 460;
+  c.width = W; c.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const tc = tcol();
+
+  const N = Math.round(p.barCount || 200);
+  const prices = getSyntheticPrices(p.market, N);
+  const probs = computeFinalProbSeries(prices, p);
+  const sig = detectSignals(probs, p);
+  const blocks = detectFilterBlocks(prices, p);
+
+  // Pivot seviyelerini hesapla (her bar için aktif pivot, NaN = pivot yok / kapalı)
+  const pivotSeries = computePivotLevels(prices, p);
+
+  // Hangi sinyaller filtreyi geçti?
+  const passedLongs = [];
+  const blockedLongs = [];
+  const passedShorts = [];
+  const blockedShorts = [];
+  // Pivot Flex ile geç gelen girişler (özel sınıf)
+  const flexLongs = [];
+  const flexShorts = [];
+
+  sig.longs.forEach(i => {
+    const b = blocks[i];
+    let blocked = false;
+    let pivotBlocked = false;
+    if (b.chopBlock) blocked = true;
+    if (p.adxOn && b.adxBlock) blocked = true;
+    if (p.adxOn && b.adxVal > p.adxForce && b.dMinus > b.dPlus) blocked = true;
+    // Pivot kontrolü: long için close > pivot olmalı
+    if (p.pivotOn && !isNaN(pivotSeries[i]) && prices[i] <= pivotSeries[i]) {
+      pivotBlocked = true;
+      blocked = true;
+    }
+    if (blocked) {
+      blockedLongs.push(i);
+      // Pivot Flex denemesi: sadece pivot bloku ise (chop/adx temiz) ve flex aktifse
+      if (pivotBlocked && p.pivotFlex && !b.chopBlock && !(p.adxOn && b.adxBlock)) {
+        const maxBar = Math.min(i + (p.pivotFlexValid || 5), prices.length - 1);
+        for (let j = i + 1; j <= maxBar; j++) {
+          if (!isNaN(pivotSeries[j]) && prices[j] > pivotSeries[j]) {
+            // Flex onayı: prob hala üstte mi? (basit kontrol)
+            if (probs[j] > sig.th.buy) {
+              flexLongs.push(j);
+              break;
+            }
+          }
+        }
+      }
+    } else {
+      passedLongs.push(i);
+    }
+  });
+  sig.shorts.forEach(i => {
+    const b = blocks[i];
+    let blocked = false;
+    let pivotBlocked = false;
+    if (b.chopBlock) blocked = true;
+    if (p.adxOn && b.adxBlock) blocked = true;
+    if (p.adxOn && b.adxVal > p.adxForce && b.dPlus > b.dMinus) blocked = true;
+    // Pivot: short için close < pivot
+    if (p.pivotOn && !isNaN(pivotSeries[i]) && prices[i] >= pivotSeries[i]) {
+      pivotBlocked = true;
+      blocked = true;
+    }
+    if (blocked) {
+      blockedShorts.push(i);
+      if (pivotBlocked && p.pivotFlex && !b.chopBlock && !(p.adxOn && b.adxBlock)) {
+        const maxBar = Math.min(i + (p.pivotFlexValid || 5), prices.length - 1);
+        for (let j = i + 1; j <= maxBar; j++) {
+          if (!isNaN(pivotSeries[j]) && prices[j] < pivotSeries[j]) {
+            if (probs[j] < sig.th.sell) {
+              flexShorts.push(j);
+              break;
+            }
+          }
+        }
+      }
+    } else {
+      passedShorts.push(i);
+    }
+  });
+
+  // Exit detection — pozisyon yönüne göre
+  // Pseudo: ilk geçen sinyalden sonra prob serisini alıp prob exit kontrol et
+  const exitInputs = {
+    pxOn: p.pxOn, pxMode: p.pxMode, pxTrailingOn: p.trailingOn,
+    pxExitLong: p.pxExitLong, pxExitShort: p.pxExitShort,
+    pdxOn: p.pdxOn, pdxLen: p.pdxLen, pdxThr: p.pdxThr, compat: p.compat,
+  };
+  // Gerçekçi: ilk geçen sinyalden başla; yoksa bar 30'dan başla
+  const passedOwn = p.posDir === 'long' ? passedLongs : passedShorts;
+  const startBar = passedOwn.length > 0 ? passedOwn[0] : 30;
+  // Probs'u kırp
+  const probsFromEntry = probs.slice(startBar);
+  // detectProbExits long varsayar; short için probs'u 1-x ile aynalayıp tekrar çalıştır
+  let exitsRel = [];
+  if (p.posDir === 'long') {
+    exitsRel = detectProbExits(probsFromEntry, exitInputs);
+  } else {
+    // short: prob azalmak yerine artmak exit'tir → mirror
+    const mirroredProbs = probsFromEntry.map(v => 1 - v);
+    const mirroredInputs = { ...exitInputs, pxExitLong: 1 - p.pxExitShort, pdxThr: p.pdxThr };
+    exitsRel = detectProbExits(mirroredProbs, mirroredInputs);
+  }
+  const exits = exitsRel.map(e => ({ ...e, i: e.i + startBar }));
+  const firstRealExit = exits.find(e => e.type !== 'blocked');
+
+  // Layout: 3 şerit
+  const padL = 38, padR = 12, padT = 12, padB = 24;
+  const totalH = H - padT - padB;
+  const gap = 8;
+  const topH = (totalH - 2 * gap) * 0.40;   // fiyat
+  const midH = (totalH - 2 * gap) * 0.35;   // prob
+  const botH = (totalH - 2 * gap) * 0.25;   // exit timeline
+
+  const topY0 = padT, topY1 = topY0 + topH;
+  const midY0 = topY1 + gap, midY1 = midY0 + midH;
+  const botY0 = midY1 + gap, botY1 = botY0 + botH;
+  const plotW = W - padL - padR;
+  const xStep = plotW / N;
+
+  // ÜST ŞERİT: fiyat + rejim arkaplanı
+  const yMin = Math.min(...prices) - 0.5, yMax = Math.max(...prices) + 0.5;
+
+  // Rejim arkaplanı (her bar)
+  for (let i = 0; i < N; i++) {
+    const b = blocks[i];
+    let bg = null;
+    if (b.chopBlock && b.adxBlock) bg = 'rgba(168,85,247,0.18)';
+    else if (b.chopBlock) bg = 'rgba(245,158,11,0.18)';
+    else if (b.adxBlock) bg = 'rgba(59,130,246,0.18)';
+    if (bg) {
+      ctx.fillStyle = bg;
+      ctx.fillRect(padL + i * xStep, topY0, xStep + 0.5, topH);
+    }
+  }
+
+  // Fiyat çizgisi
+  ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  // Fiyat grid
+  ctx.strokeStyle = 'rgba(128,128,128,0.12)'; ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 3; g++) {
+    const v = yMin + (yMax - yMin) * (g / 3);
+    const py = topY1 - (v - yMin) / (yMax - yMin) * topH;
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(W - padR, py); ctx.stroke();
+    ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(0), padL - 3, py + 3);
+  }
+
+  // Pivot çizgisi (turuncu kademeli stepline) — pivot aktifken
+  if (p.pivotOn) {
+    ctx.strokeStyle = 'rgba(249,115,22,0.85)'; ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    let started = false;
+    for (let i = 0; i < N; i++) {
+      if (isNaN(pivotSeries[i])) { started = false; continue; }
+      const px = padL + i * xStep;
+      const py = topY1 - (pivotSeries[i] - yMin) / (yMax - yMin) * topH;
+      if (!started) { ctx.moveTo(px, py); started = true; }
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+  }
+
+  // Sinyal işaretleri
+  passedLongs.forEach(i => {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    ctx.fillStyle = '#22c55e';
+    ctx.beginPath();
+    ctx.moveTo(px, py + 8); ctx.lineTo(px - 4, py + 14); ctx.lineTo(px + 4, py + 14); ctx.closePath(); ctx.fill();
+  });
+  passedShorts.forEach(i => {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath();
+    ctx.moveTo(px, py - 8); ctx.lineTo(px - 4, py - 14); ctx.lineTo(px + 4, py - 14); ctx.closePath(); ctx.fill();
+  });
+  // Bloklanmış sinyaller — boş daire
+  blockedLongs.forEach(i => {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(px, py + 11, 4, 0, Math.PI * 2); ctx.stroke();
+  });
+  blockedShorts.forEach(i => {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(px, py - 11, 4, 0, Math.PI * 2); ctx.stroke();
+  });
+  // Pivot Flex geç girişler — fuşya elmas
+  flexLongs.forEach(i => {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    ctx.fillStyle = '#d946ef'; ctx.strokeStyle = '#d946ef'; ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(px, py + 6); ctx.lineTo(px - 5, py + 12); ctx.lineTo(px, py + 18); ctx.lineTo(px + 5, py + 12);
+    ctx.closePath(); ctx.fill();
+  });
+  flexShorts.forEach(i => {
+    const px = padL + i * xStep;
+    const py = topY1 - (prices[i] - yMin) / (yMax - yMin) * topH;
+    ctx.fillStyle = '#d946ef'; ctx.strokeStyle = '#d946ef'; ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(px, py - 6); ctx.lineTo(px - 5, py - 12); ctx.lineTo(px, py - 18); ctx.lineTo(px + 5, py - 12);
+    ctx.closePath(); ctx.fill();
+  });
+
+  // Şerit etiketi
+  ctx.fillStyle = tc; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('① Fiyat + Rejim filtresi + Sinyaller', padL + 4, topY0 + 12);
+
+  // ORTA ŞERİT: prob + eşikler + exit eşiği
+  const th = sig.th;
+  const buyY = midY1 - th.buy * midH;
+  const sellY = midY1 - th.sell * midH;
+
+  ctx.fillStyle = 'rgba(34,197,94,0.10)';
+  ctx.fillRect(padL, midY0, plotW, buyY - midY0);
+  ctx.fillStyle = 'rgba(239,68,68,0.10)';
+  ctx.fillRect(padL, sellY, plotW, midY1 - sellY);
+
+  // mid line
+  ctx.strokeStyle = 'rgba(128,128,128,0.4)'; ctx.lineWidth = 0.5;
+  ctx.setLineDash([3, 3]);
+  ctx.beginPath();
+  const midLine = midY1 - 0.5 * midH;
+  ctx.moveTo(padL, midLine); ctx.lineTo(W - padR, midLine); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // buy/sell eşik çizgileri
+  ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padL, buyY); ctx.lineTo(W - padR, buyY); ctx.stroke();
+  ctx.strokeStyle = '#ef4444';
+  ctx.beginPath(); ctx.moveTo(padL, sellY); ctx.lineTo(W - padR, sellY); ctx.stroke();
+
+  // Exit eşik çizgisi (yöne göre)
+  const exitThr = p.posDir === 'long' ? p.pxExitLong : p.pxExitShort;
+  const exitY = midY1 - exitThr * midH;
+  ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1.2;
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath(); ctx.moveTo(padL, exitY); ctx.lineTo(W - padR, exitY); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // prob curve — entry sonrası soluklaşır
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const px = padL + i * xStep;
+    const py = midY1 - probs[i] * midH;
+    // İlk gerçek exit'ten sonra alpha düşür
+    const fadeStart = firstRealExit ? firstRealExit.i : N;
+    if (i === 0) {
+      ctx.strokeStyle = '#a855f7';
+      ctx.moveTo(px, py);
+    } else {
+      if (i === fadeStart) {
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(168,85,247,0.30)';
+        ctx.moveTo(px, py);
+      } else {
+        ctx.lineTo(px, py);
+      }
+    }
+  }
+  ctx.stroke();
+
+  // y-axis labels
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+  ctx.fillText('1.0', padL - 3, midY0 + 4);
+  ctx.fillText('0.5', padL - 3, midLine + 3);
+  ctx.fillText('0.0', padL - 3, midY1 + 3);
+  ctx.fillStyle = '#22c55e'; ctx.fillText('buy ' + th.buy.toFixed(2), padL - 3, buyY + 3);
+  ctx.fillStyle = '#ef4444'; ctx.fillText('sell ' + th.sell.toFixed(2), padL - 3, sellY + 3);
+  ctx.fillStyle = '#f59e0b'; ctx.textAlign = 'left'; ctx.fillText('exit ' + exitThr.toFixed(2), padL + 4, exitY - 3);
+
+  ctx.fillStyle = tc; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('② final_prob + Eşikler', padL + 4, midY0 + 12);
+
+  // ALT ŞERİT: exit timeline
+  // Entry barını işaretle
+  ctx.fillStyle = '#94a3b8'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  if (passedOwn.length > 0) {
+    const ex = padL + startBar * xStep;
+    ctx.strokeStyle = '#94a3b8'; ctx.setLineDash([2, 2]); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(ex, botY0); ctx.lineTo(ex, botY1); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillText('Entry', ex, botY0 + 12);
+  }
+
+  // Exit'leri çiz
+  exits.forEach(e => {
+    const px = padL + e.i * xStep;
+    const cy = botY0 + botH / 2;
+    let icon = '⬇', col = '#ef4444';
+    if (e.type === 'delta') { icon = '⚡'; col = '#f59e0b'; }
+    else if (e.type === 'blocked') { icon = '🛡'; col = '#3b82f6'; }
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(px, cy, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = col; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(icon, px, cy + 22);
+  });
+
+  // baseline
+  ctx.strokeStyle = 'rgba(148,163,184,0.4)'; ctx.lineWidth = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(padL, botY0 + botH / 2); ctx.lineTo(W - padR, botY0 + botH / 2);
+  ctx.stroke();
+
+  ctx.fillStyle = tc; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('③ Exit tetikleri (pozisyon: ' + p.posDir + ')', padL + 4, botY0 + 12);
+
+  // x ekseni — bar numarası
+  ctx.fillStyle = tc; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  for (let g = 0; g <= 4; g++) {
+    const i = Math.round((g / 4) * (N - 1));
+    const px = padL + i * xStep;
+    ctx.fillText('#' + i, px, H - 6);
+  }
+
+  // === İSTATİSTİKLER ===
+  const rawCount = sig.longs.length + sig.shorts.length;
+  const passedCount = passedLongs.length + passedShorts.length;
+  const blockedCount = blockedLongs.length + blockedShorts.length;
+  const blockedBars = blocks.filter(b => b.chopBlock || (p.adxOn && b.adxBlock)).length;
+  const blockPct = ((blockedBars / N) * 100).toFixed(0);
+
+  setText('uni-s-raw', rawCount);
+  setText('uni-s-passed', passedCount);
+  setText('uni-s-blocked', blockedCount);
+  setText('uni-s-flex', flexLongs.length + flexShorts.length);
+  setText('uni-s-firstexit', firstRealExit ? '#' + firstRealExit.i : '—');
+  setText('uni-s-exittype', firstRealExit ? (firstRealExit.type === 'weak' ? '⬇ Weakness' : '⚡ Delta') : '—');
+  setText('uni-s-blockpct', blockPct + '%');
+
+  // === BİRLEŞİK İÇGÖRÜ ===
+  const ins = [];
+  // 1) Sinyal sağlığı
+  if (rawCount === 0) {
+    ins.push('🔴 <b>Motor hiç sinyal üretmedi</b> — eşikler çok dar veya prob tetiklenmiyor. <code>thresh_buy/sell</code>\'i 0.5\'e yaklaştır veya motoru değiştir.');
+  } else if (rawCount > 25) {
+    ins.push('🟡 <b>Aşırı ham sinyal (' + rawCount + ')</b> — eşikleri genişlet, aksi halde overtrading riski.');
+  } else {
+    ins.push('🟢 Ham sinyal sayısı sağlıklı (' + rawCount + ').');
+  }
+
+  // 2) Filtre etkisi
+  const filterRatio = rawCount > 0 ? (blockedCount / rawCount) : 0;
+  if (rawCount > 0) {
+    if (filterRatio > 0.7) {
+      ins.push('🔴 <b>Filtreler sinyallerin %' + (filterRatio * 100).toFixed(0) + '\'ini blokluyor</b> — motor + filtre uyumsuz. Ya filtreleri gevşet (CHOP eşiğini yükselt, ADX eşiğini düşür) ya da motoru daha seçici yap.');
+    } else if (filterRatio < 0.1 && p.fltType !== 'none') {
+      ins.push('🟡 Filtreler neredeyse hiç çalışmıyor (%' + (filterRatio * 100).toFixed(0) + ' blok) — ya overhead ya da filtre eşikleri çok gevşek.');
+    } else {
+      ins.push('🟢 Filtre dengesi iyi (%' + (filterRatio * 100).toFixed(0) + ' sinyal blok edildi).');
+    }
+  }
+
+  // 3) Rejim — bar bazlı blok yoğunluğu
+  if (parseFloat(blockPct) > 65) {
+    ins.push('⚠️ Barların <b>%' + blockPct + '\'i</b> filtre tarafından bloklu — pozisyon açma şansı çok düşük. Filtreleri gevşet.');
+  }
+
+  // 3b) Pivot etkisi
+  if (p.pivotOn) {
+    const totalFlex = flexLongs.length + flexShorts.length;
+    if (totalFlex > 0) {
+      ins.push('📏 <b>Pivot Flex ' + totalFlex + ' geç giriş</b> kurtardı (◆ fuşya elmaslar). Bu sinyaller pivot doğru tarafa geçince tetiklendi.');
+    }
+    // Kaç sinyal sadece pivot yüzünden bloklanmış?
+    let pivotOnlyBlocks = 0;
+    sig.longs.forEach(i => {
+      const b = blocks[i];
+      if (b.chopBlock) return;
+      if (p.adxOn && b.adxBlock) return;
+      if (!isNaN(pivotSeries[i]) && prices[i] <= pivotSeries[i]) pivotOnlyBlocks++;
+    });
+    sig.shorts.forEach(i => {
+      const b = blocks[i];
+      if (b.chopBlock) return;
+      if (p.adxOn && b.adxBlock) return;
+      if (!isNaN(pivotSeries[i]) && prices[i] >= pivotSeries[i]) pivotOnlyBlocks++;
+    });
+    if (pivotOnlyBlocks > 0) {
+      const flexRescued = totalFlex;
+      const lostToPivot = pivotOnlyBlocks - flexRescued;
+      if (lostToPivot > 0 && !p.pivotFlex) {
+        ins.push('💡 <b>' + lostToPivot + '</b> sinyal sadece pivot yönü uymadığı için kaybedildi → <code>use_pivot_flex</code> aç, geç gelen kabulle bunları geri alabilirsin.');
+      } else if (lostToPivot > 0 && p.pivotFlex) {
+        ins.push('💡 Pivot Flex açık ama <b>' + lostToPivot + '</b> sinyal yine de geri gelmedi (pencere yetersiz veya prob düşmüş). <code>pivot_flex_valid_bars</code>\'ı (şu an ' + p.pivotFlexValid + ') artırmayı dene.');
+      }
+    }
+    if (!p.pivotT1 && !p.pivotT2 && !p.pivotT3) {
+      ins.push('⚠️ Hiç T-1/T-2/T-3 seçili değil — pivot seviyesi varsayılan T-1\'e düşer (Pine\'da `p1` fallback).');
+    }
+  } else if (p.pivotFlex) {
+    ins.push('⚠️ <code>use_pivot_flex</code> açık ama <code>use_pivot_filter</code> kapalı → flex etkisiz.');
+  }
+
+  // 4) Exit sağlığı
+  if (passedCount > 0) {
+    if (firstRealExit) {
+      const lifetime = firstRealExit.i - startBar;
+      ins.push('🚪 İlk pozisyon ortalama <b>' + lifetime + ' bar</b> sonra <b>' + (firstRealExit.type === 'weak' ? 'Weakness' : 'Delta') + '</b> ile kapandı.');
+      if (lifetime < 5) ins.push('🔴 Pozisyon ömrü çok kısa — exit eşiği çok agresif (long: <code>thresh_exit_long</code>\'u düşür / delta\'yı kapat).');
+      else if (lifetime > 100) ins.push('🟡 Pozisyon çok uzun açık kaldı — Stage 1/2 trailing kullan, sadece prob exit\'e güvenme.');
+    } else if (p.pxOn || (p.pdxOn && !p.compat)) {
+      ins.push('🟢 Prob exit aktif ama bu senaryoda hiç tetiklenmedi — pozisyon trend boyunca açık kalıyor.');
+    } else {
+      ins.push('⚪ Hiç prob exit aktif değil — pozisyon yalnızca Stage 1/2 / ters sinyal / acil SL ile kapanır.');
+    }
+  } else {
+    ins.push('⚪ Filtreyi geçen sinyal yok → exit testi yapılamadı.');
+  }
+
+  // 5) Compat çakışması
+  if (p.pdxOn && p.compat) {
+    ins.push('⚠️ <code>compat_v843_mode</code> açıkken Delta Exit pasif (Pine kodunda). Toggle\'ın etkisi yok — compat\'ı kapat.');
+  }
+  if (p.ftOn && p.compat) {
+    ins.push('⚠️ <code>compat_v843_mode</code> açıkken Fat-tail likelihood pasif. ν parametresinin etkisi yok.');
+  }
+  if (p.rpOn && p.compat) {
+    ins.push('⚠️ <code>compat_v843_mode</code> açıkken Rekürsif prior pasif. α parametrelerinin etkisi yok.');
+  }
+
+  // 5b) Fat-tail x Mod 2 uyarısı
+  if (p.ftOn && !p.compat && p.coreModel === '2') {
+    ins.push('💡 Fat-tail Mod 2/Evo motoruyla kullanılmıyor (Pine\'da sadece Smart Bayesian likelihood\'a uygulanır). Etkili olmasını istiyorsan Mod 1 veya Mod 3\'e geç.');
+  }
+  if (p.rpOn && !p.compat && p.coreModel === '2') {
+    ins.push('💡 Rekürsif prior Mod 2/Evo motoruyla kullanılmıyor — Smart Bayesian özelidir. Mod 1 veya 3\'e geç.');
+  }
+
+  // 5c) Fat-tail aşırılık uyarısı
+  if (p.ftOn && !p.compat && p.coreModel !== '2') {
+    if (p.ftNu < 3.0) {
+      ins.push('🟡 ν=' + p.ftNu.toFixed(1) + ' çok düşük → likelihood neredeyse hiç tetiklemiyor, sinyal sayısı düşer (motor aşırı temkinli).');
+    } else if (p.ftNu > 15.0) {
+      ins.push('⚪ ν=' + p.ftNu.toFixed(1) + ' yüksek → fat-tail neredeyse Gaussian\'a eşit, modülün anlamlı etkisi yok.');
+    }
+  }
+
+  // 5d) Recursive prior α dengesi
+  if (p.rpOn && !p.compat && p.coreModel !== '2') {
+    if (p.rpBase < p.rpLow) {
+      // Pine: yüksek vol → base, düşük vol → low. base < low ise yüksek volde daha hızlı unutuyor (mantıklı).
+      // Ama base ile low arasındaki fark çok büyükse osilasyon riski.
+      const gap = p.rpLow - p.rpBase;
+      if (gap > 0.10) ins.push('🟡 Rekürsif prior α aralığı geniş (base=' + p.rpBase.toFixed(2) + ', low=' + p.rpLow.toFixed(2) + ') → vol değişiminde prior keskin tepki verir, prob serisi salınabilir.');
+    } else if (p.rpBase > p.rpLow) {
+      ins.push('⚠️ <code>prior_decay_base</code> &gt; <code>prior_decay_low</code> → ters konfigürasyon (yüksek volde geçmişe daha çok güveniyor). Pine konvansiyonu base &lt; low\'dur.');
+    }
+  }
+
+  // 6) Motor x piyasa uyumu
+  if (p.market === 'chop' && rawCount > 15 && p.fltType === 'none') {
+    ins.push('💡 Yatay piyasada filtresiz çalışıyorsun — false sinyal yığını kaçınılmaz. CHOP/ER filtresini aç.');
+  }
+  if (p.market === 'trend' && passedCount < 2) {
+    ins.push('💡 Trend piyasasında bile az sinyal geçti — motor çok seçici veya filtreler gereksiz sıkı.');
+  }
+
+  $('uni-final-insight').innerHTML = ins.join('<br>');
+}
+
+function updateUnifiedPanel() {
+  if (!$('panel-unified')) return;
+  // Slider labels
+  setText('ft-nu-v', val('ft-nu').toFixed(1));
+  setText('rp-base-v', val('rp-base').toFixed(2));
+  setText('rp-low-v', val('rp-low').toFixed(2));
+  setText('uni-pf-valid-v', val('uni-pf-valid'));
+  setText('uni-bars-v', val('uni-bars'));
+  const p = getUnifiedParams();
+  drawUnifiedPosterior(p);
+  drawUnifiedChain(p);
+}
+
+// hook all inputs
+document.querySelectorAll('input, select').forEach(el => {
+  el.addEventListener('input', updateAll);
+  el.addEventListener('change', updateAll);
+});
+
+setTimeout(updateAll, 200);
+window.addEventListener('resize', () => setTimeout(updateAll, 100));
+</script>
+</body>
+</html>
