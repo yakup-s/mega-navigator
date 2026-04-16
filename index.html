@@ -3901,6 +3901,66 @@ document.querySelectorAll('input, select').forEach(el => {
 
 setTimeout(updateAll, 200);
 window.addEventListener('resize', () => setTimeout(updateAll, 100));
+// --- TARAYICI HAFIZASI (LOCALSTORAGE) ENTEGRASYONU ---
+
+// 1. Ayarları hafızadan çekip ekrana yansıtma
+function loadSavedSettings() {
+  const inputs = document.querySelectorAll('input, select, textarea');
+  let settingsLoaded = false;
+
+  inputs.forEach(input => {
+    // Her input için benzersiz bir kayıt anahtarı oluştur (id kullanılarak)
+    if (!input.id) return; 
+    const savedValue = localStorage.getItem('mega_nav_' + input.id);
+    
+    if (savedValue !== null) {
+      settingsLoaded = true;
+      if (input.type === 'checkbox' || input.type === 'radio') {
+        input.checked = (savedValue === 'true');
+      } else {
+        input.value = savedValue;
+      }
+    }
+  });
+
+  // Eğer hafızadan veri çekildiyse, hesaplamaların güncellenmesi için ana fonksiyonu tetikle
+  if (settingsLoaded && typeof updateAll === 'function') {
+    updateAll(); 
+  }
+}
+
+// 2. Herhangi bir değer değiştiğinde anında hafızaya kaydetme
+function bindSaveSettings() {
+  const inputs = document.querySelectorAll('input, select, textarea');
+  
+  inputs.forEach(input => {
+    if (!input.id) return;
+
+    // Tıklamalar, yazmalar ve dropdown değişimleri için
+    input.addEventListener('change', (e) => {
+      const valueToSave = (e.target.type === 'checkbox' || e.target.type === 'radio') 
+                          ? e.target.checked 
+                          : e.target.value;
+      localStorage.setItem('mega_nav_' + e.target.id, valueToSave);
+    });
+
+    // Slider'lar (range) kaydırılırken anlık kaydetmek için
+    if (input.type === 'range' || input.type === 'number') {
+      input.addEventListener('input', (e) => {
+        localStorage.setItem('mega_nav_' + e.target.id, e.target.value);
+      });
+    }
+  });
+}
+
+// 3. Sayfa tamamen yüklendiğinde sistemi başlat
+document.addEventListener('DOMContentLoaded', () => {
+  // Önce küçük bir gecikmeyle (diğer scriptlerin yüklenmesini beklemek için) ayarları yükle
+  setTimeout(() => {
+    loadSavedSettings();
+    bindSaveSettings();
+  }, 100); 
+});
 </script>
 </body>
 </html>
