@@ -179,6 +179,12 @@ canvas{display:block;width:100%!important;height:auto;max-width:100%;touch-actio
 <div class="prow"><span class="pname">thresh_sell</span><input type="range" min="0.20" max="0.50" step="0.01" value="0.45" id="thr-sell"><span class="pval" id="thr-sell-v">0.45</span></div>
 <div class="toggle-row"><input type="checkbox" id="evo-dyn-thr"><label for="evo-dyn-thr">use_evo_dyn_thresh</label></div>
 <div class="toggle-row"><input type="checkbox" id="compat-mode" checked><label for="compat-mode">compat_v843_mode</label></div>
+<hr class="section-sep">
+<div class="card-title" style="margin-top:0;font-size:13px;">Sinyal yumuşatma (prior)</div>
+<div class="toggle-row"><input type="checkbox" id="smooth-on"><label for="smooth-on">use_smoothing (compat’ten bağımsız)</label></div>
+<div class="prow"><span class="pname">smooth_type</span><select id="smooth-type"><option value="hma">HMA (Hızlı)</option><option value="rma">RMA (Stabil)</option><option value="median">Median (Spike)</option><option value="sma">SMA (Basit)</option></select></div>
+<div class="prow"><span class="pname">smooth_len</span><input type="range" min="1" max="50" step="1" value="3" id="smooth-len"><span class="pval" id="smooth-len-v">3</span></div>
+<div class="card-sub" style="margin-top:4px;">Smart Bayesian <code>prior</code>’a uygulanır. Evo motoru (Mod 2) etkilenmez.</div>
 </div>
 <div class="nav-card">
 <div class="card-ribbon">Legacy/Adaptive</div>
@@ -192,6 +198,8 @@ canvas{display:block;width:100%!important;height:auto;max-width:100%;touch-actio
 <div class="prow"><span class="pname">evo_gap_abs</span><input type="range" min="5" max="250" step="1" value="20" id="evo-gap"><span class="pval" id="evo-gap-v">20</span></div>
 <div class="prow"><span class="pname">adaptive_gap_pct</span><input type="range" min="5" max="60" step="1" value="20" id="ad-gap"><span class="pval" id="ad-gap-v">20%</span></div>
 <div class="prow"><span class="pname">evo_k (sigmoid)</span><input type="range" min="0.1" max="3.0" step="0.1" value="1.0" id="evo-k"><span class="pval" id="evo-k-v">1.0</span></div>
+<div class="prow"><span class="pname">evo_smooth (posterior EMA)</span><input type="range" min="1" max="30" step="1" value="4" id="evo-smooth"><span class="pval" id="evo-smooth-v">4</span></div>
+<div class="card-sub" style="margin-top:4px;">Evo motoru (Mod 2): posterior üzerine EMA. Büyüdükçe daha yumuşak.</div>
 </div>
 <div class="nav-card full is-active-spotlight">
 <div class="card-ribbon" data-tone="ok">Live</div>
@@ -705,9 +713,15 @@ function getSignalParams() {
     evoGap: val('evo-gap'),
     adGap: val('ad-gap'),
     evoK: val('evo-k'),
+    evoSmooth: val('evo-smooth'),
     envVol: val('env-vol'),
     evoBaseZone: val('evo-base-zone'),
     evoVolStr: val('evo-vol-str'),
+    // Sinyal yumuşatma (Smart Bayesian prior’a uygulanır).
+    // Pine’da compat_v843_mode’dan ETKİLENMEZ. Evo (coreModel==='2') etkilenmez.
+    smoothOn: val('smooth-on'),
+    smoothType: val('smooth-type'),
+    smoothLen: val('smooth-len'),
   };
 }
 
@@ -815,6 +829,8 @@ function updateSignalLabels(p) {
   setText('evo-gap-v', p.evoGap);
   setText('ad-gap-v', p.adGap + '%');
   setText('evo-k-v', p.evoK.toFixed(1));
+  setText('evo-smooth-v', p.evoSmooth);
+  setText('smooth-len-v', p.smoothLen);
   setText('env-vol-v', p.envVol.toFixed(1) + 'x');
   setText('evo-base-zone-v', p.evoBaseZone.toFixed(2));
   setText('evo-vol-str-v', p.evoVolStr.toFixed(1));
@@ -905,6 +921,12 @@ function drawBayes(p) {
   if (p.coreModel === '1') ins = 'Klasik motor: atan-tabanlı prior + sigmoid likelihood. Eğri keskin S-şekli.';
   else if (p.coreModel === '2') ins = 'Evo motoru: çift sigmoid, k=' + p.evoK.toFixed(1) + '. k arttıkça eğri sertleşir, false sinyaller artar.';
   else ins = 'Adaptif motor: klasik şekil ama MA uzunlukları vol ile değişir → eğri sabittir, dinamizm uzunluk seviyesinde.';
+  if (p.smoothOn && p.coreModel !== '2') {
+    const tNameMap = { hma: 'HMA', rma: 'RMA', median: 'Median', sma: 'SMA' };
+    ins += ' · Prior: ' + (tNameMap[p.smoothType] || p.smoothType) + ' len=' + p.smoothLen + '.';
+  } else if (p.smoothOn && p.coreModel === '2') {
+    ins += ' · Smoothing Evo\u2019da etkisiz (evo_smooth kullanılır).';
+  }
   $('bayes-insight').textContent = ins;
 }
 
@@ -1188,6 +1210,79 @@ function _ema(arr, len) {
   }
   return out;
 }
+function _rma(arr, len) {
+  // Wilder RMA (Pine ta.rma). alpha = 1/len.
+  const L = Math.max(1, len | 0);
+  const out = new Array(arr.length);
+  const alpha = 1 / L;
+  let prev = arr[0];
+  out[0] = prev;
+  for (let i = 1; i < arr.length; i++) {
+    prev = alpha * arr[i] + (1 - alpha) * prev;
+    out[i] = prev;
+  }
+  return out;
+}
+function _wma(arr, len) {
+  const L = Math.max(1, len | 0);
+  const out = new Array(arr.length);
+  const denom = L * (L + 1) / 2;
+  for (let i = 0; i < arr.length; i++) {
+    if (i < L - 1) { out[i] = arr[i]; continue; }
+    let s = 0;
+    for (let k = 0; k < L; k++) s += arr[i - k] * (L - k);
+    out[i] = s / denom;
+  }
+  return out;
+}
+function _hma(arr, len) {
+  // Pine ta.hma: wma(2*wma(src, len/2) - wma(src, len), round(sqrt(len)))
+  const L = Math.max(1, len | 0);
+  if (L < 2) return arr.slice();
+  const halfL = Math.max(1, Math.floor(L / 2));
+  const sqrtL = Math.max(1, Math.round(Math.sqrt(L)));
+  const wmaHalf = _wma(arr, halfL);
+  const wmaFull = _wma(arr, L);
+  const diff = new Array(arr.length);
+  for (let i = 0; i < arr.length; i++) diff[i] = 2 * wmaHalf[i] - wmaFull[i];
+  return _wma(diff, sqrtL);
+}
+function _median(arr, len) {
+  // Rolling median (Pine ta.median).
+  const L = Math.max(1, len | 0);
+  const out = new Array(arr.length);
+  for (let i = 0; i < arr.length; i++) {
+    const start = Math.max(0, i - L + 1);
+    const win = arr.slice(start, i + 1).sort((a, b) => a - b);
+    const n = win.length;
+    out[i] = n % 2 === 1 ? win[(n - 1) >> 1] : 0.5 * (win[n / 2 - 1] + win[n / 2]);
+  }
+  return out;
+}
+function _applyPriorSmoothing(prior, p) {
+  // Pine’daki sb_prior_prob smoothing bloğunun JS karşılığı.
+  // Evo (coreModel==='2') buraya gelmez (kolu ayrı). compat flag’inden bağımsız.
+  if (!p.smoothOn) return prior;
+  const L = Math.max(1, p.smoothLen | 0);
+  let smoothed;
+  switch (p.smoothType) {
+    case 'hma':    smoothed = _hma(prior, L); break;
+    case 'rma':    smoothed = _rma(prior, L); break;
+    case 'median': smoothed = _median(prior, L); break;
+    case 'sma':
+    default: {
+      smoothed = new Array(prior.length);
+      let sum = 0;
+      for (let i = 0; i < prior.length; i++) {
+        sum += prior[i];
+        if (i >= L) sum -= prior[i - L];
+        smoothed[i] = sum / Math.min(i + 1, L);
+      }
+    }
+  }
+  for (let i = 0; i < smoothed.length; i++) smoothed[i] = _clip01(smoothed[i]);
+  return smoothed;
+}
 function _dema(arr, len) {
   const e1 = _ema(arr, len);
   const e2 = _ema(e1, len);
@@ -1254,17 +1349,31 @@ function computeFinalProbSeries(prices, p) {
     const rpEnabled = p.rpOn && !p.compat;
     const nuSafe = Math.max(p.ftNu || 5.0, 2.1);
     const tScale = Math.sqrt(nuSafe / (nuSafe - 2));
-    let recursivePrior = 0.5; // sistem priorı (sadece rpEnabled iken kullanılır)
+
+    // --- PASS 1: Tüm priorRaw serisini hesapla (warm-up: 0.5) ---
+    const priorArr = new Array(N).fill(0.5);
+    const minWarm = Math.max(priorLen, likeLen);
     for (let i = 0; i < N; i++) {
-      if (i < Math.max(priorLen, likeLen)) { out[i] = 0.5; continue; }
-      // Prior: linreg vs sma slope, atan ile [0,1]'e (slice yerine endIdx kullan — O(N²) → O(N×len))
+      if (i < minWarm) { priorArr[i] = 0.5; continue; }
       const lrV = _linreg(prices, priorLen, 0, i);
       const smV = _sma(prices, priorLen, i);
       const slopeRaw = (lrV - smV) / Math.max((priorLen - 1) / 2, 1);
       const atrV = atrSeries[i] || 0.5;
       const normSlope = slopeRaw / Math.max(atrV, 0.0001);
       let priorRaw = (Math.atan(normSlope * 5) + Math.PI / 2) / Math.PI;
-      priorRaw = _clip01(priorRaw);
+      priorArr[i] = _clip01(priorRaw);
+    }
+
+    // --- PASS 2: Prior smoothing (Pine’daki use_smoothing).
+    //     compat_v843_mode’dan ETKİLENMEZ; Evo koluna uygulanmaz. ---
+    const priorSeries = _applyPriorSmoothing(priorArr, p);
+
+    // --- PASS 3: Likelihood + Bayesian posterior (+ opsiyonel rekürsif) ---
+    let recursivePrior = 0.5; // sistem priorı (sadece rpEnabled iken kullanılır)
+    for (let i = 0; i < N; i++) {
+      if (i < minWarm) { out[i] = 0.5; continue; }
+      const atrV = atrSeries[i] || 0.5;
+      const priorRaw = priorSeries[i];
 
       // Likelihood: z-score → (fat-tail varsa scale et) → sigmoid
       const basis = _linreg(prices, likeLen, 0, i);
